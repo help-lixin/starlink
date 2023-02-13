@@ -19,3 +19,6 @@
 1) 对各个组件的api进行了解.
 2) 对业务模型进行抽象,各个组件只是实现的形式而已,亦方便以后支持更多的组件.    
 3) 可以自由选择组件,而非,只支持一种组件(比如:gitlab/git/gitee...) 
+
+### 4. 各组件API介绍
+1) [Jenkins API介绍](https://www.lixin.help/2022/05/07/Jenkins-Api.html) 
