@@ -21,4 +21,7 @@
 3) 可以自由选择组件,而非,只支持一种组件(比如:gitlab/git/gitee...) 
 
 ### 4. 各组件API介绍
-1) [Jenkins API介绍](https://www.lixin.help/2022/05/07/Jenkins-Api.html) 
+1) [Jenkins API](https://www.lixin.help/2022/05/07/Jenkins-Api.html)
+2) [Nacos API](https://nacos.io/zh-cn/docs/open-api.html)
+3) [Harbor API](https://editor.swagger.io/?url=https://raw.githubusercontent.com/goharbor/harbor/main/api/v2.0/legacy_swagger.yaml)
+4) [Gitlab API](https://github.com/gitlab4j/gitlab4j-api)
