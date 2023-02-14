@@ -2,7 +2,7 @@
 ### 1. 安装Jenkins
 ```
 # 1. 创建磁盘目录
-lixin-macbook:~ lixin$ mkdir -p /Users/lixin/docker/jenkins/jenkins-data
+lixin-macbook:~ lixin$ mkdir -p /opt/docker/jenkins/jenkins-data
 
 # 2. 运行jenkins
 lixin-macbook:~ lixin$ docker run \
@@ -10,7 +10,7 @@ lixin-macbook:~ lixin$ docker run \
 -d \
 -p 2080:8080 \
 -p 50000:50000 \
--v /Users/lixin/docker/jenkins/jenkins-data:/var/jenkins_home \
+-v /opt/docker/jenkins/jenkins-data:/var/jenkins_home \
 -v /var/run/docker.sock:/var/run/docker.sock \
 jenkinsci/blueocean
 ```

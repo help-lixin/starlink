@@ -5,16 +5,17 @@ lixin-macbook:~ lixin$ docker pull gitlab/gitlab-ce
 ### 2. docker运行gitlab
 ```
 # 1. 创建挂载目录
-lixin-macbook:~ lixin$  mkdir -p /Users/lixin/docker/gitlab/etc/gitlab && mkdir -p /Users/lixin/docker/gitlab/var/log && mkdir -p /Users/lixin/docker/gitlab/var/opt 	
+lixin-macbook:~ lixin$  mkdir -p /opt/docker/gitlab/etc/gitlab && mkdir -p /opt/docker/gitlab/var/log && mkdir -p /opt/docker/gitlab/var/opt 	
 
 # 2. 运行gitlab
 lixin-macbook:~ lixin$ docker run \
 -itd  \
+-p 8443:443 \
 -p 1080:80 \
 -p 2222:22 \
--v /Users/lixin/docker/gitlab/etc/gitlab:/etc/gitlab  \
--v /Users/lixin/docker/gitlab/var/log:/var/log/gitlab \
--v /Users/lixin/docker/gitlab/var/opt:/var/opt/gitlab \
+-v /opt/docker/gitlab/etc/gitlab:/etc/gitlab  \
+-v /opt/docker/gitlab/var/log:/var/log/gitlab \
+-v /opt/docker/gitlab/var/opt:/var/opt/gitlab \
 --restart always \
 --privileged=true \
 --name gitlab \
@@ -31,9 +32,9 @@ root@339d2c526e93:/# vi /etc/gitlab/gitlab.rb
  
 #加入如下
 # gitlab访问地址,如果端口不写的话默认为80端口
-external_url 'http://127.0.0.1'
+external_url 'http://103.215.125.86'
 # ssh主机ip
-gitlab_rails['gitlab_ssh_host'] = '127.0.0.1'
+gitlab_rails['gitlab_ssh_host'] = '103.215.125.86'
 # ssh连接端口
 gitlab_rails['gitlab_shell_ssh_port'] = 2222
  
@@ -46,7 +47,7 @@ root@339d2c526e93:/# gitlab-ctl reconfigure
 # 修改http和ssh配置
 root@339d2c526e93:/# vi /opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml
   gitlab:
-    host: 127.0.0.1
+    host: 103.215.125.86
     port: 1080 # 这里改为1080
     https: false
     
@@ -77,11 +78,11 @@ Loading production environment (Rails 6.1.6.1)
 irb(main):015:0> user=User.where(id:1).first
 => #<User id:1 @root>
 # 修改密码
-irb(main):016:0> user.password='li123456'
-=> "li123456"
+irb(main):016:0> user.password='123456'
+=> "123456"
 # 确认密码
-irb(main):017:0> user.password_confirmation='li123456'
-=> "li123456"
+irb(main):017:0> user.password_confirmation='123456'
+=> "123456"
 
 # 保存
 irb(main):018:0> user.save!
@@ -93,3 +94,10 @@ irb(main):019:0> exit
 # 退出容器
 root@339d2c526e93:/# exit
 ```
+
+### 6. 创建token
+```
+preferences --> access tokens 
+```
+
+### 7. 创建token
