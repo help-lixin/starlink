@@ -12,5 +12,8 @@ lixin-macbook:~ lixin$ docker run \
 -p 50000:50000 \
 -v /opt/docker/jenkins/jenkins-data:/var/jenkins_home \
 -v /var/run/docker.sock:/var/run/docker.sock \
+--name jenkins \
+--restart always \
+--privileged=true \
 jenkinsci/blueocean
 ```

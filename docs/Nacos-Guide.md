@@ -1,7 +1,7 @@
 
 ### 1. clone nacos官网提供的镜像
 ```
-lixin-macbook:~ lixin$ git clone git@github.com:nacos-group/nacos-docker.git
+lixin-macbook:~ lixin$ git clone https://github.com/nacos-group/nacos-docker.git
 ```
 
 ### 2. 通过docker-compose运行

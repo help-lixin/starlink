@@ -14,5 +14,6 @@
 
     <modules>
         <module>gitlab-api</module>
+        <module>jenkins-api</module>
     </modules>
 </project>
