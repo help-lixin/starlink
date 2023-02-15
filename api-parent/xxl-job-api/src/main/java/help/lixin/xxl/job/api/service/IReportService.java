@@ -7,5 +7,5 @@ import java.util.Date;
 
 public interface IReportService {
     // /chartInfo
-    ResponseWrapper<JobReportResponse> chartInfo(Date startDate, Date endDate);
+    ResponseWrapper<JobReportResponse> report(Date startDate, Date endDate);
 }
