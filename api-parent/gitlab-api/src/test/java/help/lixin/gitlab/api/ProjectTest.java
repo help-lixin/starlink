@@ -1,4 +1,4 @@
-package help.lixin;
+package help.lixin.gitlab.api;
 
 
 import org.gitlab4j.api.models.*;

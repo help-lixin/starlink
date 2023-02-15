@@ -15,5 +15,6 @@
     <modules>
         <module>gitlab-api</module>
         <module>jenkins-api</module>
+        <module>nacos-api</module>
     </modules>
 </project>

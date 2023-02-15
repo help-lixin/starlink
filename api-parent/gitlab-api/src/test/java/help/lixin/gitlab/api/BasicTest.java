@@ -1,4 +1,4 @@
-package help.lixin;
+package help.lixin.gitlab.api;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;

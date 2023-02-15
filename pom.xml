@@ -23,6 +23,9 @@
         <gitlab4j-api.version>5.0.1</gitlab4j-api.version>
         <junit.version>4.13.2</junit.version>
         <commons-io.version>2.11.0</commons-io.version>
+
+        <unirest-java.version>3.13.4</unirest-java.version>
+        <commons-logging.version>1.2</commons-logging.version>
     </properties>
 
 
