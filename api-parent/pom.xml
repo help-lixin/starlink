@@ -17,5 +17,6 @@
         <module>jenkins-api</module>
         <module>nacos-api</module>
         <module>eureka-api</module>
+        <module>xxl-job-api</module>
     </modules>
 </project>
