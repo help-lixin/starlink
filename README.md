@@ -26,5 +26,6 @@
 3) [Harbor API](https://editor.swagger.io/?url=https://raw.githubusercontent.com/goharbor/harbor/main/api/v2.0/legacy_swagger.yaml)
 4) [Gitlab API](https://github.com/gitlab4j/gitlab4j-api)
 5) [Git API](https://docs.github.com/zh/enterprise-cloud@latest/rest/guides/getting-started-with-the-rest-api)
-
+6) [Eureka API](https://blog.csdn.net/guyue35/article/details/119574720)
+7) 
 ### 5.
