@@ -14,11 +14,12 @@
    Harbor/K8S/Promethues/Grafana/Jumpserver
 
 ### 3. 解决思路
-实现思路比较简单,通过统一的平台,去管理所有的组件,而不是在不同的组件之间进行登录切换. 
+实现思路比较简单,通过统一的平台,去管理所有的组件,而不是在不同的组件之间进行登录切换,并且,要做到统一的鉴权中心.     
 
 1) 对各个组件的api进行了解.
 2) 对业务模型进行抽象,各个组件只是实现的形式而已,亦方便以后支持更多的组件.    
-3) 可以自由选择组件,而非,只支持一种组件(比如:gitlab/git/gitee...) 
+3) 可以自由选择组件,而非,只支持一种组件(比如:gitlab/git/gitee...).  
+4) 实现鉴权(细到数据行),并且,同步到各个组件里(比如:gitlab).   
 
 ### 4. 各组件API罗列
 1) [Jenkins API](https://www.lixin.help/2022/05/07/Jenkins-Api.html)
@@ -26,6 +27,6 @@
 3) [Harbor API](https://editor.swagger.io/?url=https://raw.githubusercontent.com/goharbor/harbor/main/api/v2.0/legacy_swagger.yaml)
 4) [Gitlab API](https://github.com/gitlab4j/gitlab4j-api)
 5) [Git API](https://docs.github.com/zh/enterprise-cloud@latest/rest/guides/getting-started-with-the-rest-api)
-6) [Eureka API](https://blog.csdn.net/guyue35/article/details/119574720)
-7) 
-### 5.
+6) [Eureka API](https://github.com/Netflix/eureka/wiki/Eureka-REST-operations)
+
+### 5. 

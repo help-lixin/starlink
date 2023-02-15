@@ -1,0 +1,34 @@
+<instance>
+    <instanceId>127.0.0.1:test-consumer:9999</instanceId>
+    <hostName>127.0.0.1</hostName>
+    <app>TEST-CONSUMER</app>
+    <ipAddr>127.0.0.1</ipAddr>
+    <status>UP</status>
+    <overriddenstatus>UNKNOWN</overriddenstatus>
+    <port enabled="true">9999</port>
+    <securePort enabled="false">443</securePort>
+    <countryId>1</countryId>
+    <dataCenterInfo class="com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo">
+        <name>MyOwn</name>
+    </dataCenterInfo>
+    <leaseInfo>
+        <renewalIntervalInSecs>30</renewalIntervalInSecs>
+        <durationInSecs>90</durationInSecs>
+        <registrationTimestamp>1676436264663</registrationTimestamp>
+        <lastRenewalTimestamp>1676442357477</lastRenewalTimestamp>
+        <evictionTimestamp>0</evictionTimestamp>
+        <serviceUpTimestamp>1676436264152</serviceUpTimestamp>
+    </leaseInfo>
+    <metadata>
+        <management.port>9999</management.port>
+    </metadata>
+    <homePageUrl>http://127.0.0.1:9999/</homePageUrl>
+    <statusPageUrl>http://127.0.0.1:9999/actuator/info</statusPageUrl>
+    <healthCheckUrl>http://127.0.0.1:9999/actuator/health</healthCheckUrl>
+    <vipAddress>test-consumer</vipAddress>
+    <secureVipAddress>test-consumer</secureVipAddress>
+    <isCoordinatingDiscoveryServer>false</isCoordinatingDiscoveryServer>
+    <lastUpdatedTimestamp>1676436264663</lastUpdatedTimestamp>
+    <lastDirtyTimestamp>1676436264040</lastDirtyTimestamp>
+    <actionType>ADDED</actionType>
+</instance>
