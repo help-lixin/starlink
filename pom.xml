@@ -24,7 +24,8 @@
         <junit.version>4.13.2</junit.version>
         <commons-io.version>2.11.0</commons-io.version>
 
-        <unirest-java.version>3.13.4</unirest-java.version>
+        <unirest-java.version>3.14.1</unirest-java.version>
+        <unirest-objectmapper-jackson.version>3.14.1</unirest-objectmapper-jackson.version>
         <commons-logging.version>1.2</commons-logging.version>
     </properties>
 
@@ -74,7 +75,16 @@
                 <version>${gitlab4j-api.version}</version>
             </dependency>
 
-
+            <dependency>
+                <groupId>com.konghq</groupId>
+                <artifactId>unirest-java</artifactId>
+                <version>${unirest-java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.konghq</groupId>
+                <artifactId>unirest-objectmapper-jackson</artifactId>
+                <version>${unirest-objectmapper-jackson.version}</version>
+            </dependency>
 
 
             <dependency>
