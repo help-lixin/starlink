@@ -22,9 +22,6 @@ public class JobLogService implements IJobLogService {
 
     private static final String CLEAR_LOG = "/joblog/clearLog";
 
-    private static final String LOG_DETAIL_PAGE = "/joblog/logDetailPage";
-
-
     private String url;
 
     public JobLogService(String url) {
@@ -33,8 +30,7 @@ public class JobLogService implements IJobLogService {
 
     @Override
     public ResponseWrapper<List<XxlJobInfo>> getJobsByGroup(int jobGroup) {
-        GetRequest request = Unirest.get(url + GET_JOBS_GROUP)
-                .queryString("jobGroup", jobGroup);
+        GetRequest request = Unirest.get(url + GET_JOBS_GROUP).queryString("jobGroup", jobGroup);
         if (null != CookieMediator.getInstance().getCookie()) {
             request.cookie(new Cookie(CookieMediator.getInstance().getCookie()));
         }
@@ -44,8 +40,7 @@ public class JobLogService implements IJobLogService {
     }
 
     @Override
-    public JobLogResponse query(int start,
-                                int length,
+    public JobLogResponse query(int start, int length,
                                 // 执行器id
                                 int jobGroup,
                                 // 任务id
@@ -67,17 +62,6 @@ public class JobLogService implements IJobLogService {
             request.cookie(new Cookie(CookieMediator.getInstance().getCookie()));
         }
         HttpResponse<JobLogResponse> response = request.asObject(JobLogResponse.class);
-        return response.getBody();
-    }
-
-    @Override
-    public String logDetailPage(int logId) {
-        GetRequest request = Unirest.get(url + LOG_DETAIL_PAGE)
-                .queryString("id", logId);
-        if (null != CookieMediator.getInstance().getCookie()) {
-            request.cookie(new Cookie(CookieMediator.getInstance().getCookie()));
-        }
-        HttpResponse<String> response = request.asString();
         return response.getBody();
     }
 

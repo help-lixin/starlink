@@ -15,10 +15,6 @@ public interface IJobLogService {
     // /joblog/query
     JobLogResponse query(int start, int length, int jobGroup, int jobId, int logStatus, String filterTime);
 
-    // /joblog/logDetailPage
-    String logDetailPage(int logId);
-
-
     /**
      * 这里实际是调用远程机器,查看日志来着的.
      *
