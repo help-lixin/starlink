@@ -15,9 +15,19 @@ public interface IJobLogService {
     // /joblog/query
     JobLogResponse query(int start, int length, int jobGroup, int jobId, int logStatus, String filterTime);
 
-    // /joblog/load
-    XxlJobInfo load(int id);
+    // /joblog/logDetailPage
+    String logDetailPage(int logId);
 
+
+    /**
+     * 这里实际是调用远程机器,查看日志来着的.
+     *
+     * @param executorAddress
+     * @param triggerTime
+     * @param logId
+     * @param fromLineNum
+     * @return
+     */
     // /joblog/logDetailCat
     ResponseWrapper<LogResult> logDetailCat(String executorAddress, long triggerTime, long logId, int fromLineNum);
 
