@@ -18,5 +18,7 @@
         <module>nacos-api</module>
         <module>eureka-api</module>
         <module>xxl-job-api</module>
+        <module>docker-api</module>
+        <module>harbor-api</module>
     </modules>
 </project>

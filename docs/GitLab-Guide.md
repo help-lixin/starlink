@@ -100,4 +100,7 @@ root@339d2c526e93:/# exit
 preferences --> access tokens 
 ```
 
-### 7. 创建token
+![配置token步骤一](gitlab/gitlab-personal-access-token-config.png)
+![配置token步骤二](gitlab/gitlab-personal-access-token.png)
+
+

@@ -1,0 +1,69 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1167.v8fe861b_09ef9">
+    <actions>
+        <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.9.3"/>
+        <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.9.3">
+            <jobProperties/>
+            <triggers/>
+            <parameters>
+                <string>BRANCH</string>
+                <string>env</string>
+            </parameters>
+            <options/>
+        </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+    </actions>
+    <description></description>
+    <keepDependencies>false</keepDependencies>
+    <properties>
+        <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+            <triggers/>
+        </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+        <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+                <hudson.model.ChoiceParameterDefinition>
+                    <name>env</name>
+                    <description>请选择环境</description>
+                    <choices>
+                        <string>dev</string>
+                        <string>test</string>
+                        <string>pro</string>
+                    </choices>
+                </hudson.model.ChoiceParameterDefinition>
+                <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.15">
+                    <name>BRANCH</name>
+                    <uuid>a98ba383-70e9-448c-85b3-3d5e6d14bfa9</uuid>
+                    <type>PT_BRANCH</type>
+                    <tagFilter>*</tagFilter>
+                    <branchFilter>origin/(.*)</branchFilter>
+                    <defaultValue>master</defaultValue>
+                    <listSize>5</listSize>
+                    <requiredParameter>false</requiredParameter>
+                </net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition>
+            </parameterDefinitions>
+        </hudson.model.ParametersDefinitionProperty>
+    </properties>
+    <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2640.v00e79c8113de">
+        <scm class="hudson.plugins.git.GitSCM" plugin="git@4.10.3">
+            <configVersion>2</configVersion>
+            <userRemoteConfigs>
+                <hudson.plugins.git.UserRemoteConfig>
+                    <!-- git地址(http) -->
+                    <url>xxxxx</url>
+                    <credentialsId>lixin-gitlab</credentialsId>
+                </hudson.plugins.git.UserRemoteConfig>
+            </userRemoteConfigs>
+            <branches>
+                <hudson.plugins.git.BranchSpec>
+                    <name>*/master</name>
+                </hudson.plugins.git.BranchSpec>
+            </branches>
+            <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+            <submoduleCfg class="empty-list"/>
+            <extensions/>
+        </scm>
+        <scriptPath>Jenkinsfile</scriptPath>
+        <lightweight>true</lightweight>
+    </definition>
+    <triggers/>
+    <disabled>false</disabled>
+</flow-definition>
