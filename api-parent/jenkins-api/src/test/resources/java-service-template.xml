@@ -42,6 +42,12 @@
             // To run Maven on a Windows agent, use
             // bat &quot;mvn -Dmaven.test.failure.ignore=true clean package&quot;
             }
+
+            post {
+            success {
+            archiveArtifacts &apos;target/*.jar&apos;
+            }
+            }
             }
             }
             }

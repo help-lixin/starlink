@@ -68,7 +68,7 @@ public class BasicTest {
      * @throws Exception
      */
     public static RequestStatus createJob(JenkinsClient client) throws Exception {
-        String path = "/Users/lixin/Workspace/jenkins-demo/src/main/resources/tmp-setting-service.xml";
+        String path = "/Users/lixin/Workspace/jenkins-demo/src/main/resources/java-service-template.xml";
         String xmlFile = IOUtils.toString(new FileInputStream(path));
         JobsApi jobsApi = client.api().jobsApi();
         RequestStatus requestStatus = jobsApi.create(null, "tmp-setting-service", xmlFile);
