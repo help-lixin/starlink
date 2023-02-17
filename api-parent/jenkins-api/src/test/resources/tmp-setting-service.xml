@@ -1,68 +1,52 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<flow-definition plugin="workflow-job@1167.v8fe861b_09ef9">
+<flow-definition plugin="workflow-job@1268.v6eb_e2ee1a_85a">
     <actions>
-        <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.9.3"/>
-        <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.9.3">
+        <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2118.v31fd5b_9944b_5"/>
+        <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2118.v31fd5b_9944b_5">
             <jobProperties/>
             <triggers/>
-            <parameters>
-                <string>BRANCH</string>
-                <string>env</string>
-            </parameters>
+            <parameters/>
             <options/>
         </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
     </actions>
     <description></description>
     <keepDependencies>false</keepDependencies>
     <properties>
-        <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-            <triggers/>
-        </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-        <hudson.model.ParametersDefinitionProperty>
-            <parameterDefinitions>
-                <hudson.model.ChoiceParameterDefinition>
-                    <name>env</name>
-                    <description>请选择环境</description>
-                    <choices>
-                        <string>dev</string>
-                        <string>test</string>
-                        <string>pro</string>
-                    </choices>
-                </hudson.model.ChoiceParameterDefinition>
-                <net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition plugin="git-parameter@0.9.15">
-                    <name>BRANCH</name>
-                    <uuid>a98ba383-70e9-448c-85b3-3d5e6d14bfa9</uuid>
-                    <type>PT_BRANCH</type>
-                    <tagFilter>*</tagFilter>
-                    <branchFilter>origin/(.*)</branchFilter>
-                    <defaultValue>master</defaultValue>
-                    <listSize>5</listSize>
-                    <requiredParameter>false</requiredParameter>
-                </net.uaznia.lukanus.hudson.plugins.gitparameter.GitParameterDefinition>
-            </parameterDefinitions>
-        </hudson.model.ParametersDefinitionProperty>
+        <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.7.6">
+            <gitLabConnection>gitlab</gitLabConnection>
+            <jobCredentialId></jobCredentialId>
+            <useAlternativeCredential>false</useAlternativeCredential>
+        </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
     </properties>
-    <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2640.v00e79c8113de">
-        <scm class="hudson.plugins.git.GitSCM" plugin="git@4.10.3">
-            <configVersion>2</configVersion>
-            <userRemoteConfigs>
-                <hudson.plugins.git.UserRemoteConfig>
-                    <!-- git地址(http) -->
-                    <url>xxxxx</url>
-                    <credentialsId>lixin-gitlab</credentialsId>
-                </hudson.plugins.git.UserRemoteConfig>
-            </userRemoteConfigs>
-            <branches>
-                <hudson.plugins.git.BranchSpec>
-                    <name>*/master</name>
-                </hudson.plugins.git.BranchSpec>
-            </branches>
-            <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-            <submoduleCfg class="empty-list"/>
-            <extensions/>
-        </scm>
-        <scriptPath>Jenkinsfile</scriptPath>
-        <lightweight>true</lightweight>
+    <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@3618.v13db_a_21f0fcf">
+        <script>pipeline {
+            agent any
+
+            tools {
+            // Install the Maven version configured as &quot;M3&quot; and add it to the path.
+            jdk   &quot;jdk8&quot;
+            maven &quot;maven&quot;
+            }
+
+            stages {
+            stage(&apos;Build&apos;) {
+            steps {
+            // Get some code from a GitHub repository
+            git branch: &apos;main&apos;, url: &apos;ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git&apos;
+
+            // Run Maven on a Unix agent.
+            sh &quot;mvn clean install  -DskipTests -X&quot;
+
+            sh &quot;printenv&quot;
+
+            // To run Maven on a Windows agent, use
+            // bat &quot;mvn -Dmaven.test.failure.ignore=true clean package&quot;
+            }
+            }
+            }
+            }
+        </script>
+        <sandbox>true</sandbox>
     </definition>
     <triggers/>
     <disabled>false</disabled>
