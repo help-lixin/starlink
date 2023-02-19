@@ -129,7 +129,7 @@ public class JobService implements IJobService {
     }
 
     @Override
-    public ProgressiveText progressiveText(String optionalFolderPath, String jobName, int buildNumber, int start) {
+    public ProgressiveText lookBuildLog(String optionalFolderPath, String jobName, int buildNumber, int start) {
         JobsApi jobsApi = client.api().jobsApi();
         ProgressiveText progressiveText = jobsApi.progressiveText(optionalFolderPath, jobName, buildNumber, start);
         return progressiveText;

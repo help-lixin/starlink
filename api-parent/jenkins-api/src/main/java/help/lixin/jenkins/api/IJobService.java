@@ -134,7 +134,7 @@ public interface IJobService {
 
 
     /**
-     * 取最后的构建物
+     * 取最后的成品
      * artifacts: [
      * {
      * displayPath: "spring-web-demo-1.1.0.jar",
@@ -163,7 +163,7 @@ public interface IJobService {
      * @param start
      * @return
      */
-    ProgressiveText progressiveText(String optionalFolderPath,
+    ProgressiveText lookBuildLog(String optionalFolderPath,
                                     String jobName,
                                     int buildNumber,
                                     int start);

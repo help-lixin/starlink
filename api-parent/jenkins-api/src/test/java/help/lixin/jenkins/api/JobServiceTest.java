@@ -9,15 +9,13 @@ import help.lixin.jenkins.api.impl.JobService;
 import help.lixin.jenkins.api.impl.QueueService;
 import help.lixin.jenkins.model.CreateJobContext;
 import help.lixin.jenkins.model.TriggerBuildContext;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.util.List;
 
 public class JobServiceTest extends BasicTest {
@@ -110,10 +108,11 @@ public class JobServiceTest extends BasicTest {
             String relativePath = artifact.relativePath();
             InputStream inputStream = jobService.artifact(null, jobName, buildNumber, relativePath);
             try {
-                // BUG
-                byte[] bytes = new byte[inputStream.available()];
-                IOUtils.read(inputStream, bytes);
-                IOUtils.write(bytes, new FileOutputStream(new File("/tmp/" + fileName)));
+                if (inputStream instanceof FilterInputStream) {
+                    FilterInputStream filterInputStream = (FilterInputStream) inputStream;
+                    byte[] bytes = filterInputStream.readAllBytes();
+                    IOUtils.write(bytes, new FileOutputStream(new File("/tmp/" + fileName)));
+                }
             } catch (Exception ignore) {
                 ignore.printStackTrace();
             }
@@ -124,7 +123,13 @@ public class JobServiceTest extends BasicTest {
     public void testProgressiveText() {
         String jobName = "tmp_" + JOB_NAME;
         int buildNumber = 4;
-        ProgressiveText progressiveText = jobService.progressiveText(null, jobName, buildNumber, 0);
+        ProgressiveText progressiveText = jobService.lookBuildLog(null, jobName, buildNumber, 0);
         Assert.assertNotNull(progressiveText);
+        try {
+            String path = String.format("%s%s_%s%s", "/tmp/", jobName, buildNumber, ".txt");
+            IOUtils.write(progressiveText.text(), new FileOutputStream(new File(path)));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

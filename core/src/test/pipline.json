@@ -1,0 +1,111 @@
+[
+  {
+    "clazz": "help.lixin.core.definition.PipelineGroupDefinition",
+    "name": "gitlab clone source",
+    "elements": [
+      {
+        "clazz": "help.lixin.core.definition.PluginDefinition",
+        "id": "1",
+        "name": "gitlab下载源码",
+        "source": null,
+        "target": "11",
+        "plugin": "gitlab",
+        "params": "{ 'branch' :'main', 'url': 'ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git' }"
+      }
+    ]
+  },
+  {
+    "clazz": "help.lixin.core.definition.SequenceFlowDefinition",
+    "id": "11",
+    "name": "流水线-1",
+    "source": "1",
+    "target": "3",
+    "params": ""
+  },
+  {
+    "clazz": "help.lixin.core.definition.PipelineGroupDefinition",
+    "name": "jenkins java compile",
+    "elements": [
+      {
+        "clazz": "help.lixin.core.definition.PluginDefinition",
+        "id": "3",
+        "name": "jenkins源码编译",
+        "source": "11",
+        "target": "22",
+        "sync": true,
+        "plugin": "jenkins",
+        "params": "{  'credentialId' : 'zhangsan' , 'cmd' : 'mvn clean install -DskipTests -X' , 'archiveArtifacts' : 'target/*.jar' }"
+      }
+    ]
+  },
+  {
+    "clazz": "help.lixin.core.definition.SequenceFlowDefinition",
+    "id": "22",
+    "name": "流水线-2",
+    "source": "3",
+    "target": "4"
+  },
+  {
+    "clazz": "help.lixin.core.definition.PipelineGroupDefinition",
+    "name": "docker image",
+    "elements": [
+      {
+        "clazz": "help.lixin.core.definition.PluginDefinition",
+        "id": "4",
+        "name": "获取成品,并通过docker制作成镜像",
+        "source": "22",
+        "target": "",
+        "sync": true,
+        "plugin": "shell",
+        "params": "{ 'dockerFile':'DockerFile','tag':'www.lixin.help/spring-web-demo:v1.0' }"
+      }
+    ]
+  },
+  {
+    "clazz": "help.lixin.core.definition.SequenceFlowDefinition",
+    "id": "33",
+    "name": "流水线-3",
+    "source": "4",
+    "target": "5",
+    "params": ""
+  },
+  {
+    "clazz": "help.lixin.core.definition.PipelineGroupDefinition",
+    "name": "docker image push to harbor",
+    "elements": [
+      {
+        "clazz": "help.lixin.core.definition.PluginDefinition",
+        "id": "5",
+        "name": "docker镜像推到harbor仓库",
+        "source": "33",
+        "target": "",
+        "sync": true,
+        "plugin": "harbor",
+        "params": "{ 'image':'www.lixin.help/spring-web-demo:v1.0' }"
+      }
+    ]
+  },
+  {
+    "clazz": "help.lixin.core.definition.SequenceFlowDefinition",
+    "id": "44",
+    "name": "流水线-3",
+    "source": "5",
+    "target": "6"
+  },
+  {
+    "clazz": "help.lixin.core.definition.PipelineGroupDefinition",
+    "name": "k8s pull harbor image,and publish",
+    "elements": [
+      {
+        "clazz": "help.lixin.core.definition.PluginDefinition",
+        "id": "6",
+        "name": "k8s发布应用",
+        "source": "44",
+        "target": null,
+        "sync": true,
+        "plugin": "k8s",
+        "params": "{ 'template':'/opt/java/template.yaml' , 'app':'spring-web-demo' , 'image':'www.lixin.help/spring-web-demo:v1.0' }"
+      }
+    ]
+  }
+]
