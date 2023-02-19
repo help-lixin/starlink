@@ -105,6 +105,8 @@
     <modules>
         <module>core</module>
         <module>api-parent</module>
+        <module>actions</module>
+        <module>admin</module>
     </modules>
 
     <build>

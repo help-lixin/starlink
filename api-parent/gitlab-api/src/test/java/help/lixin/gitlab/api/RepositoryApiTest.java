@@ -16,6 +16,7 @@ public class RepositoryApiTest extends BasicTest {
     @Test
     public void testFetchBranches() throws Exception {
         RepositoryApi repositoryApi = gitLabApi.getRepositoryApi();
+
         // List<Branch> branches = repositoryApi.getBranches("5");
         // path = group-name/project-name
         List<Branch> branches = repositoryApi.getBranches("order-group/spring-web-demo");

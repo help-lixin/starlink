@@ -1,12 +1,14 @@
 package help.lixin.core.definition.impl;
 
-import help.lixin.core.meta.Plane;
-import help.lixin.core.meta.impl.ElementEdge;
+import help.lixin.core.plane.Plane;
+import help.lixin.core.plane.impl.ElementEdge;
 
 /**
- * 线
+ * 泳道
  */
 public class SequenceFlowDefinition extends AbstractElementDefinition {
+
+    public static final String SEQUENCE_FLOW_ACTION = "flow";
 
     protected Plane plane = new ElementEdge();
 
@@ -19,6 +21,15 @@ public class SequenceFlowDefinition extends AbstractElementDefinition {
     @Override
     public Plane getPlane() {
         return plane;
+    }
+
+    @Override
+    public String getPlugin() {
+        String plugin = super.getPlugin();
+        if (null == plugin) {
+            return SEQUENCE_FLOW_ACTION;
+        }
+        return plugin;
     }
 
     @Override

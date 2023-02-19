@@ -1,6 +1,6 @@
-package help.lixin.core.meta.impl;
+package help.lixin.core.plane.impl;
 
-import help.lixin.core.meta.ElementPlane;
+import help.lixin.core.plane.ElementPlane;
 
 public abstract class AbstractElementPlane implements ElementPlane {
 

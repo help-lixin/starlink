@@ -1,4 +1,4 @@
-package help.lixin.core.meta.impl;
+package help.lixin.core.plane.impl;
 
 /**
  * 具有x和y,同时,还具备有width和height

@@ -1,4 +1,4 @@
-package help.lixin.core.meta;
+package help.lixin.core.plane;
 
 /**
  * Plane 仅为一种标识

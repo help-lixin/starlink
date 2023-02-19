@@ -1,4 +1,4 @@
-package help.lixin.core.meta.impl;
+package help.lixin.core.plane.impl;
 
 /**
  * 带有x和y的元素

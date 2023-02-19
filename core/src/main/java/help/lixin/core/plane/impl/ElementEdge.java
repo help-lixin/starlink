@@ -1,6 +1,6 @@
-package help.lixin.core.meta.impl;
+package help.lixin.core.plane.impl;
 
-import help.lixin.core.meta.Plane;
+import help.lixin.core.plane.Plane;
 
 /**
  * 定义线,所以,需要:startPoint(x/y)和endPoint(x/y)
