@@ -54,7 +54,7 @@ public class Pipeline {
         // 从第一个元素的target开始,依次遍历向后执行.
         ElementDefinition curr = first;
         boolean isExecuteFail = Boolean.FALSE;
-        isExecuteFail = executeAction(curr, globalContext);
+        isExecuteFail = executeOne(curr, globalContext);
         do {
             String nextTarget = curr.getTarget();
             if (null != nextTarget) {
@@ -63,19 +63,18 @@ public class Pipeline {
                 curr = last;
             }
 
-            isExecuteFail = executeAction(curr, globalContext);
+            isExecuteFail = executeOne(curr, globalContext);
             // 执行失败,跳出循环.
             if (!isExecuteFail) {
                 // 抛个异常出去
                 break;
             }
         } while (curr != last);
-        System.out.println(globalContext);
     }
 
-    protected boolean executeAction(ElementDefinition actionElement,
-                                    //
-                                    PipelineContext globalContext) throws Exception {
+    protected boolean executeOne(ElementDefinition actionElement,
+                                 //
+                                 PipelineContext globalContext) throws Exception {
         boolean execute = Boolean.FALSE;
         boolean before = Boolean.FALSE;
         boolean after = Boolean.FALSE;
@@ -111,17 +110,5 @@ public class Pipeline {
             globalContext.copyFor(stageContext);
         }
         return before && execute && after;
-    }
-
-
-    /**
-     * 从第一个元素开始,验证
-     */
-    protected void validate(ElementDefinition first,
-                            //
-                            ElementDefinition last,
-                            //
-                            Map<String, ElementDefinition> all) {
-        // TODO lixin
     }
 }
