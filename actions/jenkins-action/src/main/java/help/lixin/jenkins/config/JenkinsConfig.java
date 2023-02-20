@@ -60,11 +60,13 @@ public class JenkinsConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public JenkinsFaceService jenkinsFaceService(ICrumbIssuerService crumbIssuerService,
+    public JenkinsFaceService jenkinsFaceService(JenkinsProperties jenkinsProperties,
+                                                 //
+                                                 ICrumbIssuerService crumbIssuerService,
                                                  //
                                                  IJobService jobService,
                                                  //
                                                  IQueueService queueService) {
-        return new JenkinsFaceService(crumbIssuerService, jobService, queueService);
+        return new JenkinsFaceService(jenkinsProperties, crumbIssuerService, jobService, queueService);
     }
 }
