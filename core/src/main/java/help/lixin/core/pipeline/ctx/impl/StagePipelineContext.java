@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class StagePipelineContext implements PipelineContext {
 
-    private String originParams;
+    private String stageParams;
 
     private Map<String, Object> vars = new HashMap<>();
 
@@ -26,12 +26,17 @@ public class StagePipelineContext implements PipelineContext {
     }
 
     @Override
-    public void setOriginParams(String originParams) {
-        this.originParams = originParams;
+    public Map<String, Object> getVars() {
+        return vars;
     }
 
     @Override
-    public String getOriginParams() {
-        return new String(originParams);
+    public void setStageParams(String stageParams) {
+        this.stageParams = stageParams;
+    }
+
+    @Override
+    public String getStageParams() {
+        return stageParams;
     }
 }

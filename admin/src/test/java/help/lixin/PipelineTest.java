@@ -2,7 +2,8 @@ package help.lixin;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import help.lixin.action.gitlab.GitlabAction;
+import help.lixin.gitlab.action.GitlabAction;
+import help.lixin.jenkins.action.JenkinsAction;
 import help.lixin.core.definition.ElementDefinition;
 import help.lixin.core.definition.PipelineDefinition;
 import help.lixin.core.pipeline.Pipeline;
@@ -33,10 +34,12 @@ public class PipelineTest {
     public void init() throws Exception {
         // 1.
         actionMediator = new DefaultActionMediator();
-        Action flowAction = new SequenceFlowAction();
-        Action gitlab = new GitlabAction();
-        actionMediator.register(flowAction.name(), flowAction);
-        actionMediator.register(gitlab.name(), gitlab);
+//        Action jenkinsAction = new JenkinsAction();
+//        Action flowAction = new SequenceFlowAction();
+//        Action gitlabAction = new GitlabAction();
+//        actionMediator.register(jenkinsAction.name(), jenkinsAction);
+//        actionMediator.register(flowAction.name(), flowAction);
+//        actionMediator.register(gitlabAction.name(), gitlabAction);
         this.actionMediator = actionMediator;
 
         // 2.

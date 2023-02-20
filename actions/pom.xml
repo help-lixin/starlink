@@ -14,5 +14,6 @@
 
     <modules>
         <module>gitlab-action</module>
+        <module>jenkins-action</module>
     </modules>
 </project>

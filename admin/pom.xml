@@ -23,7 +23,11 @@
             <artifactId>spider-web-platform-gitlab-action</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>spider-web-platform-jenkins-action</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
