@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -101,6 +102,7 @@ public class JenkinsAction implements Action {
         // 这一块扔出去,让一个线程去重试下载
         // 存储构建物
         List<Artifact> artifacts = buildInfo.artifacts();
+        List<String> dist = new ArrayList<>();
         for (Artifact artifact : artifacts) {
             String artifactDist = String.format("%s/%s/%s/%s", artifactPath, jobName, buildNumber, artifact.fileName());
             // 先强制创建一下父目录
@@ -110,7 +112,12 @@ public class JenkinsAction implements Action {
             // 指定输出的位置
             OutputStream outputStream = new FileOutputStream(artifactDist);
             IOUtils.copy(inputStream, outputStream);
+            dist.add(artifactDist);
         }
+        if (!dist.isEmpty()) {
+            ctx.addVar("__artifact", dist);
+        }
+
 
         // 这一块扔出去,让另一个线程去执行.
         // 获得构建后的日志信息
