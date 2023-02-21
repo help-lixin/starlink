@@ -68,30 +68,30 @@ public class ShellActionTest {
         // **************************************************************
         // 切记:所有的命令之间是不允许有空格的.
         // **************************************************************
-        String[] command = new String[]{
-                "docker",
-                "build",
-                "-f",
-                "./Dockerfile",
-                "--build-arg",
-                "APP_FILE=spring-web-demo-1.1.0.jar",
-                "-t",
-                "spring-web-demo:v1.0.0",
-                "."
-        };
+//        String[] command = new String[]{
+//                "docker",
+//                "build",
+//                "-f",
+//                "./Dockerfile",
+//                "--build-arg",
+//                "APP_FILE=spring-web-demo-1.1.0.jar",
+//                "-t",
+//                "spring-web-demo:v1.0.0",
+//                "."
+//        };
+        String[] command = new String[]{"/bin/bash",
+                //
+                "-c",
+                //
+                "cd /Users/lixin/GitRepository/spring-web-demo/target && docker build -f ./Dockerfile --build-arg APP_FILE=spring-web-demo-1.1.0.jar -t spring-web-demo:v1.0.0 . && docker login 103.215.125.86:3080 -u admin -p  && docker tag spring-web-demo:v1.0.0  103.215.125.86:3080/spring-web-demo/spring-web-demo:v1.0.0 && docker push 103.215.125.86:3080/spring-web-demo/spring-web-demo:v1.0.0"};
         ProcessBuilder cmdBuilder = new ProcessBuilder(command);
         // 指定工作目录
-        cmdBuilder.directory(new File("/Users/lixin/GitRepository/spring-web-demo/target"));
+        // cmdBuilder.directory(new File("/Users/lixin/GitRepository/spring-web-demo/target"));
         Process process = cmdBuilder.start();
         int errorCode = process.waitFor();
 
         InputStream inputStream = process.getInputStream();
         List<String> successLines = IOUtils.readLines(inputStream, "UTF-8");
-        Assert.assertEquals(true, errorCode == 0 && successLines.size() == 0);
-        if (errorCode > 0) { // 有错误的情况下才会有内容吧!
-            InputStream errorStream = process.getErrorStream();
-            List<String> errorLines = IOUtils.readLines(errorStream, "UTF-8");
-            System.out.println(errorLines);
-        }
+        Assert.assertEquals(true, errorCode == 0);
     }
 }
