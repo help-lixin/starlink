@@ -1,15 +1,18 @@
 ### 1. 项目背景
-大概是在三年前,公司让我和一同事去负责一个项目,我们在谈论微服务时,他提出了一个质疑我觉得非常好,微服务之后:<br/>
+大概是在三年前,公司让我和一同事去负责一个项目,我们在谈论微服务时,他提出了一个疑问我觉得非常好,微服务之后:<br/>
 看日志要用:Kibana,持续集成要用:Jenkins,维护定时任务要用:xxl-job-admin... <br/>
 难道就没有一个统一的开源平台,进行统一管理吗?而,该项目就是解决这个问题.  
 
 ### 2. 罗列组件
 1) 仓库
    gitlab/git/svn
+
 2) 持续集成
    jenkins
+
 3) 技术组件
    nacos/apollo/xxl-job/Skywalking/kibana/rocketmq-console
+
 4) 运维组件
    Harbor/K8S/Promethues/Grafana/Jumpserver
 
@@ -134,6 +137,7 @@ Gilab的Action比较简单,只是设置相关变量(项目名称/分支/仓库�
 ```
 
 #### 2) Jenkins
+
 Jenkins的Action比较复杂: 
 
 + 2.1) 根据:项目名称+分支名称,判断在Jenkins中是否存在,如果不存在,则创建Job,并,获了Job的基本信息(JobInfo,其中:nextBuildNumber代表下一次构建的id).
