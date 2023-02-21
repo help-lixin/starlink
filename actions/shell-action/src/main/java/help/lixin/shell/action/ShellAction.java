@@ -4,12 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import help.lixin.core.pipeline.action.Action;
 import help.lixin.core.pipeline.ctx.PipelineContext;
 import help.lixin.shell.service.ShellFaceService;
+import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ShellAction implements Action {
     public static final String SHELL_ACTION = "shell";
@@ -26,9 +28,30 @@ public class ShellAction implements Action {
         ObjectMapper mapper = new ObjectMapper();
         ShellParams shellParams = mapper.readValue(stageParams, ShellParams.class);
         List<String> commands = getCommands(shellParams, ctx);
-        Process process = Runtime.getRuntime().exec(new String[]{  });
-        InputStream inputStream = process.getInputStream();
-
+        String batchCommand = commands.stream().collect(Collectors.joining(" && "));
+        Process process = null;
+        try {
+            // 要把所有的命令,拼装成一条语句.
+            ProcessBuilder processBuilder = new ProcessBuilder(new String[]{"/bin/bash", "-c", batchCommand});
+            process = processBuilder.start();
+            int exitCode = process.waitFor();
+            InputStream inputStream = process.getInputStream();
+            if (exitCode == 0) { // 正常退出
+                String success = IOUtils.readLines(inputStream, "UTF-8").stream().collect(Collectors.joining(" \n "));
+                // TODO lixin
+                System.out.println(success);
+            } else {
+                String error = IOUtils.readLines(process.getErrorStream(), "UTF-8").stream().collect(Collectors.joining(" \n "));
+                // TODO lixin
+                System.out.println(error);
+                // 把日志信息收集好.
+                // throw new Exception();
+            }
+        } finally {
+            if (null != process) {
+                process.destroy();
+            }
+        }
         return true;
     }
 

@@ -173,7 +173,7 @@ Shell的做法会比较简单,你可以传递一组cmd(可以从上下文中获�
   cmds:[
      " cd ${artifactPath} ",
      " docker login ${repository.url} -u ${repository.userName} -p ${repository.pwd} ",
-     " docker build -f ./${dockerfile} --build-arg APP_FILE=${artifactPath}  -t ${projectName}:${version} . "
+     " docker build -f ./${dockerfile} --build-arg APP_FILE=${artifactPath}  -t ${projectName}:v${version}-${DATETIME} . "
   ]
 }
 ```

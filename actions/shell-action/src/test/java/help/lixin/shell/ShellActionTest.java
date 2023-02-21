@@ -16,10 +16,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class ShellActionTest {
 
@@ -31,22 +30,33 @@ public class ShellActionTest {
     }
 
     @Test
-    public void execute() throws Exception {
+    public void testExecute() throws Exception {
         List<String> artifacts = new ArrayList<>();
         artifacts.add("/Users/lixin/GitRepository/spring-web-demo/target/spring-web-demo-1.1.0.jar");
 
+        String artifact = artifacts.get(0);
+        File tempArtifactFile = new File(artifact);
+        String artifactPath = tempArtifactFile.getParent();
+        String artifactFileName = tempArtifactFile.getName();
+
+
+        DateFormat df = new SimpleDateFormat("HHmm");
+
         StagePipelineContext context = new StagePipelineContext();
-        context.addVar("__artifact", artifacts);
-        context.addVar("artifactPath", "/Users/lixin/GitRepository/spring-web-demo/target/");
+        context.addVar("__artifact", artifactFileName);
+        context.addVar("DATETIME", df.format(new Date()));
+        context.addVar("artifactPath", artifactPath);
         context.addVar("dockerfile", "/Users/lixin/GitRepository/spring-web-demo/target/Dockerfile");
         context.addVar("projectName", "spring-web-demo");
         context.addVar("version", "1.1.0");
+        context.addVar("repositoryUrl", "103.215.125.86:3080");
+        context.addVar("repositoryUserName", "admin");
+        context.addVar("repositoryPassword", System.getenv().getOrDefault("HARBOR-PWD", ""));
 
-        context.setStageParams("{ \"cmds\": [  \" cd ${artifactPath}  \" , \" pwd  \" , \" docker build -f ${dockerfile} --build-arg APP_FILE=${__artifact}  -t ${projectName}:v${version} . \"  ] }");
+        context.setStageParams("{ \"cmds\": [  \" cd ${artifactPath}  \" , \" docker build -f ${dockerfile} --build-arg APP_FILE=${__artifact}  -t ${projectName}:v${version}.${DATETIME} . \" , \" docker login ${repositoryUrl} -u ${repositoryUserName} -p ${repositoryPassword} \" ,  \"docker tag ${projectName}:v${version}.${DATETIME}  ${repositoryUrl}/${projectName}/${projectName}:v${version}.${DATETIME} \" , \" docker push ${repositoryUrl}/${projectName}/${projectName}:v${version}.${DATETIME} \"   ] }");
 
         ShellAction shellAction = applicationContext.getBean(ShellAction.class);
         shellAction.execute(context);
-        System.out.println();
     }
 
     @Test
