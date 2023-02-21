@@ -13,7 +13,7 @@ lixin-macbook:~ lixin$ cat ~/.docker/daemon.json
 ### 3. 登录Harbor
 
 ```
-lixin-macbook:~ lixin$ docker login 103.215.125.86:3080 -u admin 
-WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+lixin-macbook:~ lixin$ docker login 103.215.125.86:3080 -u admin
+Password:
 Login Succeeded
 ```
