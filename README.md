@@ -117,7 +117,7 @@ lixin-macbook:spider-web-platform lixin$ tree -L 2
 ```
 
 ### 9. 各Action详解
-1) Gitlab
+#### 1) Gitlab
 
 Gilab的Action比较简单,只是设置相关变量(项目名称/分支/仓库地址)即可,为什么这么简单?因为:Gitlab提供了大量的Api给前端,由前端辅助用户选择:项目和分支,并将选择结果交给后端保存.  
 
@@ -133,7 +133,7 @@ Gilab的Action比较简单,只是设置相关变量(项目名称/分支/仓库�
 }
 ```
 
-2) Jenkins
+#### 2) Jenkins
 Jenkins的Action比较复杂: 
 
 + 2.1) 根据:项目名称+分支名称,判断在Jenkins中是否存在,如果不存在,则创建Job,并,获了Job的基本信息(JobInfo,其中:nextBuildNumber代表下一次构建的id).
@@ -160,7 +160,8 @@ Jenkins的Action比较复杂:
    + 2.7.1) 需要预先在Jenkins里大量的配置(比如:插件安装/凭证配置/jdk/maven/gradle/nodejs/gitlab),运维人员都能参与到这份上了,与我的想法差别还是比较大的,后期的想法是去掉Jenkins自己去拉取代码下来,调用:Docker根据不同的环境(java/android/ios)来编译.
    + 2.7.2) 为什么我要把"成品"下载下来,原因只有一个,我不能让后面的action与jenkins有太大的交互了,比如:后面我需要对"成品"进行二次加工,制作成docker镜像. 
 
-3) Shell
+#### 3) Shell
+
 Shell的做法会比较简单,你可以传递一组cmd(可以从上下文中获取一些信息),进行执行,应用场景(比如上面:会先进入到"成品"位置,登录镜像仓库,构建镜像并打包).
 
 ```
