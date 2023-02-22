@@ -1,5 +1,6 @@
 package help.lixin.core.pipeline;
 
+import help.lixin.core.constants.Constant;
 import help.lixin.core.definition.ElementDefinition;
 import help.lixin.core.definition.PipelineDefinition;
 import help.lixin.core.pipeline.action.Action;
@@ -8,9 +9,9 @@ import help.lixin.core.pipeline.ctx.impl.GlobalPipelineContext;
 import help.lixin.core.pipeline.ctx.impl.StagePipelineContext;
 import help.lixin.core.pipeline.mediator.ActionMediator;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 
 public class Pipeline {
@@ -48,8 +49,18 @@ public class Pipeline {
             last = lastElement.get();
         }
 
-        // 创建global上下文
+        // 创建global上下文,并配置公共变量
         PipelineContext globalContext = new GlobalPipelineContext();
+        Calendar cal = Calendar.getInstance();
+        Date date = new Date();
+        globalContext.getVars().put(Constant.Common.YEAR, cal.get(Calendar.YEAR));
+        globalContext.getVars().put(Constant.Common.MONTH, cal.get(Calendar.MONTH) + 1);
+        globalContext.getVars().put(Constant.Common.DAY, cal.get(Calendar.DAY_OF_MONTH));
+        globalContext.getVars().put(Constant.Common.HOUR, cal.get(Calendar.HOUR));
+        globalContext.getVars().put(Constant.Common.MINUTE, cal.get(Calendar.MINUTE));
+        globalContext.getVars().put(Constant.Common.SECOND, cal.get(Calendar.SECOND));
+        globalContext.getVars().put(Constant.Common.DATETIME, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+
 
         // 从第一个元素的target开始,依次遍历向后执行.
         ElementDefinition curr = first;

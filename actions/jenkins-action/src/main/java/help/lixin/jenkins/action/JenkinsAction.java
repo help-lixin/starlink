@@ -7,6 +7,8 @@ import com.cdancy.jenkins.rest.domain.job.BuildInfo;
 import com.cdancy.jenkins.rest.domain.job.JobInfo;
 import com.cdancy.jenkins.rest.domain.job.ProgressiveText;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import help.lixin.core.artifact.ArtifactInfo;
+import help.lixin.core.constants.Constant;
 import help.lixin.core.pipeline.action.Action;
 import help.lixin.core.pipeline.ctx.PipelineContext;
 import help.lixin.jenkins.model.CreateJobContext;
@@ -56,7 +58,7 @@ public class JenkinsAction implements Action {
         // 1. 参数解析
         String stageParams = ctx.getStageParams();
         ObjectMapper mapper = new ObjectMapper();
-        JenkinsActionProperties actionProperties = mapper.readValue(stageParams, JenkinsActionProperties.class);
+        JenkinsActionParams actionProperties = mapper.readValue(stageParams, JenkinsActionParams.class);
 
         // 2. 上下文获取
         String projectName = (String) ctx.getVar("projectName");
@@ -102,22 +104,33 @@ public class JenkinsAction implements Action {
         // 这一块扔出去,让一个线程去重试下载
         // 存储构建物
         List<Artifact> artifacts = buildInfo.artifacts();
-        List<String> dist = new ArrayList<>();
-        for (Artifact artifact : artifacts) {
-            String artifactDist = String.format("%s/%s/%s/%s", artifactPath, jobName, buildNumber, artifact.fileName());
-            // 先强制创建一下父目录
-            FileUtils.forceMkdirParent(new File(artifactDist));
-            // 从远程下载文件
-            InputStream inputStream = jobService.artifact(null, jobName, buildNumber, artifact.relativePath());
-            // 指定输出的位置
-            OutputStream outputStream = new FileOutputStream(artifactDist);
-            IOUtils.copy(inputStream, outputStream);
-            dist.add(artifactDist);
-        }
-        if (!dist.isEmpty()) {
-            ctx.addVar("__artifact", dist);
+        if (null != artifacts && artifacts.size() > 1) {
+            // 控制产生的构建物应该只能是一个来着的.
+            //throw Exception
         }
 
+        // 在这里也只一个成品出来.
+        Artifact artifact = artifacts.get(0);
+        String artifactFullPath = String.format("%s/%s/%s/%s", artifactPath, jobName, buildNumber, artifact.fileName());
+        // 先强制创建一下父目录
+        FileUtils.forceMkdirParent(new File(artifactFullPath));
+        // 通过jenkins api远程下载文件
+        InputStream inputStream = jobService.artifact(null, jobName, buildNumber, artifact.relativePath());
+        // 指定输出的位置
+        IOUtils.copy(inputStream, new FileOutputStream(artifactFullPath));
+
+        ArtifactInfo artifactInfo = new ArtifactInfo();
+        artifactInfo.setArtifactFullName(artifactFullPath);
+        ctx.getVars().put(Constant.Artifact.ARTIFACT_DIR, artifactInfo.getArtifactDir());
+        ctx.getVars().put(Constant.Artifact.ARTIFACT_NAME, artifactInfo.getArtifactFileName());
+        ctx.getVars().put(Constant.Artifact.ARTIFACT_FULL_PATH, artifactInfo.getArtifactFullName());
+
+
+        // DockerFile
+        String dockerFilePath = getDockerFilePath(actionProperties);
+        if (null != dockerFilePath) {
+            ctx.getVars().put(Constant.Docker.DOCKER_FILE, dockerFilePath);
+        }
 
         // 这一块扔出去,让另一个线程去执行.
         // 获得构建后的日志信息
@@ -127,6 +140,15 @@ public class JenkinsAction implements Action {
         }
         return true;
     }
+
+    protected String getDockerFilePath(JenkinsActionParams params) {
+        String dockerFile = params.getDockerFile();
+        if (null == dockerFile) {
+            dockerFile = jenkinsFaceService.getJenkinsProperties().getDockerFile();
+        }
+        return dockerFile;
+    }
+
 
     protected IntegerResponse triggerBuild(String jobName, String branch, String url) {
         IJobService jobService = jenkinsFaceService.getJobService();

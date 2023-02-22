@@ -1,6 +1,6 @@
 package help.lixin.gitlab.action;
 
-public class GitlabActionProperties {
+public class GitlabActionParams {
     private String projectName;
     private String branch;
     private String url;

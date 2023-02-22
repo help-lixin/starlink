@@ -16,5 +16,6 @@
         <module>gitlab-action</module>
         <module>jenkins-action</module>
         <module>shell-action</module>
+        <module>harbor-action</module>
     </modules>
 </project>

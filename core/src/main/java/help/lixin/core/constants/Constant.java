@@ -2,6 +2,23 @@ package help.lixin.core.constants;
 
 public class Constant {
 
+    public static class Common {
+        // 年
+        public static final String YEAR = "YEAR";
+        // 月
+        public static final String MONTH = "MONTH";
+        // 日
+        public static final String DAY = "DAY";
+        // 小时
+        public static final String HOUR = "HOUR";
+        // 分
+        public static final String MINUTE = "MINUTE";
+        // 秒
+        public static final String SECOND = "SECOND";
+        // 全量
+        public static final String DATETIME = "DATETIME";
+    }
+
     // 成品库信息
     public static class Artifact {
         // 成品库位置(/Users/lixin/GitRepository/spring-web-demo/target)
@@ -14,8 +31,9 @@ public class Constant {
         public static final String ARTIFACT_FULL_PATH = "ARTIFACT_FULL_PATH";
     }
 
-    // 仓库信息
+    // 仓库信息(比如:harbor)
     public static class Repository {
+        public static final String HTTP_REPOSITORY_URL = "HTTP_REPOSITORY_URL";
         // 仓库URL
         public static final String REPOSITORY_URL = "REPOSITORY_URL";
         // 仓库的用户名

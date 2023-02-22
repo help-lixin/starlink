@@ -22,10 +22,11 @@ public class GitlabAction implements Action {
     public boolean execute(PipelineContext ctx) throws Exception {
         String stageParams = ctx.getStageParams();
         ObjectMapper objectMapper = new ObjectMapper();
-        GitlabActionProperties gitlabProperties = objectMapper.readValue(stageParams, GitlabActionProperties.class);
+        GitlabActionParams gitlabProperties = objectMapper.readValue(stageParams, GitlabActionParams.class);
         ctx.addVar("projectName", gitlabProperties.getProjectName());
         ctx.addVar("branch", gitlabProperties.getBranch());
         ctx.addVar("url", gitlabProperties.getUrl());
+        ctx.addVar("version", gitlabProperties.getBranch());
         return true;
     }
 

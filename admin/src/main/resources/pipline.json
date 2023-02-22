@@ -6,7 +6,7 @@
     "source": null,
     "target": "2",
     "plugin": "gitlab",
-    "params": "{ \"branch\" : \"main\", \"url\" : \"ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git\" }"
+    "params": "{  \"url\" : \"ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git\" , \"branch\" : \"main\" }"
   },
   {
     "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
@@ -36,11 +36,27 @@
   {
     "clazz": "help.lixin.core.definition.impl.PluginDefinition",
     "id": "5",
-    "name": "docker构建并且推送到仓库里",
+    "name": "配置harbor仓库",
     "source": "4",
+    "target": "6",
+    "sync": true,
+    "plugin": "harbor"
+  },
+  {
+    "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+    "id": "6",
+    "name": "流水线-3",
+    "source": "5",
+    "target": "7"
+  },
+  {
+    "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+    "id": "7",
+    "name": "Docker打包镜像并推送给Harbor仓库",
+    "source": "6",
     "target": null,
     "sync": true,
     "plugin": "shell",
-    "params": "{  }"
+    "params" : "{  \"cmds\":[  \" cd ${ARTIFACT_DIR} \" , \" docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${SECOND} . \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} \" , \" docker tag ${projectName}:v${SECOND}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${SECOND} \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${SECOND} \"  ] }"
   }
 ]

@@ -3,7 +3,7 @@ package help.lixin.jenkins.action;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JenkinsActionProperties {
+public class JenkinsActionParams {
     // 模板文件位置
     private String templateFile;
     // 凭证id
@@ -14,6 +14,9 @@ public class JenkinsActionProperties {
     private String cmd;
     // 成品位置
     private String archiveArtifacts;
+    // Dockerfile模板名称(Docker会通过DB统一存储)
+    private String dockerFile;
+
     // 其它信息
     private Map<String, Object> others = new HashMap<>();
 
@@ -63,6 +66,14 @@ public class JenkinsActionProperties {
 
     public void setOthers(Map<String, Object> others) {
         this.others = others;
+    }
+
+    public String getDockerFile() {
+        return dockerFile;
+    }
+
+    public void setDockerFile(String dockerFile) {
+        this.dockerFile = dockerFile;
     }
 
     @Override

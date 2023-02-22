@@ -12,6 +12,9 @@ public class JenkinsProperties extends UserNamePasswordCredentials {
     // 成品库路径(比如:/tmp)
     private String artifactPath = "/tmp";
 
+    // 默认的Dockerfile文件位置
+    private String dockerFile;
+
     public Long getCrumbRefreshinterval() {
         return crumbRefreshinterval;
     }
@@ -26,5 +29,13 @@ public class JenkinsProperties extends UserNamePasswordCredentials {
 
     public void setArtifactPath(String artifactPath) {
         this.artifactPath = artifactPath;
+    }
+
+    public void setDockerFile(String dockerFile) {
+        this.dockerFile = dockerFile;
+    }
+
+    public String getDockerFile() {
+        return dockerFile;
     }
 }

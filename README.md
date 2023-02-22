@@ -47,7 +47,7 @@
     "source": null,
     "target": "2",
     "plugin": "gitlab",
-    "params": "{ \"branch\" : \"main\", \"url\" : \"ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git\" }"
+    "params": "{  \"url\" : \"ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git\" , \"branch\" : \"main\" }"
   },
   {
     "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
@@ -72,7 +72,33 @@
     "id": "4",
     "name": "流水线-2",
     "source": "3",
-    "target": null
+    "target": "5"
+  },
+  {
+    "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+    "id": "5",
+    "name": "配置harbor仓库",
+    "source": "4",
+    "target": "6",
+    "sync": true,
+    "plugin": "harbor"
+  },
+  {
+    "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+    "id": "6",
+    "name": "流水线-3",
+    "source": "5",
+    "target": "7"
+  },
+  {
+    "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+    "id": "7",
+    "name": "Docker打包镜像并推送给Harbor仓库",
+    "source": "6",
+    "target": null,
+    "sync": true,
+    "plugin": "shell",
+    "params" : "{  \"cmds\":[  \" cd ${ARTIFACT_DIR} \" , \" docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${SECOND} . \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} \" , \" docker tag ${projectName}:v${SECOND}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${SECOND} \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${SECOND} \"  ] }"
   }
 ]
 ```
@@ -136,6 +162,7 @@ Gilab的Action比较简单,只是设置相关变量(项目名称/分支/仓库�
 }
 ```
 
+
 #### 2) Jenkins
 
 Jenkins的Action比较复杂: 
@@ -164,16 +191,51 @@ Jenkins的Action比较复杂:
    + 2.7.1) 需要预先在Jenkins里大量的配置(比如:插件安装/凭证配置/jdk/maven/gradle/nodejs/gitlab),运维人员都能参与到这份上了,与我的想法差别还是比较大的,后期的想法是去掉Jenkins自己去拉取代码下来,调用:Docker根据不同的环境(java/android/ios)来编译.
    + 2.7.2) 为什么我要把"成品"下载下来,原因只有一个,我不能让后面的action与jenkins有太大的交互了,比如:后面我需要对"成品"进行二次加工,制作成docker镜像. 
 
-#### 3) Shell
++ 2.8) Jenkins提供可引用的变量
 
-Shell的做法会比较简单,你可以传递一组cmd(可以从上下文中获取一些信息),进行执行.
+```
+ARTIFACT_DIR         :          /Users/lixin/GitRepository/spring-web-demo/target    
+ARTIFACT_NAME        :          spring-web-demo-1.1.0.jar 
+ARTIFACT_FULL_PATH   :          /Users/lixin/GitRepository/spring-web-demo/target/spring-web-demo-1.1.0.jar
+DOCKER_FILE          :          application.properties里配置(jenkins.dockerFile=/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/Dockerfile)
+```
+
+#### 3) Harbor
+Harbor现在的做法,是把仓库地址/账号/密码塞在上下文里,这些信息,可以在流水线里配置,也可以不用配置,不配置会默认读取application.properties里的.
+
+Harbor提供可引用的变量
+
+```
+HTTP_REPOSITORY_URL  :   http://103.215.125.86:3080 
+REPOSITORY_URL       :   103.215.125.86:3080
+REPOSITORY_USERNAME  :   admin
+REPOSITORY_PASSWORD  :   XXXXX
+```
+
+#### 4) Shell
+
+Shell的做法会比较简单,你可以传递一组cmd,进行执行,以下为案例. 
 
 ```
 {
   cmds:[
      " cd ${ARTIFACT_DIR} ",
      " docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} ",
-     " docker build -f ./${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${version}-${DATETIME} . "
+     " docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${SECOND} .  ",
+     " docker tag ${projectName}:v${SECOND}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${SECOND} ",
+     " docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${SECOND} "
   ]
 }
+```
+
+#### 5) Gloabl变量
+
+```
+YEAR     : 年
+MONTH    : 月
+DAY      : 日
+HOUR     : 小时
+MINUTE   : 分钟
+SECOND   : 秒钟
+DATETIME : yyyy-MM-dd HH:mm:ss
 ```
