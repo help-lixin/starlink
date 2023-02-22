@@ -1,5 +1,7 @@
 package help.lixin.shell;
 
+import help.lixin.core.artifact.ArtifactInfo;
+import help.lixin.core.constants.Constant;
 import help.lixin.core.pipeline.ctx.impl.StagePipelineContext;
 import help.lixin.shell.action.ShellAction;
 import help.lixin.shell.config.ShellActionConfig;
@@ -34,29 +36,34 @@ public class ShellActionTest {
         List<String> artifacts = new ArrayList<>();
         artifacts.add("/Users/lixin/GitRepository/spring-web-demo/target/spring-web-demo-1.1.0.jar");
 
-        String artifact = artifacts.get(0);
-        File tempArtifactFile = new File(artifact);
-        String artifactPath = tempArtifactFile.getParent();
-        String artifactFileName = tempArtifactFile.getName();
+
+        ArtifactInfo info = new ArtifactInfo();
+        info.setArtifactFullName(artifacts.get(0));
 
 
         DateFormat df = new SimpleDateFormat("HHmm");
 
         StagePipelineContext context = new StagePipelineContext();
-        context.addVar("__artifact", artifactFileName);
         context.addVar("DATETIME", df.format(new Date()));
-        context.addVar("artifactPath", artifactPath);
-        context.addVar("dockerfile", "/Users/lixin/GitRepository/spring-web-demo/target/Dockerfile");
+        // spring-web-demo
+        context.addVar(Constant.Artifact.ARTIFACT_NAME, info.getArtifactFileName());
+        // /Users/lixin/GitRepository/spring-web-demo/target
+        context.addVar(Constant.Artifact.ARTIFACT_DIR, info.getArtifactDir());
+
         context.addVar("projectName", "spring-web-demo");
         context.addVar("version", "1.1.0");
-        context.addVar("repositoryUrl", "103.215.125.86:3080");
-        context.addVar("repositoryUserName", "admin");
-        context.addVar("repositoryPassword", System.getenv().getOrDefault("HARBOR-PWD", ""));
 
-        context.setStageParams("{ \"cmds\": [  \" cd ${artifactPath}  \" , \" docker build -f ${dockerfile} --build-arg APP_FILE=${__artifact}  -t ${projectName}:v${version}.${DATETIME} . \" , \" docker login ${repositoryUrl} -u ${repositoryUserName} -p ${repositoryPassword} \" ,  \"docker tag ${projectName}:v${version}.${DATETIME}  ${repositoryUrl}/${projectName}/${projectName}:v${version}.${DATETIME} \" , \" docker push ${repositoryUrl}/${projectName}/${projectName}:v${version}.${DATETIME} \"   ] }");
+        context.addVar(Constant.Docker.DOCKER_FILE, "/Users/lixin/GitRepository/spring-web-demo/target/Dockerfile");
+        // 仓库信息
+        context.addVar(Constant.Repository.REPOSITORY_URL, "103.215.125.86:3080");
+        context.addVar(Constant.Repository.REPOSITORY_USERNAME, "admin");
+        context.addVar(Constant.Repository.REPOSITORY_PASSWORD, System.getenv().getOrDefault("HARBOR-PWD", ""));
+
+        context.setStageParams("{ \"cmds\": [  \" cd ${ARTIFACT_DIR}  \" , \" docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${version}.${DATETIME} . \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} \" ,  \"docker tag ${projectName}:v${version}.${DATETIME}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${version}.${DATETIME} \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${version}.${DATETIME} \"   ] }");
 
         ShellAction shellAction = applicationContext.getBean(ShellAction.class);
         shellAction.execute(context);
+        System.out.println();
     }
 
     @Test

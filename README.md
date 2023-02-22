@@ -171,9 +171,9 @@ Shell的做法会比较简单,你可以传递一组cmd(可以从上下文中获�
 ```
 {
   cmds:[
-     " cd ${artifactPath} ",
-     " docker login ${repository.url} -u ${repository.userName} -p ${repository.pwd} ",
-     " docker build -f ./${dockerfile} --build-arg APP_FILE=${artifactPath}  -t ${projectName}:v${version}-${DATETIME} . "
+     " cd ${ARTIFACT_DIR} ",
+     " docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} ",
+     " docker build -f ./${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${version}-${DATETIME} . "
   ]
 }
 ```
