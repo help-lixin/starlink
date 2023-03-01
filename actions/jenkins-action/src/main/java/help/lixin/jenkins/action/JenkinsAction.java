@@ -28,6 +28,10 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * 需要深度优化
+ */
+@Deprecated
 public class JenkinsAction implements Action {
 
     private static final String FAILURE = "FAILURE";

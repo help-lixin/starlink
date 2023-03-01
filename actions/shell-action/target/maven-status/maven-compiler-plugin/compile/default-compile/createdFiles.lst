@@ -1,0 +1,8 @@
+help/lixin/shell/config/ShellConfig.class
+help/lixin/shell/action/ShellAction.class
+help/lixin/shell/service/IExpressionService.class
+help/lixin/shell/service/IContextCustomizer.class
+help/lixin/shell/config/ShellActionConfig.class
+help/lixin/shell/action/ShellParams.class
+help/lixin/shell/service/impl/BeetlExpressionService.class
+help/lixin/shell/service/ShellFaceService.class

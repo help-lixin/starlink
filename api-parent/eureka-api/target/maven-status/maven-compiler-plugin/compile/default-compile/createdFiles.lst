@@ -1,0 +1,4 @@
+help/lixin/eureka/api/EurekaClient.class
+help/lixin/eureka/api/status/EurekaInstanceStatus.class
+help/lixin/eureka/api/exception/EurekaClientException.class
+help/lixin/eureka/api/impl/EurekaClientImpl.class

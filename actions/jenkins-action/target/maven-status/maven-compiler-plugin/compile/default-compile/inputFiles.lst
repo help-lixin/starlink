@@ -1,0 +1,16 @@
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/service/JenkinsClientCustomizer.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/service/IJobService.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/config/JenkinsActionConfig.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/config/JenkinsConfig.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/service/impl/CrumbIssuerService.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/service/impl/QueueService.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/service/JenkinsFaceService.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/service/ICrumbIssuerService.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/action/JenkinsActionParams.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/service/impl/JobService.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/schedule/CrumbSchedule.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/model/CreateJobContext.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/action/JenkinsAction.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/properties/JenkinsProperties.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/service/IQueueService.java
+/Users/lixin/GitRepository/spider-web-platform/actions/jenkins-action/src/main/java/help/lixin/jenkins/model/TriggerBuildContext.java

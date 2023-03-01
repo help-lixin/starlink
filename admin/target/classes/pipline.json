@@ -1,0 +1,62 @@
+[
+  {
+    "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+    "id": "1",
+    "name": "gitlab下载源码",
+    "source": null,
+    "target": "2",
+    "plugin": "gitlab",
+    "params": "{  \"url\" : \"ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git\" , \"branch\" : \"main\" }"
+  },
+  {
+    "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+    "id": "2",
+    "name": "流水线-1",
+    "source": "1",
+    "target": "3",
+    "params": ""
+  },
+  {
+    "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+    "id": "3",
+    "name": "jenkins maven 源码编译",
+    "source": "2",
+    "target": "4",
+    "sync": true,
+    "plugin": "jenkins",
+    "params": "{  \"templateFile\" : \"/Users/lixin/GitRepository/spider-web-platform/admin/src/test/resources/java-service-template.xml\" , \"credentialId\" : \"zhangsan\" , \"compile\" : \"maven\" , \"cmd\" : \"mvn clean install -DskipTests -X\" , \"archiveArtifacts\" : \"target/*.jar\" }"
+  },
+  {
+    "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+    "id": "4",
+    "name": "流水线-2",
+    "source": "3",
+    "target": "5"
+  },
+  {
+    "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+    "id": "5",
+    "name": "配置harbor仓库",
+    "source": "4",
+    "target": "6",
+    "sync": true,
+    "plugin": "harbor"
+  },
+  {
+    "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+    "id": "6",
+    "name": "流水线-3",
+    "source": "5",
+    "target": "7"
+  },
+  {
+    "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+    "id": "7",
+    "name": "Docker打包镜像并推送给Harbor仓库",
+    "source": "6",
+    "target": null,
+    "sync": true,
+    "plugin": "shell",
+    "params" : "{  \"cmds\":[  \" cd ${ARTIFACT_DIR} \" , \" docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${SECOND} . \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} \" , \" docker tag ${projectName}:v${SECOND}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${SECOND} \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${SECOND} \"  ] }"
+  }
+]

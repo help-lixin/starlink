@@ -17,5 +17,6 @@
         <module>jenkins-action</module>
         <module>shell-action</module>
         <module>harbor-action</module>
+        <module>k8s-action</module>
     </modules>
 </project>
