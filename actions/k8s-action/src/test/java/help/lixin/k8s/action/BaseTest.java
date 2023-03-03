@@ -3,6 +3,7 @@ package help.lixin.k8s.action;
 import io.fabric8.kubernetes.client.Config;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import io.fabric8.kubernetes.client.KubernetesClientBuilder;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -21,7 +22,8 @@ public abstract class BaseTest {
     public void init() throws Exception {
         String kubeconfigContents = IOUtils.toString(new FileInputStream(KUBE_CONFIG), "UTF-8");
         Config config = Config.fromKubeconfig(kubeconfigContents);
-        client = new DefaultKubernetesClient(config);
+        client = new KubernetesClientBuilder().withConfig(config).build();
+//        client = new DefaultKubernetesClient(config);
     }
 
     protected String getToken() throws Exception {

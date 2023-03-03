@@ -46,7 +46,7 @@ public class JobLogServiceTest extends BasicTest {
     @Test
     public void testLogDetailPage() {
         int id = 5;
-        String result = jobLogService.logDetailPage(5);
+        String result = null;//jobLogService.logDetailPage(5);
         Assert.assertNotNull(result);
     }
 
