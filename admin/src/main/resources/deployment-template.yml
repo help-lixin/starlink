@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${DEPLOYMENT_NAME}
+  namespace: ${NAMESPACE}
+spec:
+  selector:
+    matchLabels:
+      ${POD_LABEL_NAME}: ${POD_LABEL_VALUE}
+  template:
+    metadata:
+      labels:
+        ${POD_LABEL_NAME}: ${POD_LABEL_VALUE}
+    spec:
+      imagePullSecrets:
+        - name: ${IMAGE_PULL_SECRET_NAME}
+      containers:
+        - image: ${REPOSITORY_URL}/${projectName}/${projectName}:v${SECOND}
+          name: ${projectName}
+          ports:
+            - containerPort: ${PORT}

@@ -1,4 +1,4 @@
-package help.lixin.k8s.action;
+package help.lixin.k8s.action.api;
 
 import io.fabric8.kubernetes.api.model.*;
 import io.fabric8.kubernetes.client.dsl.NonNamespaceOperation;

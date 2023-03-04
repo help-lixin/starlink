@@ -1,13 +1,6 @@
-package help.lixin.k8s.action;
+package help.lixin.k8s.action.api;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.ser.*;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import io.fabric8.kubernetes.api.model.*;
 import io.fabric8.kubernetes.api.model.apps.*;
 import io.fabric8.kubernetes.client.dsl.*;
@@ -16,9 +9,7 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,8 +57,7 @@ public class DeploymentTest extends BaseTest {
                         //
                         .withNamespace("default")
                         //
-                        .build()
-                ).withSpec(new DeploymentSpecBuilder()
+                        .build()).withSpec(new DeploymentSpecBuilder()
                         //
                         .withSelector(new LabelSelectorBuilder().withMatchLabels(podLabels).build())
                         //
@@ -85,6 +75,18 @@ public class DeploymentTest extends BaseTest {
         Assert.assertNotNull(deployment);
     }
 
+
+    @Test
+    public void testYamlToDeployment() throws Exception {
+        String appName = "nginx-deployment";
+        AppsAPIGroupDSL apps = client.apps();
+        ItemWritableOperation<Deployment> deploymentService = apps.deployments().inNamespace("default").dryRun(true);
+        StringWriter writer = new StringWriter();
+        IOUtils.copy(new FileInputStream(new File("/tmp/deploy.yml")), writer, "UTF-8");
+        String yamlDeploy = writer.toString();
+        Deployment deployment = Serialization.yamlMapper().readValue(yamlDeploy, Deployment.class);
+        Assert.assertEquals(deployment.getMetadata().getName(), appName);
+    }
 
     @Test
     public void testDeployToYAML() throws Exception {
@@ -170,30 +172,5 @@ public class DeploymentTest extends BaseTest {
                 //
                 .build()).build());
         Assert.assertNotNull(statusDetails);
-    }
-}
-
-class ObjectMetaSerializer extends StdSerializer<ObjectMeta> {
-    protected ObjectMetaSerializer(Class<ObjectMeta> t) {
-        super(t);
-    }
-
-    protected ObjectMetaSerializer(JavaType type) {
-        super(type);
-    }
-
-    protected ObjectMetaSerializer(Class<?> t, boolean dummy) {
-        super(t, dummy);
-    }
-
-    protected ObjectMetaSerializer(StdSerializer<?> src) {
-        super(src);
-    }
-
-    @Override
-    public void serialize(ObjectMeta value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        gen.writeStartObject();
-
-        gen.writeEndObject();
     }
 }

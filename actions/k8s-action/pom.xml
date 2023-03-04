@@ -20,12 +20,16 @@
         </dependency>
 
         <dependency>
+            <groupId>com.ibeetl</groupId>
+            <artifactId>beetl</artifactId>
+            <version>3.14.1.RELEASE</version>
+        </dependency>
+
+        <dependency>
             <groupId>io.fabric8</groupId>
             <artifactId>kubernetes-client</artifactId>
             <version>6.5-SNAPSHOT</version>
         </dependency>
-
-
         <dependency>
             <groupId>io.fabric8</groupId>
             <artifactId>kubernetes-model-admissionregistration</artifactId>

@@ -1,4 +1,4 @@
-package help.lixin.k8s.action;
+package help.lixin.k8s.action.api;
 
 import io.fabric8.kubernetes.client.Config;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;

@@ -19,19 +19,19 @@ public class Application {
     private static String PIPELINE_DSL = "pipline.json";
 
     public static void main(String[] args) throws Exception {
-//        URL resource = Application.class.getClassLoader().getResource(PIPELINE_DSL);
-//        String pipelineDSLPath = resource.getFile();
-//        String jsonDSL = FileUtils.readFileToString(new File(pipelineDSLPath), "UTF-8");
-//        ObjectMapper mapper = new ObjectMapper();
-//        List<ElementDefinition> elements = mapper.readValue(jsonDSL, new TypeReference<List<ElementDefinition>>() {
-//        });
-//        PipelineDefinition pipelineDefinition = new PipelineDefinition();
-//        pipelineDefinition.setName("test hello");
-//        pipelineDefinition.setPipelines(elements);
+        URL resource = Application.class.getClassLoader().getResource(PIPELINE_DSL);
+        String pipelineDSLPath = resource.getFile();
+        String jsonDSL = FileUtils.readFileToString(new File(pipelineDSLPath), "UTF-8");
+        ObjectMapper mapper = new ObjectMapper();
+        List<ElementDefinition> elements = mapper.readValue(jsonDSL, new TypeReference<List<ElementDefinition>>() {
+        });
+        PipelineDefinition pipelineDefinition = new PipelineDefinition();
+        pipelineDefinition.setName("test hello");
+        pipelineDefinition.setPipelines(elements);
 
         ConfigurableApplicationContext ctx = SpringApplication.run(Application.class, args);
-//        Pipeline pipelineBean = ctx.getBean(Pipeline.class);
-//        pipelineBean.execute(pipelineDefinition);
-//        System.out.println();
+        Pipeline pipelineBean = ctx.getBean(Pipeline.class);
+        pipelineBean.execute(pipelineDefinition);
+        System.out.println();
     }
 }

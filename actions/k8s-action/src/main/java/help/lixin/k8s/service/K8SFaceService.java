@@ -9,6 +9,16 @@ public class K8SFaceService {
 
     private KubernetesClient kubernetesClient;
 
+    private IDeploymentApiService deploymentApiService;
+
+    public void setDeploymentApiService(IDeploymentApiService deploymentApiService) {
+        this.deploymentApiService = deploymentApiService;
+    }
+
+    public IDeploymentApiService getDeploymentApiService() {
+        return deploymentApiService;
+    }
+
     public K8SProperties getK8SProperties() {
         return k8SProperties;
     }
