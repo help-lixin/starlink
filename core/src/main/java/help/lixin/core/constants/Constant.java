@@ -19,6 +19,12 @@ public class Constant {
         public static final String DATETIME = "DATETIME";
     }
 
+    public static class Jenkins {
+        // 触发构建时的唯一id
+        public static final String BUILD_NUMBER = "BUILD_NUMBER";
+    }
+
+
     // 成品库信息
     public static class Artifact {
         // 成品库位置(/Users/lixin/GitRepository/spring-web-demo/target)

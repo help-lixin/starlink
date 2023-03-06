@@ -18,6 +18,8 @@ import help.lixin.jenkins.service.IJobService;
 import help.lixin.jenkins.service.JenkinsFaceService;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,6 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Deprecated
 public class JenkinsAction implements Action {
+    private Logger logger = LoggerFactory.getLogger(JenkinsAction.class);
 
     private static final String FAILURE = "FAILURE";
     private static final String SUCCESS = "SUCCESS";
@@ -59,6 +62,10 @@ public class JenkinsAction implements Action {
 
     @Override
     public boolean execute(PipelineContext ctx) throws Exception {
+        if (logger.isDebugEnabled()) {
+            logger.debug("start execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
+        }
+
         // 1. 参数解析
         String stageParams = ctx.getStageParams();
         ObjectMapper mapper = new ObjectMapper();
@@ -80,15 +87,22 @@ public class JenkinsAction implements Action {
         //  触发构建
         IntegerResponse response = triggerBuild(jobName, branch, url);
         int buildNumber = jobInfo.nextBuildNumber();
+        ctx.getVars().put(Constant.Jenkins.BUILD_NUMBER, buildNumber);
         Future<BuildInfo> buildInfoFuture = executor.submit(new Callable<BuildInfo>() {
             @Override
             public BuildInfo call() throws Exception {
                 // FAILURE / SUCCESS
                 BuildInfo buildInfo = null;
                 do {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("start while wait build success...");
+                    }
                     buildInfo = getBuildInfo(jobName, buildNumber);
                     if (null == buildInfo) {
-                        TimeUnit.SECONDS.sleep(1);
+                        TimeUnit.SECONDS.sleep(10);
+                    }
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("end while wait build success...");
                     }
                 } while (null == buildInfo || null == buildInfo.result());
                 // 经过几轮测试,发现:result有值的时候,代表这次build是结束了的,至于是成功还是失败,要看result具体的值
@@ -99,7 +113,9 @@ public class JenkinsAction implements Action {
         // 最多等10分钟(这个应该留在参数里,让用户自己提交过来)
         BuildInfo buildInfo = buildInfoFuture.get(10, TimeUnit.MINUTES);
         if ("FAILURE".equals(buildInfo.result())) {
-            // throw new Exception
+            if (logger.isDebugEnabled()) {
+                logger.debug("trigger build FAIL,fail details:[{}]", buildInfo);
+            }
         }
 
         JenkinsProperties jenkinsProperties = jenkinsFaceService.getJenkinsProperties();
@@ -118,17 +134,22 @@ public class JenkinsAction implements Action {
         String artifactFullPath = String.format("%s/%s/%s/%s", artifactPath, jobName, buildNumber, artifact.fileName());
         // 先强制创建一下父目录
         FileUtils.forceMkdirParent(new File(artifactFullPath));
+        if (logger.isDebugEnabled()) {
+            logger.debug("start copy artifact:[{}] to disk:[{}]", artifact, artifactFullPath);
+        }
         // 通过jenkins api远程下载文件
         InputStream inputStream = jobService.artifact(null, jobName, buildNumber, artifact.relativePath());
         // 指定输出的位置
         IOUtils.copy(inputStream, new FileOutputStream(artifactFullPath));
+        if (logger.isDebugEnabled()) {
+            logger.debug("end copy artifact:[{}] to disk:[{}]", artifact, artifactFullPath);
+        }
 
         ArtifactInfo artifactInfo = new ArtifactInfo();
         artifactInfo.setArtifactFullName(artifactFullPath);
         ctx.getVars().put(Constant.Artifact.ARTIFACT_DIR, artifactInfo.getArtifactDir());
         ctx.getVars().put(Constant.Artifact.ARTIFACT_NAME, artifactInfo.getArtifactFileName());
         ctx.getVars().put(Constant.Artifact.ARTIFACT_FULL_PATH, artifactInfo.getArtifactFullName());
-
 
         // DockerFile
         String dockerFilePath = getDockerFilePath(actionProperties);
@@ -138,10 +159,12 @@ public class JenkinsAction implements Action {
 
         // 这一块扔出去,让另一个线程去执行.
         // 获得构建后的日志信息
-        ProgressiveText progressiveText = jobService.lookBuildLog(null, jobName, buildNumber, 0);
-        if (null != progressiveText.text()) {
-            ctx.addVar("__build_log", progressiveText.text());
-        }
+//        ProgressiveText progressiveText = jobService.lookBuildLog(null, jobName, buildNumber, 0);
+//        if (null != progressiveText.text()) {
+//            ctx.addVar("__build_log", progressiveText.text());
+//        }
+
+        logger.debug("end execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
         return true;
     }
 
@@ -165,6 +188,9 @@ public class JenkinsAction implements Action {
                 .properties("url", url)
                 //
                 .build();
+        if (logger.isDebugEnabled()) {
+            logger.debug("start trigger job:[{}],trigger ctx:[{}]", buildContext.getJobName(), buildContext);
+        }
         IntegerResponse response = jobService.triggerBuild(buildContext);
         return response;
     }
@@ -180,7 +206,16 @@ public class JenkinsAction implements Action {
                 // throw new Exception
             } else {
                 String configXML = FileUtils.readFileToString(templateFile, "UTF-8");
-                CreateJobContext createJobContext = CreateJobContext.newBuilder().jobName(jobName).configXML(configXML).build();
+                CreateJobContext createJobContext = CreateJobContext.newBuilder()
+                        //
+                        .jobName(jobName)
+                        //
+                        .configXML(configXML)
+                        //
+                        .build();
+                if (logger.isDebugEnabled()) {
+                    logger.debug("start create job name:[{}],xml:\n{}", createJobContext.getJobName(), createJobContext.getConfigXML());
+                }
                 RequestStatus status = jobService.createJob(createJobContext);
                 if (status.errors().size() > 0) {
                     // 返回错误处理
@@ -188,6 +223,9 @@ public class JenkinsAction implements Action {
                 } else {
                     // 3.2 创建完job后,重新获取job信息
                     jobInfo = jobService.getJobInfo(null, jobName);
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("end create job name:[{}],xml:\n{},jobinfo:\n{}", createJobContext.getJobName(), createJobContext.getConfigXML(), jobInfo);
+                    }
                 }
             }
         }

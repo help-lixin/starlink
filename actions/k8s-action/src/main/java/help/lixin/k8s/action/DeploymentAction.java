@@ -14,6 +14,8 @@ import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
 import org.beetl.core.resource.StringTemplateResourceLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,6 +27,7 @@ import java.util.Map;
 
 
 public class DeploymentAction implements Action {
+    private Logger logger = LoggerFactory.getLogger(DeploymentAction.class);
     public static final String K8S_DEPLOYMENT_ACTION = "k8s-deploy";
 
     private StringTemplateResourceLoader resourceLoader = new StringTemplateResourceLoader();
@@ -37,6 +40,9 @@ public class DeploymentAction implements Action {
 
     @Override
     public boolean execute(PipelineContext ctx) throws Exception {
+        if (logger.isDebugEnabled()) {
+            logger.debug("start execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
+        }
         // 1. 参数解析
         String stageParams = ctx.getStageParams();
         ObjectMapper mapper = new ObjectMapper();
@@ -68,6 +74,10 @@ public class DeploymentAction implements Action {
         t.binding(tempContext);
         String ymlContent = t.render();
 
+        if (logger.isDebugEnabled()) {
+            logger.debug("ready apply yaml:\n{}", ymlContent);
+        }
+
         // 5. 根据yml模板转换成:Deployment对象,目的是还需要填充一些其它信息到Deployment上
         Deployment deployment = k8sFaceService.getDeploymentApiService().yamlConvertDeployment(ymlContent);
 
@@ -77,6 +87,9 @@ public class DeploymentAction implements Action {
 
         // 7. 向K8S,提交Deployment
         k8sFaceService.getDeploymentApiService().apply(deployment);
+        if (logger.isDebugEnabled()) {
+            logger.debug("end execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
+        }
         return true;
     }
 

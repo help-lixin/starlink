@@ -6,8 +6,12 @@ import help.lixin.core.pipeline.action.Action;
 import help.lixin.core.pipeline.ctx.PipelineContext;
 import help.lixin.harbor.properties.HarborProperties;
 import help.lixin.harbor.service.HarborFaceService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HarborAction implements Action {
+
+    private Logger logger = LoggerFactory.getLogger(HarborAction.class);
 
     public static final String HARBOR_ACTION = "harbor";
 
@@ -19,6 +23,7 @@ public class HarborAction implements Action {
 
     @Override
     public boolean execute(PipelineContext ctx) throws Exception {
+        logger.debug("start execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
         RepositoryInfo repositoryInfo = getRepositoryInfo(ctx);
         if (null != repositoryInfo) {
             String repositoryUrl = repositoryInfo.getUrl().replaceAll("http://", "");
@@ -27,6 +32,7 @@ public class HarborAction implements Action {
         ctx.getVars().put(Constant.Repository.HTTP_REPOSITORY_URL, repositoryInfo.getUrl());
         ctx.getVars().put(Constant.Repository.REPOSITORY_USERNAME, repositoryInfo.getUserName());
         ctx.getVars().put(Constant.Repository.REPOSITORY_PASSWORD, repositoryInfo.getPassword());
+        logger.debug("end execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
         return true;
     }
 
