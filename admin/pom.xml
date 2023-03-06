@@ -39,11 +39,14 @@
             <artifactId>spider-web-platform-shell-action</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!--
         <dependency>
             <groupId>help.lixin</groupId>
             <artifactId>spider-web-platform-k8s-action</artifactId>
             <version>${project.version}</version>
         </dependency>
+        -->
 
 
         <dependency>

@@ -16,7 +16,7 @@ import java.util.List;
 
 @SpringBootApplication
 public class Application {
-    private static String PIPELINE_DSL = "pipline.json";
+    private static String PIPELINE_DSL = "pipline-jenkins.json";
 
     public static void main(String[] args) throws Exception {
         URL resource = Application.class.getClassLoader().getResource(PIPELINE_DSL);

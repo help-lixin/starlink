@@ -99,7 +99,7 @@ public class JenkinsAction implements Action {
                     }
                     buildInfo = getBuildInfo(jobName, buildNumber);
                     if (null == buildInfo) {
-                        TimeUnit.SECONDS.sleep(10);
+                        TimeUnit.SECONDS.sleep(20);
                     }
                     if (logger.isDebugEnabled()) {
                         logger.debug("end while wait build success...");

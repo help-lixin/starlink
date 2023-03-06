@@ -23,7 +23,11 @@
         <gitlab4j-api.version>5.0.1</gitlab4j-api.version>
         <junit.version>4.13.2</junit.version>
         <commons-io.version>2.11.0</commons-io.version>
+        <beetl.version>3.14.1.RELEASE</beetl.version>
+        <kubernetes-client.version>6.4.1</kubernetes-client.version>
+        <jenkins-rest.version>1.0.2</jenkins-rest.version>
 
+        <jackson.version>2.14.2</jackson.version>
         <unirest-java.version>3.14.1</unirest-java.version>
         <unirest-objectmapper-jackson.version>3.14.1</unirest-objectmapper-jackson.version>
         <commons-logging.version>1.2</commons-logging.version>
@@ -48,6 +52,30 @@
             </dependency>
 
             <dependency>
+                <groupId>io.fabric8</groupId>
+                <artifactId>kubernetes-client</artifactId>
+                <version>${kubernetes-client.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ibeetl</groupId>
+                <artifactId>beetl</artifactId>
+                <version>${beetl.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.cdancy</groupId>
+                <artifactId>jenkins-rest</artifactId>
+                <version>${jenkins-rest.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons-logging.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.konghq</groupId>
                 <artifactId>unirest-java</artifactId>
                 <version>${unirest-java.version}</version>
@@ -62,6 +90,29 @@
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
             </dependency>
+
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>

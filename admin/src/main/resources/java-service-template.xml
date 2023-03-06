@@ -38,40 +38,60 @@
         </hudson.model.ParametersDefinitionProperty>
     </properties>
     <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@3618.v13db_a_21f0fcf">
-        <script>pipeline {
-            agent any
+        <script>
+         pipeline {
+                agent any
 
-            parameters {
-            string(name: &apos;branch&apos;, defaultValue: &apos;main&apos;, description: &apos;分支名称&apos;)
-            string(name: &apos;url&apos;, defaultValue: &apos;ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git&apos;, description: &apos;url&apos;)
-            }
+                parameters {
+                    string(name: &apos;branch&apos;, defaultValue: &apos;main&apos;, description: &apos;分支名称&apos;)
+                    string(name: &apos;url&apos;, defaultValue: &apos;ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git&apos;, description: &apos;url&apos;)
+                }
 
-            tools {
-            // Install the Maven version configured as &quot;M3&quot; and add it to the path.
-            jdk   &quot;jdk8&quot;
-            maven &quot;maven&quot;
-            }
+                tools {
+                    // Install the Maven version configured as &quot;M3&quot; and add it to the path.
+                    jdk   &quot;jdk8&quot;
+                    maven &quot;maven&quot;
+                }
 
-            stages {
-            stage(&apos;Build&apos;) {
-            steps {
-            // Get some code from a GitHub repository
-            git branch: &quot;${params.branch}&quot; , url: &quot;${params.url}&quot;
+                stages {
 
-            // Run Maven on a Unix agent.
-            sh &quot;mvn clean install  -DskipTests -X&quot;
+                    stage(&apos;Git&apos;) {
+                        steps {
+                            // Get some code from a GitHub repository
+                            git branch: &quot;${params.branch}&quot; , url: &quot;${params.url}&quot;
+                        }
+                     // end Git stage
+                    }
 
-            sh &quot;printenv&quot;
-            }
+                    stage(&apos;Build&apos;) {
+                        steps {
+                            // Run Maven on a Unix agent.
+                            sh &quot;mvn clean install  -DskipTests -X&quot;
+                        }
+                    // end Build stage
+                    }
 
-            post {
-            success {
-            archiveArtifacts &apos;target/*.jar&apos;
-            }
-            }
-            }
-            }
-            }
+
+
+                    stage(&apos;PrintEnv&apos;) {
+                        steps {
+                            sh &quot;printenv&quot;
+                        }
+                    // end PrintEnv
+                    }
+                // end stages
+                }
+
+                post {
+                    success {
+                        archiveArtifacts &apos;target/*.jar&apos;
+                      // end success
+                    }
+                // end post
+                }
+
+          // end   pipeline
+          }
         </script>
         <sandbox>true</sandbox>
     </definition>

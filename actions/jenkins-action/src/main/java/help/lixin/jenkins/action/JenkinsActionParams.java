@@ -1,21 +1,26 @@
 package help.lixin.jenkins.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class JenkinsActionParams {
+
+    // 模板文件id(来自于DB存的ID)
+    private String templateId;
     // 模板文件位置
     private String templateFile;
     // 凭证id
     private String credentialId;
     // 编译环境(java/nodejs/gradle)
     private String compile;
-    // 要执行的命令
-    private String cmd;
     // 成品位置
     private String archiveArtifacts;
     // Dockerfile模板名称(Docker会通过DB统一存储)
     private String dockerFile;
+    // jenkins中的stage
+    private List<JenkinsStage> stages = new ArrayList<>();
 
     // 其它信息
     private Map<String, Object> others = new HashMap<>();
@@ -44,14 +49,6 @@ public class JenkinsActionParams {
         this.compile = compile;
     }
 
-    public String getCmd() {
-        return cmd;
-    }
-
-    public void setCmd(String cmd) {
-        this.cmd = cmd;
-    }
-
     public String getArchiveArtifacts() {
         return archiveArtifacts;
     }
@@ -74,6 +71,22 @@ public class JenkinsActionParams {
 
     public void setDockerFile(String dockerFile) {
         this.dockerFile = dockerFile;
+    }
+
+    public String getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
+    }
+
+    public List<JenkinsStage> getStages() {
+        return stages;
+    }
+
+    public void setStages(List<JenkinsStage> stages) {
+        this.stages = stages;
     }
 
     @Override

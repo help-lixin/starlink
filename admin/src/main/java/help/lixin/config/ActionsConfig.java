@@ -26,7 +26,7 @@ public class ActionsConfig {
     @ConditionalOnMissingBean
     public ActionMediator actionMediator(@Autowired(required = false) List<Action> actions) {
         ActionMediator mediator = new DefaultActionMediator();
-        if (!actions.isEmpty()) {
+        if (null != actions && !actions.isEmpty()) {
             for (Action action : actions) {
                 String name = action.name();
                 Action registerAction = action;
