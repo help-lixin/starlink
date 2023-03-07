@@ -26,4 +26,11 @@ public class GlobalPipelineContext implements PipelineContext {
     public Map<String, Object> getVars() {
         return vars;
     }
+
+    @Override
+    public String toString() {
+        return "GlobalPipelineContext{" +
+                "vars=" + vars +
+                '}';
+    }
 }

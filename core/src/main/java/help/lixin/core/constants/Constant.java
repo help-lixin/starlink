@@ -2,6 +2,12 @@ package help.lixin.core.constants;
 
 public class Constant {
 
+    // 代码仓库
+    public static class CodeRepository {
+        // gitlab/svn/git/github
+        public static final String CODE_REPOSITORY = "CODE_REPOSITORY";
+    }
+
     public static class Common {
         // 年
         public static final String YEAR = "YEAR";
@@ -37,8 +43,8 @@ public class Constant {
         public static final String ARTIFACT_FULL_PATH = "ARTIFACT_FULL_PATH";
     }
 
-    // 仓库信息(比如:harbor)
-    public static class Repository {
+    // 镜像仓库信息(比如:harbor)
+    public static class ImageRepository {
         public static final String HTTP_REPOSITORY_URL = "HTTP_REPOSITORY_URL";
         // 仓库URL
         public static final String REPOSITORY_URL = "REPOSITORY_URL";

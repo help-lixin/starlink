@@ -11,12 +11,14 @@ public class JenkinsActionParams {
     private String templateId;
     // 模板文件位置
     private String templateFile;
-    // 凭证id
+
+    // 凭证id(需要在jenkins里配置)
     private String credentialId;
-    // 编译环境(java/nodejs/gradle)
-    private String compile;
     // 成品位置
     private String archiveArtifacts;
+    // 下载成品策略
+    private DownloadStrategy downloadStrategy = DownloadStrategy.REMOTE;
+
     // Dockerfile模板名称(Docker会通过DB统一存储)
     private String dockerFile;
     // jenkins中的stage
@@ -39,14 +41,6 @@ public class JenkinsActionParams {
 
     public void setCredentialId(String credentialId) {
         this.credentialId = credentialId;
-    }
-
-    public String getCompile() {
-        return compile;
-    }
-
-    public void setCompile(String compile) {
-        this.compile = compile;
     }
 
     public String getArchiveArtifacts() {
@@ -87,6 +81,14 @@ public class JenkinsActionParams {
 
     public void setStages(List<JenkinsStage> stages) {
         this.stages = stages;
+    }
+
+    public DownloadStrategy getDownloadStrategy() {
+        return downloadStrategy;
+    }
+
+    public void setDownloadStrategy(DownloadStrategy downloadStrategy) {
+        this.downloadStrategy = downloadStrategy;
     }
 
     @Override

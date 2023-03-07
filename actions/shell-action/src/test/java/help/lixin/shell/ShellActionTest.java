@@ -16,7 +16,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.io.File;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -55,9 +54,9 @@ public class ShellActionTest {
 
         context.addVar(Constant.Docker.DOCKER_FILE, "/Users/lixin/GitRepository/spring-web-demo/target/Dockerfile");
         // 仓库信息
-        context.addVar(Constant.Repository.REPOSITORY_URL, "103.215.125.86:3080");
-        context.addVar(Constant.Repository.REPOSITORY_USERNAME, "admin");
-        context.addVar(Constant.Repository.REPOSITORY_PASSWORD, System.getenv().getOrDefault("HARBOR-PWD", ""));
+        context.addVar(Constant.ImageRepository.REPOSITORY_URL, "103.215.125.86:3080");
+        context.addVar(Constant.ImageRepository.REPOSITORY_USERNAME, "admin");
+        context.addVar(Constant.ImageRepository.REPOSITORY_PASSWORD, System.getenv().getOrDefault("HARBOR-PWD", ""));
 
         context.setStageParams("{ \"cmds\": [  \" cd ${ARTIFACT_DIR}  \" , \" docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${version}.${DATETIME} . \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} \" ,  \"docker tag ${projectName}:v${version}.${DATETIME}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${version}.${DATETIME} \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${version}.${DATETIME} \"   ] }");
 

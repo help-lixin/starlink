@@ -113,8 +113,8 @@ public class JobServiceTest extends BasicTest {
                 if (inputStream instanceof FilterInputStream) {
                     FilterInputStream filterInputStream = (FilterInputStream) inputStream;
                     
-                    byte[] bytes = filterInputStream.readAllBytes();
-                    IOUtils.write(bytes, new FileOutputStream(new File("/tmp/" + fileName)));
+                    // byte[] bytes = filterInputStream.readAllBytes();
+                    // IOUtils.write(bytes, new FileOutputStream(new File("/tmp/" + fileName)));
                 }
             } catch (Exception ignore) {
                 ignore.printStackTrace();

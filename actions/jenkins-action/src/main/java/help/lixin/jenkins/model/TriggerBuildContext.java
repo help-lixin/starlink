@@ -75,4 +75,13 @@ public class TriggerBuildContext {
     public void setProperties(Map<String, List<String>> properties) {
         this.properties = properties;
     }
+
+    @Override
+    public String toString() {
+        return "TriggerBuildContext{" +
+                "optionalFolderPath='" + optionalFolderPath + '\'' +
+                ", jobName='" + jobName + '\'' +
+                ", properties=" + properties +
+                '}';
+    }
 }

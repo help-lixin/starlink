@@ -15,11 +15,14 @@
     <description></description>
     <keepDependencies>false</keepDependencies>
     <properties>
-        <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.7.6">
-            <gitLabConnection>gitlab</gitLabConnection>
-            <jobCredentialId></jobCredentialId>
-            <useAlternativeCredential>false</useAlternativeCredential>
-        </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
+        <#if CODE_REPOSITORY == "gitlab" >
+            <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.7.6">
+                <gitLabConnection>${_jenkins.credentialId}</gitLabConnection>
+                <jobCredentialId></jobCredentialId>
+                <useAlternativeCredential>false</useAlternativeCredential>
+            </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
+        </#if>
+
         <hudson.model.ParametersDefinitionProperty>
             <parameterDefinitions>
                 <hudson.model.StringParameterDefinition>
@@ -31,7 +34,7 @@
                 <hudson.model.StringParameterDefinition>
                     <name>url</name>
                     <description>url</description>
-                    <defaultValue>ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git</defaultValue>
+                    <defaultValue>ssh://git@103.215.125.86/order-group/spring-web-demo.git</defaultValue>
                     <trim>false</trim>
                 </hudson.model.StringParameterDefinition>
             </parameterDefinitions>
@@ -43,39 +46,37 @@
                 agent any
 
                 parameters {
-                    string(name: &apos;branch&apos;, defaultValue: &apos;main&apos;, description: &apos;分支名称&apos;)
-                    string(name: &apos;url&apos;, defaultValue: &apos;ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git&apos;, description: &apos;url&apos;)
+                    string(name: "branch", defaultValue: "main", description: "分支名称")
+                    string(name: "url", defaultValue: "ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git", description: "url")
                 }
 
                 tools {
-                    // Install the Maven version configured as &quot;M3&quot; and add it to the path.
-                    jdk   &quot;jdk8&quot;
-                    maven &quot;maven&quot;
+                    jdk   "jdk8"
+                    maven "maven"
                 }
 
                 stages {
-
-                    stage(&apos;Git&apos;) {
-                        steps {
-                            // Get some code from a GitHub repository
-                            git branch: &quot;${params.branch}&quot; , url: &quot;${params.url}&quot;
+                    <#if CODE_REPOSITORY == "gitlab" >
+                        stage("Gitlab") {
+                            steps {
+                                git branch: "${r'${params.branch}'}" , url: "${r'${params.url}'}"
+                            }
+                         // end Git stage
                         }
-                     // end Git stage
-                    }
+                    </#if>
 
-                    stage(&apos;Build&apos;) {
-                        steps {
-                            // Run Maven on a Unix agent.
-                            sh &quot;mvn clean install  -DskipTests -X&quot;
+                    <#list _jenkins.stages as stageVar >
+                        stage("${stageVar.name}") {
+                            steps {
+                                ${stageVar.steps}
+                            }
+                        // end stage
                         }
-                    // end Build stage
-                    }
+                    </#list>
 
-
-
-                    stage(&apos;PrintEnv&apos;) {
+                    stage("PrintEnv") {
                         steps {
-                            sh &quot;printenv&quot;
+                            sh "printenv"
                         }
                     // end PrintEnv
                     }
@@ -84,7 +85,7 @@
 
                 post {
                     success {
-                        archiveArtifacts &apos;target/*.jar&apos;
+                        archiveArtifacts "${_jenkins.archiveArtifacts}";
                       // end success
                     }
                 // end post

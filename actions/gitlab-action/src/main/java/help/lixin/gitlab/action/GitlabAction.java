@@ -1,6 +1,7 @@
 package help.lixin.gitlab.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import help.lixin.core.constants.Constant;
 import help.lixin.core.pipeline.action.Action;
 import help.lixin.core.pipeline.ctx.PipelineContext;
 import help.lixin.gitlab.service.GitlabFaceService;
@@ -28,6 +29,7 @@ public class GitlabAction implements Action {
         String stageParams = ctx.getStageParams();
         ObjectMapper objectMapper = new ObjectMapper();
         GitlabActionParams gitlabProperties = objectMapper.readValue(stageParams, GitlabActionParams.class);
+        ctx.addVar(Constant.CodeRepository.CODE_REPOSITORY, "gitlab");
         ctx.addVar("projectName", gitlabProperties.getProjectName());
         ctx.addVar("branch", gitlabProperties.getBranch());
         ctx.addVar("url", gitlabProperties.getUrl());

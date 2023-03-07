@@ -39,4 +39,12 @@ public class StagePipelineContext implements PipelineContext {
     public String getStageParams() {
         return stageParams;
     }
+
+    @Override
+    public String toString() {
+        return "StagePipelineContext{" +
+                "stageParams='" + stageParams + '\'' +
+                ", vars=" + vars +
+                '}';
+    }
 }

@@ -27,11 +27,11 @@ public class HarborAction implements Action {
         RepositoryInfo repositoryInfo = getRepositoryInfo(ctx);
         if (null != repositoryInfo) {
             String repositoryUrl = repositoryInfo.getUrl().replaceAll("http://", "");
-            ctx.getVars().put(Constant.Repository.REPOSITORY_URL, repositoryUrl);
+            ctx.getVars().put(Constant.ImageRepository.REPOSITORY_URL, repositoryUrl);
         }
-        ctx.getVars().put(Constant.Repository.HTTP_REPOSITORY_URL, repositoryInfo.getUrl());
-        ctx.getVars().put(Constant.Repository.REPOSITORY_USERNAME, repositoryInfo.getUserName());
-        ctx.getVars().put(Constant.Repository.REPOSITORY_PASSWORD, repositoryInfo.getPassword());
+        ctx.getVars().put(Constant.ImageRepository.HTTP_REPOSITORY_URL, repositoryInfo.getUrl());
+        ctx.getVars().put(Constant.ImageRepository.REPOSITORY_USERNAME, repositoryInfo.getUserName());
+        ctx.getVars().put(Constant.ImageRepository.REPOSITORY_PASSWORD, repositoryInfo.getPassword());
         logger.debug("end execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
         return true;
     }
