@@ -14,7 +14,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "help.lixin")
 public class Application {
     private static String PIPELINE_DSL = "pipline-jenkins.json";
 

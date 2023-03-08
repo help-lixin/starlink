@@ -1,4 +1,4 @@
-package help.lixin.vo;
+package help.lixin.admin.vo;
 
 public class SubmitPipeline {
     private String name;

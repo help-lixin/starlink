@@ -37,20 +37,25 @@ public class JenkinsTemplateLoadFaceService {
 
     public String loadAndProcess(JenkinsActionParams params, Map<String, Object> ctx) throws JenkinsTemplateNotFoundException {
         String templateString = loadJenkinsTemplateService.load(params);
-        String rest = templateString;
+        String result = templateString;
         if (null != templateString) {
             try {
                 if (null == templateLoader.findTemplateSource(JENKINS_SERVICE_TEMPLATE_NAME)) {
-                    templateLoader.putTemplate(JENKINS_SERVICE_TEMPLATE_NAME, templateString);
+                    synchronized (templateLoader) {
+                        if (null == templateLoader.findTemplateSource(JENKINS_SERVICE_TEMPLATE_NAME)) {
+                            templateLoader.putTemplate(JENKINS_SERVICE_TEMPLATE_NAME, templateString);
+                        }
+                    }
                 }
+
                 Template template = configuration.getTemplate(JENKINS_SERVICE_TEMPLATE_NAME);
                 StringWriter stringWriter = new StringWriter();
                 template.process(ctx, stringWriter);
-                rest = stringWriter.toString();
+                result = stringWriter.toString();
             } catch (Exception ignore) {
                 logger.error("process template:[{}],error:[{}]", templateString, ignore);
             }
         }
-        return rest;
+        return result;
     }
 }

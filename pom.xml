@@ -29,9 +29,11 @@
         <jenkins-rest.version>1.0.2</jenkins-rest.version>
 
         <jackson.version>2.14.2</jackson.version>
+        <cloudevents-json-jackson.version>2.3.0</cloudevents-json-jackson.version>
         <unirest-java.version>3.14.1</unirest-java.version>
         <unirest-objectmapper-jackson.version>3.14.1</unirest-objectmapper-jackson.version>
         <commons-logging.version>1.2</commons-logging.version>
+        <disruptor.version>3.3.7</disruptor.version>
     </properties>
 
 
@@ -92,6 +94,11 @@
                 <version>${commons-io.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>${disruptor.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>

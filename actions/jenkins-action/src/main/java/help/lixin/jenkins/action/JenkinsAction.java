@@ -17,13 +17,10 @@ import help.lixin.jenkins.model.TriggerBuildContext;
 import help.lixin.jenkins.properties.JenkinsProperties;
 import help.lixin.jenkins.service.IJobService;
 import help.lixin.jenkins.service.JenkinsFaceService;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +76,6 @@ public class JenkinsAction implements Action {
         IJobService jobService = jenkinsFaceService.getJobService();
         // 在jenkins中的job名称是:项目名称__分支名称
         String jobName = String.format("%s__%s", projectName, branch);
-
 
         CompletableFuture<JobInfo> jobInfoCompletableFuture = CompletableFuture.supplyAsync(() -> { // 1. 获取模板
             Map<String, Object> tempContext = new HashMap<>(ctx.getVars());
@@ -212,8 +208,7 @@ public class JenkinsAction implements Action {
         }, executor);
 
         // 组合线程
-        CompletableFuture.allOf(
-                        jobInfoCompletableFuture,
+        CompletableFuture.allOf(jobInfoCompletableFuture,
                         //
                         buildInfoCompletableFuture,
                         //

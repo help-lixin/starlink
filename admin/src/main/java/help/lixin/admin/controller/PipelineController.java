@@ -1,4 +1,4 @@
-package help.lixin.controller;
+package help.lixin.admin.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import help.lixin.core.definition.ElementDefinition;
 import help.lixin.core.definition.PipelineDefinition;
 import help.lixin.core.pipeline.Pipeline;
-import help.lixin.vo.Response;
-import help.lixin.vo.SubmitPipeline;
+import help.lixin.admin.vo.Response;
+import help.lixin.admin.vo.SubmitPipeline;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

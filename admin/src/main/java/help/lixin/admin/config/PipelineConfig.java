@@ -1,4 +1,4 @@
-package help.lixin.config;
+package help.lixin.admin.config;
 
 import help.lixin.core.pipeline.Pipeline;
 import help.lixin.core.pipeline.mediator.ActionMediator;

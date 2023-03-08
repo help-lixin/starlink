@@ -1,4 +1,4 @@
-package help.lixin.config;
+package help.lixin.admin.config;
 
 import help.lixin.core.pipeline.action.Action;
 import help.lixin.core.pipeline.action.impl.SequenceFlowAction;

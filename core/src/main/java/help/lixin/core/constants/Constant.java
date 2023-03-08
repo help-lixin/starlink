@@ -2,6 +2,15 @@ package help.lixin.core.constants;
 
 public class Constant {
 
+    public static class Pipeline {
+        // 实例id(类似于zipkin中的traceId)
+        public static final String PIPELINE_INSTANCE_ID = "PIPELINE_INSTANCE_ID";
+        // 节点id(类似于zipkin中的spaceId)
+        public static final String PIPELINE_NODE_ID = "PIPELINE_NODE_ID";
+
+        public static final String SEQUENCE = "SEQUENCE";
+    }
+
     // 代码仓库
     public static class CodeRepository {
         // gitlab/svn/git/github
@@ -9,6 +18,9 @@ public class Constant {
     }
 
     public static class Common {
+        // gitlab/jenkins/harbor/shell/k8s-deploy
+        public static final String ACTION_NAME = "ACTION_NAME";
+
         // 年
         public static final String YEAR = "YEAR";
         // 月

@@ -246,6 +246,10 @@ DATETIME : yyyy-MM-dd HH:mm:ss
 2). 由于涉及到流程的编排,自然离不开一整套的生命周期管理,如果自己去开发这一套,开发周期会相当的长,和几个朋友经过激烈的讨论后,后面,的想法是:把自己定义的Pipline向BPMN流程靠拢,即把Pipline转换成BPMN中的Task,这样,每一个节点的处理,由流程引擎去驱动,特别是:将来可能编排过程中会存在并行/人工处理/子流程之类的.  
 3). 流程引擎选型问题,Activiti/Flowable/Camunda 7/Camunda 8,其实,我个人是钟意:Camunda 8的,但是,这东西的源码,我只看完了十分之一,感觉怕Hold不住,所以,最终选终是在Flowable与Camunda 7之间做选择,由于我将来还是要向Camunda 8靠拢,所以,我的选择是:Camunda 7.
 
-### 11. Pipeline转换成BPMN
+
+### 11. 日志落库
+有可能Pipline的执行过程会比较耗时,为了增加体验,要求能实时的查看每一个Pipline操作明细,如果,自己实现这功能,需要大量的在业务代码里做记录,最终的解决方案是对Logger进行扩展,并透明化切入,开发完全无感知,只要按照正常打日志,然后,日志会进行落库操作,这个过程是异步的,允许丢失消息.    
+
+### 12. Pipeline转换成BPMN
 ![Pipeline 转换成BPMN后效果图](docs/desgin/pipline-bpmn.png)
 
