@@ -1,19 +1,34 @@
-package help.lixin.core.log;
+package help.lixin.core.log.impl;
 
 import com.lmax.disruptor.*;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
+import help.lixin.core.log.ILogEntryHandlerService;
+import help.lixin.core.log.ILogPublishService;
+import help.lixin.core.log.LogEntry;
 import help.lixin.core.log.util.DisruptorBuilder;
 import help.lixin.core.log.util.NamedThreadFactory;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DefaultLogPublishService implements ILogPublishService {
+
+    private org.slf4j.Logger logger = LoggerFactory.getLogger(DefaultLogPublishService.class);
 
     private Disruptor<LogEntry> disruptor;
     private RingBuffer<LogEntry> taskQueue;
     private static final Integer DEFAULT_DISUPTOR_BUFFER_SIZE = 32768;
     private int disruptorBufferSize = DEFAULT_DISUPTOR_BUFFER_SIZE;
 
-    public DefaultLogPublishService() {
+    private List<ILogEntryHandlerService> logEntryHandlerServices = new ArrayList<>(0);
+
+    public DefaultLogPublishService(List<ILogEntryHandlerService> logEntryHandlerServices) {
+        if (null != logEntryHandlerServices) {
+            this.logEntryHandlerServices.addAll(logEntryHandlerServices);
+        }
+
         this.disruptor = DisruptorBuilder.<LogEntry>newInstance() //
                 .setEventFactory(new LogEntryFactory()) //
                 .setRingBufferSize(getDisruptorBufferSize()) //
@@ -70,10 +85,14 @@ public class DefaultLogPublishService implements ILogPublishService {
     private class LogEntryHandler implements EventHandler<LogEntry> {
         @Override
         public void onEvent(LogEntry event, long sequence, boolean endOfBatch) throws Exception {
-            // TODO lixin
-            // 回调给业务系统去保存日志
-            System.out.println(event);
-            // 记得清除消息体的内容
+            for (ILogEntryHandlerService logEntryHandlerService : logEntryHandlerServices) {
+                try {
+                    logEntryHandlerService.handler(event);
+                } catch (Exception ignore) {
+                    logger.error("LogEntryHandler error:[{}]", ignore);
+                }
+            }
+            // **记得清除消息体的内容**
             event.reset();
         }
     }

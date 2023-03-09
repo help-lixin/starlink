@@ -1,6 +1,7 @@
 package help.lixin.core.config;
 
-import help.lixin.core.log.DefaultLogPublishService;
+import help.lixin.core.log.ILogEntryHandlerService;
+import help.lixin.core.log.impl.DefaultLogPublishService;
 import help.lixin.core.log.ILogPublishService;
 import help.lixin.core.log.ILoggingSystemCustomizer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,14 @@ import java.util.List;
 @Configuration
 public class LoggingConfig {
 
+
     @Bean
     @ConditionalOnMissingBean
-    public ILogPublishService logPublishService() {
-        return new DefaultLogPublishService();
+
+    public ILogPublishService logPublishService(@Autowired(required = false)
+                                                //
+                                                List<ILogEntryHandlerService> logEntryHandlerServices) {
+        return new DefaultLogPublishService(logEntryHandlerServices);
     }
 
     @Configuration
