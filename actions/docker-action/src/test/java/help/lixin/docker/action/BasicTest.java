@@ -47,12 +47,11 @@ public abstract class BasicTest {
                 //
                 .maxConnections(100)
                 //
-                .connectionTimeout(Duration.ofSeconds(3000))
+                .connectionTimeout(Duration.ofMinutes(1))
                 //
-                .responseTimeout(Duration.ofSeconds(4500))
+                .responseTimeout(Duration.ofMinutes(1))
                 //
                 .build();
-
         this.dockerClient = DockerClientImpl.getInstance(config, httpClient);
     }
 
