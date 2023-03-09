@@ -1,6 +1,7 @@
 package help.lixin.core.config;
 
 import ch.qos.logback.core.Appender;
+import help.lixin.core.log.ILogPublishService;
 import help.lixin.core.log.ILoggingSystemCustomizer;
 import help.lixin.core.log.logback.LogbackLogHubAppender;
 import help.lixin.core.log.logback.LogbackLoggingSystemCustomizer;
@@ -21,7 +22,9 @@ public class LogbackConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public Appender logbackLogHubAppender() {
-        return new LogbackLogHubAppender();
+    public Appender logbackLogHubAppender(ILogPublishService logPublishService) {
+        LogbackLogHubAppender logbackLogHubAppender = new LogbackLogHubAppender();
+        logbackLogHubAppender.setLogPublishService(logPublishService);
+        return logbackLogHubAppender;
     }
 }

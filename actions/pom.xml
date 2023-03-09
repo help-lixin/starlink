@@ -18,5 +18,6 @@
         <module>shell-action</module>
         <module>harbor-action</module>
         <module>k8s-action</module>
+        <module>docker-action</module>
     </modules>
 </project>
