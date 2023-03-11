@@ -14,7 +14,6 @@ import java.util.List;
 
 public class PipelineDefinitionParseTest {
 
-
     @Test
     public void testSerial() throws Exception {
         ElementDefinition gitlab = new PluginDefinition();
@@ -35,7 +34,8 @@ public class PipelineDefinitionParseTest {
         jenkins.setParams("{  'credentialId':'zhangsan','compile':'maven','cmd':'mvn clean install -DskipTests -X','archiveArtifacts':'target/*.jar' }");
 
         PipelineDefinition pipelineDefinition = new PipelineDefinition();
-        pipelineDefinition.setName("test hello");
+        pipelineDefinition.setKey("pipline-test");
+        pipelineDefinition.setName("测试");
         pipelineDefinition.add(gitlab);
         pipelineDefinition.add(sequenceFlowDefinition);
         pipelineDefinition.add(jenkins);
@@ -51,8 +51,9 @@ public class PipelineDefinitionParseTest {
         String file = resource.getFile();
         String json = FileUtils.readFileToString(new File(file), "UTF-8");
         ObjectMapper mapper = new ObjectMapper();
-        List<ElementDefinition> pipeline = mapper.readValue(json, new TypeReference<List<ElementDefinition>>() {
+        PipelineDefinition pipelineDefinition = mapper.readValue(json, new TypeReference<PipelineDefinition>() {
         });
-        Assert.assertEquals(9, pipeline.size());
+        Assert.assertNotNull(pipelineDefinition);
+        Assert.assertEquals(9, pipelineDefinition.getPipelines());
     }
 }
