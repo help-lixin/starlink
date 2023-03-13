@@ -2,13 +2,9 @@ package help.lixin;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import help.lixin.gitlab.action.GitlabAction;
-import help.lixin.jenkins.action.JenkinsAction;
 import help.lixin.core.definition.ElementDefinition;
 import help.lixin.core.definition.PipelineDefinition;
 import help.lixin.core.pipeline.Pipeline;
-import help.lixin.core.pipeline.action.Action;
-import help.lixin.core.pipeline.action.impl.SequenceFlowAction;
 import help.lixin.core.pipeline.mediator.ActionMediator;
 import help.lixin.core.pipeline.mediator.impl.DefaultActionMediator;
 import org.apache.commons.io.FileUtils;
