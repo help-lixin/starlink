@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Deprecated
 public class Pipeline {
     private ActionMediator actionMediator;
 

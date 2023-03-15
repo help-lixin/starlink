@@ -14,7 +14,7 @@ public class PipelineDefinition {
     // 流水性描述
     private String name;
     // 流水线链
-    private List<ElementDefinition> pipelines = new ArrayList<>();
+    private List<ElementDefinition> pipelines = new ArrayList<ElementDefinition>(0);
     private Map<String, Object> others = new HashMap<>();
 
     public String getKey() {

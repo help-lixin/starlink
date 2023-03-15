@@ -1,4 +1,4 @@
-package help.lixin.core.config;
+package help.lixin.core.log.config;
 
 import help.lixin.core.log.ILogEntryHandlerService;
 import help.lixin.core.log.impl.DefaultLogPublishService;

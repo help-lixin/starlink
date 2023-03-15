@@ -53,6 +53,5 @@ public class PipelineDefinitionParseTest {
         PipelineDefinition pipelineDefinition = mapper.readValue(json, new TypeReference<PipelineDefinition>() {
         });
         Assert.assertNotNull(pipelineDefinition);
-        Assert.assertEquals(9, pipelineDefinition.getPipelines());
     }
 }

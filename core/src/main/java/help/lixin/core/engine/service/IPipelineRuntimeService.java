@@ -35,25 +35,25 @@ public interface IPipelineRuntimeService {
                                                Map<String, Object> localVars);
 
 
-    default PipelineInstance startPipelineInstanceByKey(String pipelineDeploykey) {
-        return startPipelineInstanceByKey(pipelineDeploykey, null);
+    default PipelineInstance startPipelineInstanceByKey(String pipelineDeployKey) {
+        return startPipelineInstanceByKey(pipelineDeployKey, null);
     }
 
-    default PipelineInstance startPipelineInstanceByKey(String pipelineDeploykey,
+    default PipelineInstance startPipelineInstanceByKey(String pipelineDeployKey,
                                                         //
                                                         String businessKey) {
-        return startPipelineInstanceById(pipelineDeploykey, businessKey, new HashMap<>());
+        return startPipelineInstanceById(pipelineDeployKey, businessKey, new HashMap<>());
     }
 
-    default PipelineInstance startPipelineInstanceByKey(String pipelineDeploykey,
+    default PipelineInstance startPipelineInstanceByKey(String pipelineDeployKey,
                                                         //
                                                         String businessKey,
                                                         //
                                                         Map<String, Object> globalVars) {
-        return startPipelineInstanceById(pipelineDeploykey, businessKey, globalVars, new HashMap<>());
+        return startPipelineInstanceByKey(pipelineDeployKey, businessKey, globalVars, new HashMap<>());
     }
 
-    PipelineInstance startPipelineInstanceByKey(String pipelineDeploykey,
+    PipelineInstance startPipelineInstanceByKey(String pipelineDeployKey,
                                                 //
                                                 String businessKey,
                                                 //

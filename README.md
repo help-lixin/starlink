@@ -35,78 +35,193 @@
 ### 5. 设计图纸
 ![框架设计图纸](docs/desgin/Pipeline-ClassDiagram.jpg)
 
-### 6. 流水线定义案例
-> 后期需要前端配合,像工作流那样,运维通过画布组合大量的组件,实现流水线的编排.    
+### 6. 自定义流水线案例(JSON)
 
 ```
-[
-  {
-    "clazz": "help.lixin.core.definition.impl.PluginDefinition",
-    "id": "1",
-    "name": "gitlab下载源码",
-    "source": null,
-    "target": "2",
-    "plugin": "gitlab",
-    "params": "{  \"url\" : \"ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git\" , \"branch\" : \"main\" }"
-  },
-  {
-    "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
-    "id": "2",
-    "name": "流水线-1",
-    "source": "1",
-    "target": "3",
-    "params": ""
-  },
-  {
-    "clazz": "help.lixin.core.definition.impl.PluginDefinition",
-    "id": "3",
-    "name": "jenkins maven 源码编译",
-    "source": "2",
-    "target": "4",
-    "sync": true,
-    "plugin": "jenkins",
-    "params": "{  \"templateFile\" : \"/Users/lixin/GitRepository/spider-web-platform/admin/src/test/resources/java-service-template.xml\" , \"credentialId\" : \"zhangsan\" , \"compile\" : \"maven\" , \"cmd\" : \"mvn clean install -DskipTests -X\" , \"archiveArtifacts\" : \"target/*.jar\" }"
-  },
-  {
-    "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
-    "id": "4",
-    "name": "流水线-2",
-    "source": "3",
-    "target": "5"
-  },
-  {
-    "clazz": "help.lixin.core.definition.impl.PluginDefinition",
-    "id": "5",
-    "name": "配置harbor仓库",
-    "source": "4",
-    "target": "6",
-    "sync": true,
-    "plugin": "harbor"
-  },
-  {
-    "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
-    "id": "6",
-    "name": "流水线-3",
-    "source": "5",
-    "target": "7"
-  },
-  {
-    "clazz": "help.lixin.core.definition.impl.PluginDefinition",
-    "id": "7",
-    "name": "Docker打包镜像并推送给Harbor仓库",
-    "source": "6",
-    "target": null,
-    "sync": true,
-    "plugin": "shell",
-    "params" : "{  \"cmds\":[  \" cd ${ARTIFACT_DIR} \" , \" docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${SECOND} . \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} \" , \" docker tag ${projectName}:v${SECOND}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${SECOND} \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${SECOND} \"  ] }"
-  }
-]
+{
+  "key": "pipeline-test",
+  "name": "测试流水线",
+  "pipelines": [
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "1",
+      "name": "gitlab下载源码",
+      "source": null,
+      "target": "2",
+      "plugin": "gitlab",
+      "params": "{  \"url\" : \"ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git\" , \"branch\" : \"main\" }"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+      "id": "2",
+      "name": "流水线-1",
+      "source": "1",
+      "target": "3",
+      "params": ""
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "3",
+      "name": "jenkins maven 源码编译",
+      "source": "2",
+      "target": "4",
+      "sync": true,
+      "plugin": "jenkins",
+      "params": "{  \"templateFile\" : \"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" , \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests -X '''  \"  } ] }"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+      "id": "4",
+      "name": "流水线-2",
+      "source": "3",
+      "target": "5"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "5",
+      "name": "配置harbor仓库",
+      "source": "4",
+      "target": "6",
+      "sync": true,
+      "plugin": "harbor"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+      "id": "6",
+      "name": "流水线-3",
+      "source": "5",
+      "target": "7"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "7",
+      "name": "Docker打包镜像并推送给Harbor仓库",
+      "source": "6",
+      "target": "8",
+      "sync": true,
+      "plugin": "shell",
+      "params": "{  \"cmds\":[  \" cd ${ARTIFACT_DIR} \" , \" docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${BUILD_NUMBER} . \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} \" , \" docker tag ${projectName}:v${BUILD_NUMBER}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} \"  ] }"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+      "id": "8",
+      "name": "流水线-4",
+      "source": "7",
+      "target": "9"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "9",
+      "name": "K8S拉取镜像,并发布",
+      "source": "8",
+      "target": null,
+      "sync": true,
+      "plugin": "k8s-deploy",
+      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
+    }
+  ]
+}
 ```
 
-### 7. 为什么要自定义流水线
-在设计时,有考虑过是否要向Jenkins靠拢,即:把流水进行转换成jenkis中的stage,但是,后来考虑了一下,这样做的话,会太过于依赖jenkins了,后来决定,还是自己做pipline,然后,把jenkins当成流水线中的一个小步骤,实际,这样做与jenkins之间的打通,也还是需要时间的.  
+### 7. 自定义流水线案例(YAML)
+```
+key: "pipeline-test"
+name: "测试流水线"
+pipelines:
+  - !<help.lixin.core.definition.impl.PluginDefinition>
+    id: "1"
+    source: null
+    target: "2"
+    name: "gitlab下载源码"
+    clazz: "help.lixin.core.definition.impl.PluginDefinition"
+    params: "{  \"url\" : \"ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git\" , \"branch\" : \"main\" }"
+    plugin: "gitlab"
+    sync: true
+  - !<help.lixin.core.definition.impl.SequenceFlowDefinition>
+    id: "2"
+    source: "1"
+    target: "3"
+    name: "流水线-1"
+    clazz: "help.lixin.core.definition.impl.SequenceFlowDefinition"
+    params: ""
+    plugin: "flow"
+  - !<help.lixin.core.definition.impl.PluginDefinition>
+    id: "3"
+    source: "2"
+    target: "4"
+    name: "jenkins maven 源码编译"
+    clazz: "help.lixin.core.definition.impl.PluginDefinition"
+    params: "{  \"templateFile\" : \"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/java-service-template.ftl\"\
+    \ , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" ,\
+    \ \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests\
+    \ -X '''  \"  } ] }"
+    plugin: "jenkins"
+    sync: true
+  - !<help.lixin.core.definition.impl.SequenceFlowDefinition>
+    id: "4"
+    source: "3"
+    target: "5"
+    name: "流水线-2"
+    clazz: "help.lixin.core.definition.impl.SequenceFlowDefinition"
+    params: null
+    plugin: "flow"
+  - !<help.lixin.core.definition.impl.PluginDefinition>
+    id: "5"
+    source: "4"
+    target: "6"
+    name: "配置harbor仓库"
+    clazz: "help.lixin.core.definition.impl.PluginDefinition"
+    params: null
+    plugin: "harbor"
+    sync: true
+  - !<help.lixin.core.definition.impl.SequenceFlowDefinition>
+    id: "6"
+    source: "5"
+    target: "7"
+    name: "流水线-3"
+    clazz: "help.lixin.core.definition.impl.SequenceFlowDefinition"
+    params: null
+    plugin: "flow"
+  - !<help.lixin.core.definition.impl.PluginDefinition>
+    id: "7"
+    source: "6"
+    target: "8"
+    name: "Docker打包镜像并推送给Harbor仓库"
+    clazz: "help.lixin.core.definition.impl.PluginDefinition"
+    params: "{  \"cmds\":[  \" cd ${ARTIFACT_DIR} \" , \" docker build -f ${DOCKER_FILE}\
+    \ --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${BUILD_NUMBER} .\
+    \ \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD}\
+    \ \" , \" docker tag ${projectName}:v${BUILD_NUMBER}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER}\
+    \ \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER}\
+    \ \"  ] }"
+    plugin: "shell"
+    sync: true
+  - !<help.lixin.core.definition.impl.SequenceFlowDefinition>
+    id: "8"
+    source: "7"
+    target: "9"
+    name: "流水线-4"
+    clazz: "help.lixin.core.definition.impl.SequenceFlowDefinition"
+    params: null
+    plugin: "flow"
+  - !<help.lixin.core.definition.impl.PluginDefinition>
+    id: "9"
+    source: "8"
+    target: null
+    name: "Docker打包镜像并推送给Harbor仓库"
+    clazz: "help.lixin.core.definition.impl.PluginDefinition"
+    params: "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/deployment-template.yml\"\
+    \ , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\"\
+    :\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\"\
+    :\"${projectName}\", \"port\":\"9091\" }"
+    plugin: "k8s-deploy"
+    sync: true
+```
 
-### 8. 项目结构
+### 8. 为什么要自定义流水线
+在设计时,有考虑过是否要向Jenkins靠拢,即:把流水进行转换成jenkis中的stage,但是,后来考虑了一下,这样做的话,会太过于依赖jenkins了,后来决定,还是自己做pipline,然后,把jenkins当成流水线中的一个小步骤.  
+
+### 9. 项目结构
 ```
 lixin-macbook:spider-web-platform lixin$ tree -L 2
 .
@@ -145,7 +260,7 @@ lixin-macbook:spider-web-platform lixin$ tree -L 2
 └── pom.xml
 ```
 
-### 9. 各Action详解
+### 10. 各Action详解
 #### 1) Gitlab
 
 Gilab的Action比较简单,只是设置相关变量(项目名称/分支/仓库地址)即可,为什么这么简单?因为:Gitlab提供了大量的Api给前端,由前端辅助用户选择:项目和分支,并将选择结果交给后端保存.  
@@ -197,7 +312,6 @@ Jenkins的Action比较复杂:
 ARTIFACT_DIR         :          /Users/lixin/GitRepository/spring-web-demo/target    
 ARTIFACT_NAME        :          spring-web-demo-1.1.0.jar 
 ARTIFACT_FULL_PATH   :          /Users/lixin/GitRepository/spring-web-demo/target/spring-web-demo-1.1.0.jar
-DOCKER_FILE          :          application.properties里配置(jenkins.dockerFile=/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/Dockerfile)
 ```
 
 #### 3) Harbor
@@ -240,16 +354,131 @@ SECOND   : 秒钟
 DATETIME : yyyy-MM-dd HH:mm:ss
 ```
 
-### 10. 未来规划
-现有不足点:
-1). 现在只支持DSL(JSON)的方式,进行流程管理,并且流程管理是串行的.为什么会这样?因为,整个模型框架只用了一上午做的设计,考虑太多(包括流程重试/流程日志记录),会让代码没法往下实现,首要任务是能否实现思想,而非流程的编排,所以,后面会支持可视化编排.  
-2). 由于涉及到流程的编排,自然离不开一整套的生命周期管理,如果自己去开发这一套,开发周期会相当的长,和几个朋友经过激烈的讨论后,后面,的想法是:把自己定义的Pipline向BPMN流程靠拢,即把Pipline转换成BPMN中的Task,这样,每一个节点的处理,由流程引擎去驱动,特别是:将来可能编排过程中会存在并行/人工处理/子流程之类的.  
-3). 流程引擎选型:定义驱动流程接口,让各个流程引擎向这个接口靠拢,这样就不存在选型问题,目前:只支持Camunda,后续会支持Flowable/Activiti. 
+### 11. 流水线引擎
+为了让框架更加的通用,没有自己研发流水线引擎,而是向"流程引擎"靠拢,
+也没有与具体的某一个"流程引擎"厂商绑定,而是:自己定义"流水线引擎操作接口",让各个"流程引擎"实现这个接口,这样就不存在选型问题,目前:只支持Camunda,后续会支持更多(Flowable/Activiti). 
+
+### 12. 流水线日志
+Pipline的执行过程会比较耗时,为了增加体验,最好是能实时的查看每一个Pipline内部,现在正在做的操作,最终的解决方案是对Logger进行扩展,并"透明化切入"(无须在XML里配置独立的Appender),开发完全无感知,只要像以往那样打日志,然后,会对日志进行落库(DB),最终会把日志与具体的Pipline(Pipline Id)进行关联,这个过程是异步的(通过Disruptor生产和消费),允许丢失消息.      
+
+为什么不用AOP来做日志拦截和处理? 
+1) AOP只能拦截到方法上,粒度太粗了.  
+2) AOP会强制要求:开发必须把每一个细小的操作,都转换成方法,而且,不能是private/final.  
+3) 有一定约束和规范有好处,亦有坏处,而,在我看来,越是有约束的东西,就越会局限你,阻碍你的认知.    
 
 
-### 11. 日志落库
-有可能Pipline的执行过程会比较耗时,为了增加体验,要求能实时的查看每一个Pipline操作明细,最终的解决方案是对Logger进行扩展,并"透明化切入"(无须在XML里配置独立的Appender),开发完全无感知,只要按照正常打日志,然后,日志会进行落库并与业务关联,这个过程是异步的(通过Disruptor实现),允许丢失消息.     
-
-### 12. Pipeline转换成BPMN
+### 13. Pipeline转换成BPMN效果图
 ![Pipeline 转换成BPMN后效果图](docs/desgin/pipline-bpmn.png)
 
+### 14. 上面Pipeline转换成Camunda xml的内容
+```
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="definitions_ed4324e7-ae1f-4741-a359-d5bb8454c530" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL">
+  <process id="pipeline-test" isExecutable="true" name="测试流水线">
+    <startEvent id="startEvent_1ea0ff43-9d78-4fce-aba7-c8bf05827554">
+      <outgoing>sequenceFlow_cba7c820-c00c-40df-8ecb-67b1222aa034</outgoing>
+    </startEvent>
+    <serviceTask camunda:topic="gitlab" camunda:type="external" id="serviceTask_f18e889a-531f-499f-92d5-142aa845cb12" name="gitlab下载源码">
+      <extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="_params">{  "url" : "ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git" , "branch" : "main" }</camunda:inputParameter>
+        </camunda:inputOutput>
+      </extensionElements>
+      <incoming>sequenceFlow_cba7c820-c00c-40df-8ecb-67b1222aa034</incoming>
+      <outgoing>sequenceFlow_abcac0da-58fd-4efd-b89a-1265944c9239</outgoing>
+    </serviceTask>
+    <sequenceFlow id="sequenceFlow_cba7c820-c00c-40df-8ecb-67b1222aa034" sourceRef="startEvent_1ea0ff43-9d78-4fce-aba7-c8bf05827554" targetRef="serviceTask_f18e889a-531f-499f-92d5-142aa845cb12"/>
+    <serviceTask camunda:topic="jenkins" camunda:type="external" id="serviceTask_5a68b5ac-eb1a-4da1-bab8-f53340eb91f2" name="jenkins maven 源码编译">
+      <extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="_params">{  "templateFile" : "/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/java-service-template.ftl" , "credentialId" : "gitlab" , "archiveArtifacts" : "target/*.jar" , "stages": [ { "name":"Build","steps": " sh  ''' mvn clean install -DskipTests -X '''  "  } ] }</camunda:inputParameter>
+        </camunda:inputOutput>
+      </extensionElements>
+      <incoming>sequenceFlow_abcac0da-58fd-4efd-b89a-1265944c9239</incoming>
+      <outgoing>sequenceFlow_94561705-1178-4d14-8d47-794518afcef8</outgoing>
+    </serviceTask>
+    <sequenceFlow id="sequenceFlow_abcac0da-58fd-4efd-b89a-1265944c9239" sourceRef="serviceTask_f18e889a-531f-499f-92d5-142aa845cb12" targetRef="serviceTask_5a68b5ac-eb1a-4da1-bab8-f53340eb91f2"/>
+    <serviceTask camunda:topic="harbor" camunda:type="external" id="serviceTask_228efccb-047d-4d4b-a9fb-2e32d94b9fa1" name="配置harbor仓库">
+      <incoming>sequenceFlow_94561705-1178-4d14-8d47-794518afcef8</incoming>
+      <outgoing>sequenceFlow_18bd9c91-89ef-4c31-89ac-7dc5a87b19fa</outgoing>
+    </serviceTask>
+    <sequenceFlow id="sequenceFlow_94561705-1178-4d14-8d47-794518afcef8" sourceRef="serviceTask_5a68b5ac-eb1a-4da1-bab8-f53340eb91f2" targetRef="serviceTask_228efccb-047d-4d4b-a9fb-2e32d94b9fa1"/>
+    <serviceTask camunda:topic="shell" camunda:type="external" id="serviceTask_5674b6da-8d3f-4477-bbac-c7cfd289c075" name="Docker打包镜像并推送给Harbor仓库">
+      <extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="_params">{  "cmds":[  " cd ${ARTIFACT_DIR} " , " docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${BUILD_NUMBER} . " , " docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} " , " docker tag ${projectName}:v${BUILD_NUMBER}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} " , " docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} "  ] }</camunda:inputParameter>
+        </camunda:inputOutput>
+      </extensionElements>
+      <incoming>sequenceFlow_18bd9c91-89ef-4c31-89ac-7dc5a87b19fa</incoming>
+      <outgoing>sequenceFlow_92981ff9-2d33-4d10-8efb-d89b1ef00fbf</outgoing>
+    </serviceTask>
+    <sequenceFlow id="sequenceFlow_18bd9c91-89ef-4c31-89ac-7dc5a87b19fa" sourceRef="serviceTask_228efccb-047d-4d4b-a9fb-2e32d94b9fa1" targetRef="serviceTask_5674b6da-8d3f-4477-bbac-c7cfd289c075"/>
+    <serviceTask camunda:topic="k8s-deploy" camunda:type="external" id="serviceTask_020fa67e-253c-4069-8a20-aad8447bc60e" name="K8S拉取镜像,并发布">
+      <extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="_params">{  "yamlTemplatePath":"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/deployment-template.yml" , "deployName":"${projectName}-deploy" ,"podLabelName":"app" ,"podLabelValue":"spring-web-demo-pod", "imagePullSecretName":"loginharbor" , "containerName":"${projectName}", "port":"9091" }</camunda:inputParameter>
+        </camunda:inputOutput>
+      </extensionElements>
+      <incoming>sequenceFlow_92981ff9-2d33-4d10-8efb-d89b1ef00fbf</incoming>
+      <outgoing>sequenceFlow_bef88dea-628a-4cb3-8a34-59b38cd58dc9</outgoing>
+    </serviceTask>
+    <sequenceFlow id="sequenceFlow_92981ff9-2d33-4d10-8efb-d89b1ef00fbf" sourceRef="serviceTask_5674b6da-8d3f-4477-bbac-c7cfd289c075" targetRef="serviceTask_020fa67e-253c-4069-8a20-aad8447bc60e"/>
+    <endEvent id="endEvent_e436a048-f9ef-4663-988c-6edf9c528d91">
+      <incoming>sequenceFlow_bef88dea-628a-4cb3-8a34-59b38cd58dc9</incoming>
+    </endEvent>
+    <sequenceFlow id="sequenceFlow_bef88dea-628a-4cb3-8a34-59b38cd58dc9" sourceRef="serviceTask_020fa67e-253c-4069-8a20-aad8447bc60e" targetRef="endEvent_e436a048-f9ef-4663-988c-6edf9c528d91"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_fb17dfc5-6da8-4f53-9d72-d09eb379c571">
+    <bpmndi:BPMNPlane bpmnElement="pipeline-test" id="BPMNPlane_33359969-957b-4ae6-b7e8-13f622ee9bcb">
+      <bpmndi:BPMNShape bpmnElement="startEvent_1ea0ff43-9d78-4fce-aba7-c8bf05827554" id="BPMNShape_027afffd-e789-49ef-b23d-ce3db92c6b2b">
+        <dc:Bounds height="36.0" width="36.0" x="100.0" y="100.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="serviceTask_f18e889a-531f-499f-92d5-142aa845cb12" id="BPMNShape_33826a0d-58db-4cbb-ae1f-f4a37491cffd">
+        <dc:Bounds height="80.0" width="100.0" x="186.0" y="78.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_cba7c820-c00c-40df-8ecb-67b1222aa034" id="BPMNEdge_e4122b00-d231-4b34-8b27-d31778df5225">
+        <di:waypoint x="136.0" y="118.0"/>
+        <di:waypoint x="186.0" y="118.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="serviceTask_5a68b5ac-eb1a-4da1-bab8-f53340eb91f2" id="BPMNShape_78cb0897-43ee-4fb1-84d0-32612741e8bd">
+        <dc:Bounds height="80.0" width="100.0" x="336.0" y="78.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_abcac0da-58fd-4efd-b89a-1265944c9239" id="BPMNEdge_88ff2bcb-4eb9-448c-a673-b1c048ce73d5">
+        <di:waypoint x="286.0" y="118.0"/>
+        <di:waypoint x="336.0" y="118.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="serviceTask_228efccb-047d-4d4b-a9fb-2e32d94b9fa1" id="BPMNShape_390830be-824e-4c91-abc6-9136ae816d62">
+        <dc:Bounds height="80.0" width="100.0" x="486.0" y="78.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_94561705-1178-4d14-8d47-794518afcef8" id="BPMNEdge_184239f6-2601-418f-affa-4aebe1ef50db">
+        <di:waypoint x="436.0" y="118.0"/>
+        <di:waypoint x="486.0" y="118.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="serviceTask_5674b6da-8d3f-4477-bbac-c7cfd289c075" id="BPMNShape_07cd8b97-c314-4ffc-9bd3-2a9650d1ffd4">
+        <dc:Bounds height="80.0" width="100.0" x="636.0" y="78.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_18bd9c91-89ef-4c31-89ac-7dc5a87b19fa" id="BPMNEdge_0509ce09-1e68-46ec-bb81-467f0c7558bf">
+        <di:waypoint x="586.0" y="118.0"/>
+        <di:waypoint x="636.0" y="118.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="serviceTask_020fa67e-253c-4069-8a20-aad8447bc60e" id="BPMNShape_141b4f4f-8bbb-44c3-88a0-8521bd1cbdf8">
+        <dc:Bounds height="80.0" width="100.0" x="786.0" y="78.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_92981ff9-2d33-4d10-8efb-d89b1ef00fbf" id="BPMNEdge_b67e75e4-c104-49ff-8cac-c11cd978f82c">
+        <di:waypoint x="736.0" y="118.0"/>
+        <di:waypoint x="786.0" y="118.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="endEvent_e436a048-f9ef-4663-988c-6edf9c528d91" id="BPMNShape_6978de87-6de0-4ff6-ba69-289bd8a06a9e">
+        <dc:Bounds height="36.0" width="36.0" x="936.0" y="100.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_bef88dea-628a-4cb3-8a34-59b38cd58dc9" id="BPMNEdge_3711fb64-7394-4c61-a853-09b5b14744dd">
+        <di:waypoint x="886.0" y="118.0"/>
+        <di:waypoint x="936.0" y="118.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
+```
+
+### 15. 感谢其它开源作者 
+1) [Camunda BPMN Converter](https://github.com/lzgabel/camunda-bpmn-converter)

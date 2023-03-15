@@ -1,4 +1,4 @@
-package help.lixin.core.config;
+package help.lixin.core.log.config;
 
 import ch.qos.logback.core.Appender;
 import help.lixin.core.log.ILogPublishService;

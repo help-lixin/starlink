@@ -14,10 +14,45 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+
+        <dependency>
             <groupId>help.lixin</groupId>
             <artifactId>spider-web-platform-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!-- pipeline engine -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>spider-web-platform-camunda7-engine</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- actions -->
         <dependency>
             <groupId>help.lixin</groupId>
             <artifactId>spider-web-platform-gitlab-action</artifactId>
@@ -28,7 +63,6 @@
             <artifactId>spider-web-platform-jenkins-action</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>help.lixin</groupId>
             <artifactId>spider-web-platform-harbor-action</artifactId>

@@ -9,6 +9,8 @@ public class Constant {
         public static final String PIPELINE_NODE_ID = "PIPELINE_NODE_ID";
 
         public static final String SEQUENCE = "SEQUENCE";
+
+        public static final String INPUT_JSON_PARAM = "_input_json_param";
     }
 
     // 代码仓库

@@ -11,10 +11,12 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
 
         <spring-cloud.version>2020.0.1</spring-cloud.version>
+<!--        <spring-boot-dependencies.version>2.7.3</spring-boot-dependencies.version>-->
+
         <spring-boot-dependencies.version>2.4.2</spring-boot-dependencies.version>
         <spring-cloud-netflix.version>3.0.0</spring-cloud-netflix.version>
         <spring-cloud-alibaba-dependencies>2021.1</spring-cloud-alibaba-dependencies>
@@ -28,13 +30,23 @@
         <kubernetes-client.version>6.4.1</kubernetes-client.version>
         <jenkins-rest.version>1.0.2</jenkins-rest.version>
 
-        <jackson.version>2.14.2</jackson.version>
+        <jackson.version>2.13.5</jackson.version>
         <cloudevents-json-jackson.version>2.3.0</cloudevents-json-jackson.version>
         <unirest-java.version>3.14.1</unirest-java.version>
         <unirest-objectmapper-jackson.version>3.14.1</unirest-objectmapper-jackson.version>
         <commons-logging.version>1.2</commons-logging.version>
         <disruptor.version>3.3.7</disruptor.version>
         <docker-java-api.version>3.3.0</docker-java-api.version>
+
+
+        <lombok.version>1.18.26</lombok.version>
+        <guava.version>30.1-jre</guava.version>
+        <fastjson.version>1.2.83</fastjson.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
+
+        <jaxb-api.version>2.3.1</jaxb-api.version>
+        <camunda7.version>7.18.0</camunda7.version>
+        <mysql-connector-java.version>5.1.49</mysql-connector-java.version>
     </properties>
 
 
@@ -47,6 +59,37 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.camunda.bpm</groupId>
+                <artifactId>camunda-bom</artifactId>
+                <version>${camunda7.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons-collections.version}</version>
+            </dependency>
+
 
             <!-- gitlab -->
             <dependency>
@@ -132,6 +175,16 @@
                 <artifactId>jackson-dataformat-xml</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-yaml</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>junit</groupId>
@@ -144,6 +197,7 @@
 
     <modules>
         <module>core</module>
+        <module>engines</module>
         <module>api-parent</module>
         <module>actions</module>
         <module>admin</module>

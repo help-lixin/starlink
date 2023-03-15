@@ -1,0 +1,92 @@
+key: "pipeline-test"
+name: "测试流水线"
+pipelines:
+  - !<help.lixin.core.definition.impl.PluginDefinition>
+    id: "1"
+    source: null
+    target: "2"
+    name: "gitlab下载源码"
+    clazz: "help.lixin.core.definition.impl.PluginDefinition"
+    params: "{  \"url\" : \"ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git\" , \"branch\" : \"main\" }"
+    plugin: "gitlab"
+    sync: true
+  - !<help.lixin.core.definition.impl.SequenceFlowDefinition>
+    id: "2"
+    source: "1"
+    target: "3"
+    name: "流水线-1"
+    clazz: "help.lixin.core.definition.impl.SequenceFlowDefinition"
+    params: ""
+    plugin: "flow"
+  - !<help.lixin.core.definition.impl.PluginDefinition>
+    id: "3"
+    source: "2"
+    target: "4"
+    name: "jenkins maven 源码编译"
+    clazz: "help.lixin.core.definition.impl.PluginDefinition"
+    params: "{  \"templateFile\" : \"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/java-service-template.ftl\"\
+    \ , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" ,\
+    \ \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests\
+    \ -X '''  \"  } ] }"
+    plugin: "jenkins"
+    sync: true
+  - !<help.lixin.core.definition.impl.SequenceFlowDefinition>
+    id: "4"
+    source: "3"
+    target: "5"
+    name: "流水线-2"
+    clazz: "help.lixin.core.definition.impl.SequenceFlowDefinition"
+    params: null
+    plugin: "flow"
+  - !<help.lixin.core.definition.impl.PluginDefinition>
+    id: "5"
+    source: "4"
+    target: "6"
+    name: "配置harbor仓库"
+    clazz: "help.lixin.core.definition.impl.PluginDefinition"
+    params: null
+    plugin: "harbor"
+    sync: true
+  - !<help.lixin.core.definition.impl.SequenceFlowDefinition>
+    id: "6"
+    source: "5"
+    target: "7"
+    name: "流水线-3"
+    clazz: "help.lixin.core.definition.impl.SequenceFlowDefinition"
+    params: null
+    plugin: "flow"
+  - !<help.lixin.core.definition.impl.PluginDefinition>
+    id: "7"
+    source: "6"
+    target: "8"
+    name: "Docker打包镜像并推送给Harbor仓库"
+    clazz: "help.lixin.core.definition.impl.PluginDefinition"
+    params: "{  \"cmds\":[  \" cd ${ARTIFACT_DIR} \" , \" docker build -f ${DOCKER_FILE}\
+    \ --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${BUILD_NUMBER} .\
+    \ \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD}\
+    \ \" , \" docker tag ${projectName}:v${BUILD_NUMBER}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER}\
+    \ \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER}\
+    \ \"  ] }"
+    plugin: "shell"
+    sync: true
+  - !<help.lixin.core.definition.impl.SequenceFlowDefinition>
+    id: "8"
+    source: "7"
+    target: "9"
+    name: "流水线-4"
+    clazz: "help.lixin.core.definition.impl.SequenceFlowDefinition"
+    params: null
+    plugin: "flow"
+  - !<help.lixin.core.definition.impl.PluginDefinition>
+    id: "9"
+    source: "8"
+    target: null
+    name: "Docker打包镜像并推送给Harbor仓库"
+    clazz: "help.lixin.core.definition.impl.PluginDefinition"
+    params: "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/deployment-template.yml\"\
+    \ , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\"\
+    :\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\"\
+    :\"${projectName}\", \"port\":\"9091\" }"
+    plugin: "k8s-deploy"
+    sync: true
+others: { }
