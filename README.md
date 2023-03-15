@@ -151,10 +151,7 @@ pipelines:
     target: "4"
     name: "jenkins maven 源码编译"
     clazz: "help.lixin.core.definition.impl.PluginDefinition"
-    params: "{  \"templateFile\" : \"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/java-service-template.ftl\"\
-    \ , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" ,\
-    \ \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests\
-    \ -X '''  \"  } ] }"
+    params: "{  \"templateFile\" : \"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" ,  \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests  -X '''  \"  } ] }"
     plugin: "jenkins"
     sync: true
   - !<help.lixin.core.definition.impl.SequenceFlowDefinition>
@@ -188,12 +185,7 @@ pipelines:
     target: "8"
     name: "Docker打包镜像并推送给Harbor仓库"
     clazz: "help.lixin.core.definition.impl.PluginDefinition"
-    params: "{  \"cmds\":[  \" cd ${ARTIFACT_DIR} \" , \" docker build -f ${DOCKER_FILE}\
-    \ --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${BUILD_NUMBER} .\
-    \ \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD}\
-    \ \" , \" docker tag ${projectName}:v${BUILD_NUMBER}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER}\
-    \ \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER}\
-    \ \"  ] }"
+    params: "{  \"cmds\":[  \" cd ${ARTIFACT_DIR} \" , \" docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${BUILD_NUMBER} . \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} \" , \" docker tag ${projectName}:v${BUILD_NUMBER}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} \"  ] }"
     plugin: "shell"
     sync: true
   - !<help.lixin.core.definition.impl.SequenceFlowDefinition>
@@ -210,12 +202,10 @@ pipelines:
     target: null
     name: "Docker打包镜像并推送给Harbor仓库"
     clazz: "help.lixin.core.definition.impl.PluginDefinition"
-    params: "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/deployment-template.yml\"\
-    \ , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\"\
-    :\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\"\
-    :\"${projectName}\", \"port\":\"9091\" }"
+    params: "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\" : \"${projectName}\", \"port\":\"9091\" }"
     plugin: "k8s-deploy"
     sync: true
+others: { }
 ```
 
 ### 8. 为什么要自定义流水线

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import help.lixin.core.definition.PipelineDefinition;
 import org.apache.commons.io.IOUtils;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
@@ -21,6 +22,6 @@ public class YamlParseTest {
         ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
         PipelineDefinition pipelineDefinition = yamlMapper.readValue(yaml, new TypeReference<PipelineDefinition>() {
         });
-        System.out.println(pipelineDefinition);
+        Assert.assertNotNull(pipelineDefinition);
     }
 }
