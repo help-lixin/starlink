@@ -4,16 +4,16 @@
 难道就没有一个统一的开源平台,进行统一管理吗?而,该项目就是解决这个问题.  
 
 ### 2. 罗列组件
-1) 仓库
+1) 仓库     
    gitlab/git/svn
 
-2) 持续集成
+2) 持续集成     
    jenkins
 
-3) 技术组件
+3) 技术组件          
    nacos/apollo/xxl-job/Skywalking/kibana/rocketmq-console
 
-4) 运维组件
+4) 运维组件          
    Harbor/K8S/Promethues/Grafana/Jumpserver
 
 ### 3. 解决思路
@@ -32,10 +32,13 @@
 5) [Git API](https://docs.github.com/zh/enterprise-cloud@latest/rest/guides/getting-started-with-the-rest-api)
 6) [Eureka API](https://github.com/Netflix/eureka/wiki/Eureka-REST-operations)
 
-### 5. 设计图纸
+### 5. 模块依赖图纸
+![模块依赖图](docs/desgin/module-dependency.jpg)
+
+### 6. 设计图纸
 ![框架设计图纸](docs/desgin/Pipeline-ClassDiagram.jpg)
 
-### 6. 自定义流水线案例(JSON)
+### 7. 自定义流水线案例(JSON)
 
 ```
 {
@@ -123,7 +126,7 @@
 }
 ```
 
-### 7. 自定义流水线案例(YAML)
+### 8. 自定义流水线案例(YAML)
 ```
 key: "pipeline-test"
 name: "测试流水线"
@@ -208,47 +211,8 @@ pipelines:
 others: { }
 ```
 
-### 8. 为什么要自定义流水线
+### 9. 为什么要自定义流水线
 在设计时,有考虑过是否要向Jenkins靠拢,即:把流水进行转换成jenkis中的stage,但是,后来考虑了一下,这样做的话,会太过于依赖jenkins了,后来决定,还是自己做pipline,然后,把jenkins当成流水线中的一个小步骤.  
-
-### 9. 项目结构
-```
-lixin-macbook:spider-web-platform lixin$ tree -L 2
-.
-├── LICENSE
-├── README.md
-├── actions                     # action组件集合(jenins/gitlab/harbor....)
-│   ├── gitlab-action
-│   ├── harbor-action
-│   ├── jenkins-action
-│   └── pom.xml
-├── admin                       # 将来的后台系统,统一界面. 
-│   ├── pom.xml
-│   ├── src
-│   └── target
-├── api-parent                   # 在第一阶段,用于api测试的代码,到最后,action完成后,这些api测试代码会移除
-│   ├── docker-api
-│   ├── eureka-api
-│   ├── gitlab-api
-│   ├── harbor-api
-│   ├── jenkins-api
-│   ├── nacos-api
-│   ├── pom.xml
-│   └── xxl-job-api
-├── core                        # pipline的核心代码定义
-│   ├── pom.xml
-│   ├── src
-│   └── target
-├── docs                        # 所有软件的安装以及配置过程
-│   ├── GitLab-Guide.md
-│   ├── Harbor-Install.md
-│   ├── Jenkins-Guide.md
-│   ├── Nacos-Guide.md
-│   ├── desgin
-│   ├── gitlab
-│   └── jenkins
-└── pom.xml
-```
 
 ### 10. 各Action详解
 #### 1) Gitlab
