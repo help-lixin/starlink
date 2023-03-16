@@ -6,8 +6,6 @@ import help.lixin.core.definition.PipelineDefinition;
 import help.lixin.core.engine.CamundaSevenEngineConfig;
 import help.lixin.core.engine.service.IPipelineConverterBpmnModelInstance;
 import org.apache.commons.io.FileUtils;
-import org.camunda.bpm.model.bpmn.Bpmn;
-import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -17,9 +15,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.io.File;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class PipelineConverterBpmnModelInstanceTest {
 

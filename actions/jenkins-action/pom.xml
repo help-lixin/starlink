@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>spider-web-platform-core</artifactId>
+            <artifactId>spider-web-platform-action-api</artifactId>
             <version>${project.version}</version>
             <exclusions>
                 <exclusion>

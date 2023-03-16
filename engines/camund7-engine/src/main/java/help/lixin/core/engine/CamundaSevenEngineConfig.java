@@ -1,9 +1,9 @@
 package help.lixin.core.engine;
 
 import help.lixin.core.engine.service.IPipelineConverterBpmnModelInstance;
-import help.lixin.core.engine.service.impl.PipelineConverterBpmnModelInstance;
 import help.lixin.core.engine.service.IPipelineDeployService;
 import help.lixin.core.engine.service.IPipelineRuntimeService;
+import help.lixin.core.engine.service.impl.PipelineConverterBpmnModelInstance;
 import help.lixin.core.engine.service.impl.PipelineDeployService;
 import help.lixin.core.engine.service.impl.PipelineRuntimeService;
 import org.camunda.bpm.engine.RepositoryService;
@@ -21,14 +21,12 @@ public class CamundaSevenEngineConfig {
     }
 
     @Bean
-    @ConditionalOnMissingBean
     public IPipelineRuntimeService pipelineRuntimeService() {
         PipelineRuntimeService pipelineRuntimeService = new PipelineRuntimeService();
         return pipelineRuntimeService;
     }
 
     @Bean
-    @ConditionalOnMissingBean
     public IPipelineDeployService pipelineDeployService(RepositoryService repositoryService, IPipelineConverterBpmnModelInstance pipelineConverterBpmnModelInstance) {
         PipelineDeployService pipelineDeployService = new PipelineDeployService(repositoryService, pipelineConverterBpmnModelInstance);
         return pipelineDeployService;

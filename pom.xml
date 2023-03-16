@@ -196,10 +196,15 @@
     </dependencyManagement>
 
     <modules>
-        <module>core</module>
+        <module>model</module>
+        <module>common</module>
+        <module>engine-api</module>
         <module>engines</module>
-        <module>api-parent</module>
+        <module>log</module>
+<!--        <module>api-parent</module>-->
+        <module>action-api</module>
         <module>actions</module>
+
         <module>admin</module>
     </modules>
 </project>
