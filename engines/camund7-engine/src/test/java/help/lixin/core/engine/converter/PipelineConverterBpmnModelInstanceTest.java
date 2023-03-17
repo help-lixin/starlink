@@ -3,7 +3,7 @@ package help.lixin.core.engine.converter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import help.lixin.core.definition.PipelineDefinition;
-import help.lixin.core.engine.CamundaSevenEngineConfig;
+import help.lixin.core.engine.config.Camunda7EngineConfig;
 import help.lixin.core.engine.service.IPipelineConverterBpmnModelInstance;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
@@ -29,7 +29,7 @@ public class PipelineConverterBpmnModelInstanceTest {
 
     @Before
     public void loadPipelineJsonFileAndInject() throws Exception {
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(CamundaSevenEngineConfig.class);
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(Camunda7EngineConfig.class);
         pipelineConverterBpmnModelInstance = applicationContext.getBean(IPipelineConverterBpmnModelInstance.class);
 
 

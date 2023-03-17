@@ -1,5 +1,6 @@
 package help.lixin.core.engine.service;
 
+import help.lixin.core.definition.PipelineDefinition;
 import help.lixin.core.engine.model.PipelineDeploy;
 
 /**
@@ -9,5 +10,5 @@ public interface IPipelineDeployCallbackService {
     /**
      * 部署流水线回调
      */
-    void callback(PipelineDeploy deploy);
+    void callback(PipelineDefinition pipeline, PipelineDeploy deployResult);
 }

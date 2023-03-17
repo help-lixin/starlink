@@ -51,34 +51,4 @@ public class EngineConfig {
         PipelineDeployTemplate pipelineDeployTemplate = new PipelineDeployTemplate(pipelineDeployService, pipelineDeployCallbackService);
         return pipelineDeployTemplate;
     }
-
-
-    // 以下两个做成默认的目的在于就算没有实现类扔进来也不要造成启动失败
-    @Bean
-    @ConditionalOnMissingBean
-    public IPipelineRuntimeService pipelineRuntimeService() {
-        return new IPipelineRuntimeService() {
-            @Override
-            public PipelineInstance startPipelineInstanceById(String pipelineDeployId, String businessKey, Map<String, Object> globalVars, Map<String, Object> localVars) {
-                return null;
-            }
-
-            @Override
-            public PipelineInstance startPipelineInstanceByKey(String pipelineDeployKey, String businessKey, Map<String, Object> globalVars, Map<String, Object> localVars) {
-                return null;
-            }
-        };
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public IPipelineDeployService pipelineDeployService() {
-        return new IPipelineDeployService() {
-            @Override
-            public PipelineDeploy deploy(PipelineDefinition pipeline) {
-                return null;
-            }
-        };
-    }
-
 }

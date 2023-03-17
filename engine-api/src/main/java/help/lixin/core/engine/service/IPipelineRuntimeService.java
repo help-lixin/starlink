@@ -18,21 +18,11 @@ public interface IPipelineRuntimeService {
         return startPipelineInstanceById(pipelineDeployId, businessKey, new HashMap<>());
     }
 
-    default PipelineInstance startPipelineInstanceById(String pipelineDeployId,
-                                                       //
-                                                       String businessKey,
-                                                       //
-                                                       Map<String, Object> globalVars) {
-        return startPipelineInstanceById(pipelineDeployId, businessKey, globalVars, new HashMap<>());
-    }
-
     PipelineInstance startPipelineInstanceById(String pipelineDeployId,
                                                //
                                                String businessKey,
                                                //
-                                               Map<String, Object> globalVars,
-                                               //
-                                               Map<String, Object> localVars);
+                                               Map<String, Object> vars);
 
 
     default PipelineInstance startPipelineInstanceByKey(String pipelineDeployKey) {
@@ -42,22 +32,23 @@ public interface IPipelineRuntimeService {
     default PipelineInstance startPipelineInstanceByKey(String pipelineDeployKey,
                                                         //
                                                         String businessKey) {
-        return startPipelineInstanceById(pipelineDeployKey, businessKey, new HashMap<>());
+        return startPipelineInstanceByKey(pipelineDeployKey, businessKey, null);
     }
+
 
     default PipelineInstance startPipelineInstanceByKey(String pipelineDeployKey,
                                                         //
                                                         String businessKey,
                                                         //
-                                                        Map<String, Object> globalVars) {
-        return startPipelineInstanceByKey(pipelineDeployKey, businessKey, globalVars, new HashMap<>());
+                                                        Integer version) {
+        return startPipelineInstanceByKey(pipelineDeployKey, businessKey, version, new HashMap<>());
     }
 
     PipelineInstance startPipelineInstanceByKey(String pipelineDeployKey,
                                                 //
                                                 String businessKey,
                                                 //
-                                                Map<String, Object> globalVars,
+                                                Integer version,
                                                 //
-                                                Map<String, Object> localVars);
+                                                Map<String, Object> vars);
 }

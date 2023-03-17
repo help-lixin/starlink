@@ -34,6 +34,15 @@ public class PipelineDeployService implements IPipelineDeployService {
     public PipelineDeploy deploy(PipelineDefinition pipeline) {
         try {
             String resourceName = String.format("%s.bpmn", pipeline.getKey());
+
+            // TODO lixin
+            // 部署之前,通过md5验证(pipeline),验证:是否有部署过.
+            // 如果,有部署过,则不进行部署,并返回md5的那个版本部署版本回去.
+            // 如果,没有部署过,则部署一份.
+            // 表结构:
+            //  process.getId() ||  process.getKey() || process.getName() || process.getVersion() ||  pipeline_content
+            // process.getId() == pipeline-test:1:381e73ad-c3b5-11ed-93fe-52819222aa32
+
             BpmnModelInstance bpmnModelInstance = pipelineConverterBpmnModelInstance.toBpmnModelInstance(pipeline);
             Deployment deploy = repositoryService.createDeployment()
                     //

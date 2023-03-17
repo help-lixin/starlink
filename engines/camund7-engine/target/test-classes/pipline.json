@@ -1,0 +1,84 @@
+{
+  "key": "pipeline-test",
+  "name": "测试流水线",
+  "pipelines": [
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "1",
+      "name": "gitlab下载源码",
+      "source": null,
+      "target": "2",
+      "plugin": "gitlab",
+      "params": "{  \"url\" : \"ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git\" , \"branch\" : \"main\" }"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+      "id": "2",
+      "name": "流水线-1",
+      "source": "1",
+      "target": "3",
+      "params": ""
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "3",
+      "name": "jenkins maven 源码编译",
+      "source": "2",
+      "target": "4",
+      "sync": true,
+      "plugin": "jenkins",
+      "params": "{  \"templateFile\" : \"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" , \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests -X '''  \"  } ] }"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+      "id": "4",
+      "name": "流水线-2",
+      "source": "3",
+      "target": "5"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "5",
+      "name": "配置harbor仓库",
+      "source": "4",
+      "target": "6",
+      "sync": true,
+      "plugin": "harbor"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+      "id": "6",
+      "name": "流水线-3",
+      "source": "5",
+      "target": "7"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "7",
+      "name": "Docker打包镜像并推送给Harbor仓库",
+      "source": "6",
+      "target": "8",
+      "sync": true,
+      "plugin": "shell",
+      "params": "{  \"cmds\":[  \" cd ${ARTIFACT_DIR} \" , \" docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${BUILD_NUMBER} . \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} \" , \" docker tag ${projectName}:v${BUILD_NUMBER}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} \"  ] }"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+      "id": "8",
+      "name": "流水线-4",
+      "source": "7",
+      "target": "9"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "9",
+      "name": "K8S拉取镜像,并发布",
+      "source": "8",
+      "target": null,
+      "sync": true,
+      "plugin": "k8s-deploy",
+      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
+    }
+  ]
+}
+

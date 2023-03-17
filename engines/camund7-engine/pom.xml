@@ -19,6 +19,12 @@
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>spider-web-platform-action-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- json to camunda bpmn conerter dependency -->
         <dependency>
             <groupId>org.projectlombok</groupId>

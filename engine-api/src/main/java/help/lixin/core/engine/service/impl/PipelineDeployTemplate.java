@@ -20,10 +20,13 @@ public class PipelineDeployTemplate {
         this.pipelineDeployCallbackService = pipelineDeployCallbackService;
     }
 
-    public void deploy(PipelineDefinition pipeline) {
+    public PipelineDeploy deploy(PipelineDefinition pipeline) {
         PipelineDeploy deploy = pipelineDeployService.deploy(pipeline);
         if (null != deploy) {
-            pipelineDeployCallbackService.callback(deploy);
+            pipelineDeployCallbackService.callback(pipeline, deploy);
         }
+        // TODO
+        // TODO lixin,需要创建相应的流程消费者
+        return deploy;
     }
 }

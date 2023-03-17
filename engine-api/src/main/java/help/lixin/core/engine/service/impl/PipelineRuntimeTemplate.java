@@ -22,26 +22,26 @@ public class PipelineRuntimeTemplate {
     }
 
 
-    public void startPipelineInstanceById(String pipelineDeployId,
-                                          //
-                                          String businessKey,
-                                          //
-                                          Map<String, Object> globalVars,
-                                          //
-                                          Map<String, Object> localVars) {
-        PipelineInstance pipelineInstance = pipelineRuntimeService.startPipelineInstanceById(pipelineDeployId, businessKey, globalVars, localVars);
+    public PipelineInstance startPipelineInstanceById(String pipelineDeployId,
+                                                      //
+                                                      String businessKey,
+                                                      //
+                                                      Map<String, Object> vars) {
+        PipelineInstance pipelineInstance = pipelineRuntimeService.startPipelineInstanceById(pipelineDeployId, businessKey, vars);
         callback(pipelineInstance);
+        return pipelineInstance;
     }
 
-    public void startPipelineInstanceByKey(String pipelineDeployId,
-                                           //
-                                           String businessKey,
-                                           //
-                                           Map<String, Object> globalVars,
-                                           //
-                                           Map<String, Object> localVars) {
-        PipelineInstance pipelineInstance = pipelineRuntimeService.startPipelineInstanceByKey(pipelineDeployId, businessKey, globalVars, localVars);
+    public PipelineInstance startPipelineInstanceByKey(String pipelineDeployKey,
+                                                       //
+                                                       Integer version,
+                                                       //
+                                                       String businessKey,
+                                                       //
+                                                       Map<String, Object> vars) {
+        PipelineInstance pipelineInstance = pipelineRuntimeService.startPipelineInstanceByKey(pipelineDeployKey, businessKey, version, vars);
         callback(pipelineInstance);
+        return pipelineInstance;
     }
 
     protected void callback(PipelineInstance pipelineInstance) {

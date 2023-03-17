@@ -24,11 +24,6 @@ import com.lmax.disruptor.WaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 
-/**
- * A builder to build a disruptor instance.
- *
- * @author boyan(boyan @ antfin.com)
- */
 public class DisruptorBuilder<T> {
     private EventFactory<T> eventFactory;
     private Integer ringBufferSize;
