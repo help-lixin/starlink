@@ -329,11 +329,11 @@ DATETIME : yyyy-MM-dd HH:mm:ss
 
 1) 同步调用    
    比如:在本系统创建:用户/角色/项目时,同步调用其它组件(比如:gitlab/harbor),缺点:代码过于耦合,如果,新增一个组件咋办?所以Pass掉.   
-2) MQ方案(Kakfa/RocketMQ/Pulsar)      
+2) MQ方案(Kakfa/RocketMQ/Pulsar)       
    不推荐MQ的原因是有两点:    
    2.1) MQ(RocketMQ/Kafka)会自动删除过期的消息,不符合我的业务,例如:用户刚开始使用的组件是:阿里docker仓库,后面(几年后),把docker仓库切换成:harbor(由于,本系统要协助用户自动在harbor创建Project),而此时,如果harbor组件去订阅消息时,发现以前的消息不复存在了.         
    2.2) MQ太重了,因为,这个项目是Plugin模式开发,期望:一个普通开发人员拿下代码后,能直接运行,而且,一旦启动时,依赖其它的框架,会给开发人员造成学习成本的增加.         
-3) outbox模式(推荐)
+3) outbox模式(推荐)         
    针对同步调用的缺点,相应的解决方案是,通过:"事件发布"进行解耦,把消息载体通过DB来存储,而且,还能,保证在一个事务之内(该思想源于:eventuate-tram-core),这样,就能保证,绝对不会丢失消息,不同的组件(gitlab)在订阅时,记住最后一次同步的id(lastId),一批一批的拉取消息进行同步处理.     
 
 ### 14. Pipeline转换成BPMN效果图
