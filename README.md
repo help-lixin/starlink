@@ -324,11 +324,22 @@ DATETIME : yyyy-MM-dd HH:mm:ss
 2) 为了这个日志收集功能,AOP会强制要求:开发必须把每一个细小的操作,都转换成方法,这种约束过强.     
 3) 有一定约束和规范有好处,亦有坏处,越是有规范的东西,能减少异同和学习成本,但是,也会局限你,阻碍你的认知,它会给你灌输一种思想,让你从骨子里就认为,形成规范的东西一定是最好的,会影响你对未知的探索.          
 
+### 13. 事件总线
+首先要说明事件总线的背景,本系统有一整套管理模型(比如:用户/项目),而其它组件(比如:gitlab/harbor/camunda...)也都有一套模型,期望:在本系统进行管理时,能够自动在其它组件(比如:gitlab/harbor)进行同步,而不是纯粹的只是对api进行管理(要求:用户在gitlab创建用户和项目/harbor创建项目),实现方式有以下几种:    
 
-### 13. Pipeline转换成BPMN效果图
+1) 同步调用    
+   比如:在本系统创建:用户/角色/项目时,同步调用其它组件(比如:gitlab/harbor),缺点:代码过于耦合,如果,新增一个组件咋办?所以Pass掉.   
+2) MQ方案(Kakfa/RocketMQ/Pulsar)      
+   不推荐MQ的原因是有两点:    
+   2.1) MQ(RocketMQ/Kafka)会自动删除过期的消息,不符合我的业务,例如:用户刚开始使用的组件是:阿里docker仓库,后面(几年后),把docker仓库切换成:harbor(由于,本系统要协助用户自动在harbor创建Project),而此时,如果harbor组件去订阅消息时,发现以前的消息不复存在了.         
+   2.2) MQ太重了,因为,这个项目是Plugin模式开发,期望:一个普通开发人员拿下代码后,能直接运行,而且,一旦启动时,依赖其它的框架,会给开发人员造成学习成本的增加.         
+3) outbox模式(推荐)
+   针对同步调用的缺点,相应的解决方案是,通过:"事件发布"进行解耦,把消息载体通过DB来存储,而且,还能,保证在一个事务之内(该思想源于:eventuate-tram-core),这样,就能保证,绝对不会丢失消息,不同的组件(gitlab)在订阅时,记住最后一次同步的id(lastId),一批一批的拉取消息进行同步处理.     
+
+### 14. Pipeline转换成BPMN效果图
 ![Pipeline 转换成BPMN后效果图](docs/desgin/pipline-bpmn.png)
 
-### 14. 上面Pipeline转换成Camunda xml的内容
+### 15. 上面Pipeline转换成Camunda xml的内容
 ```
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <definitions xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="definitions_ed4324e7-ae1f-4741-a359-d5bb8454c530" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL">
@@ -438,5 +449,5 @@ DATETIME : yyyy-MM-dd HH:mm:ss
 </definitions>
 ```
 
-### 15. 感谢其它开源作者 
+### 16. 感谢其它开源作者 
 1) [Camunda BPMN Converter](https://github.com/lzgabel/camunda-bpmn-converter)
