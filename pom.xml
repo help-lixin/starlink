@@ -201,6 +201,6 @@
         <module>trace-log-parent</module>
         <module>action-parent</module>
         <module>event-parent</module>
-<!--        <module>admin</module>-->
+        <module>admin</module>
     </modules>
 </project>
