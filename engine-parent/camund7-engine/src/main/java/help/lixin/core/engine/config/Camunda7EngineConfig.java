@@ -28,30 +28,30 @@ import java.util.List;
 public class Camunda7EngineConfig {
 
 
-    @Bean(name = {"camundaClient"})
-    @ConditionalOnMissingBean
-    public ExternalTaskClient camundaClient(CamundaClientProperties camundaClientProperties,
-                                            //
-                                            @Autowired(required = false) IExternalTaskClientCustomizer externalTaskClientCustomizer) {
-        ExternalTaskClientBuilder clientBuilder = ExternalTaskClient.create()
-                //
-                .baseUrl(camundaClientProperties.getBaseUrl())
-                //
-                .asyncResponseTimeout(camundaClientProperties.getAsyncResponseTimeout());
-        if (null != externalTaskClientCustomizer) {
-            externalTaskClientCustomizer.customizer(clientBuilder);
-        }
-        return clientBuilder.build();
-    }
+//    @Bean(name = {"camundaClient"})
+//    @ConditionalOnMissingBean
+//    public ExternalTaskClient camundaClient(CamundaClientProperties camundaClientProperties,
+//                                            //
+//                                            @Autowired(required = false) IExternalTaskClientCustomizer externalTaskClientCustomizer) {
+//        ExternalTaskClientBuilder clientBuilder = ExternalTaskClient.create()
+//                //
+//                .baseUrl(camundaClientProperties.getBaseUrl())
+//                //
+//                .asyncResponseTimeout(camundaClientProperties.getAsyncResponseTimeout());
+//        if (null != externalTaskClientCustomizer) {
+//            externalTaskClientCustomizer.customizer(clientBuilder);
+//        }
+//        return clientBuilder.build();
+//    }
 
-    @Bean
-    @ConditionalOnMissingBean
-    public ITopicSubscribeFactory topicSubscribeFactory(ExternalTaskClient camundaClient,
-                                                        //
-                                                        @Autowired(required = false) List<ITopicSubscribeCustomizer> customizers) {
-        TopicSubscribeFactory topicSubscribeFactory = new TopicSubscribeFactory(camundaClient, customizers);
-        return topicSubscribeFactory;
-    }
+//    @Bean
+//    @ConditionalOnMissingBean
+//    public ITopicSubscribeFactory topicSubscribeFactory(ExternalTaskClient camundaClient,
+//                                                        //
+//                                                        @Autowired(required = false) List<ITopicSubscribeCustomizer> customizers) {
+//        TopicSubscribeFactory topicSubscribeFactory = new TopicSubscribeFactory(camundaClient, customizers);
+//        return topicSubscribeFactory;
+//    }
 
 
     @Bean

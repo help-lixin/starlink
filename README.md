@@ -42,7 +42,7 @@
 
 ```
 {
-  "key": "pipeline-test",
+  "key": "pipelineEngine-test",
   "name": "测试流水线",
   "pipelines": [
     {
@@ -128,7 +128,7 @@
 
 ### 8. 自定义流水线案例(YAML)
 ```
-key: "pipeline-test"
+key: "pipelineEngine-test"
 name: "测试流水线"
 pipelines:
   - !<help.lixin.core.definition.impl.PluginDefinition>
@@ -345,7 +345,7 @@ DATETIME : yyyy-MM-dd HH:mm:ss
 ```
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <definitions xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="definitions_ed4324e7-ae1f-4741-a359-d5bb8454c530" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL">
-  <process id="pipeline-test" isExecutable="true" name="测试流水线">
+  <process id="pipelineEngine-test" isExecutable="true" name="测试流水线">
     <startEvent id="startEvent_1ea0ff43-9d78-4fce-aba7-c8bf05827554">
       <outgoing>sequenceFlow_cba7c820-c00c-40df-8ecb-67b1222aa034</outgoing>
     </startEvent>
@@ -400,7 +400,7 @@ DATETIME : yyyy-MM-dd HH:mm:ss
     <sequenceFlow id="sequenceFlow_bef88dea-628a-4cb3-8a34-59b38cd58dc9" sourceRef="serviceTask_020fa67e-253c-4069-8a20-aad8447bc60e" targetRef="endEvent_e436a048-f9ef-4663-988c-6edf9c528d91"/>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_fb17dfc5-6da8-4f53-9d72-d09eb379c571">
-    <bpmndi:BPMNPlane bpmnElement="pipeline-test" id="BPMNPlane_33359969-957b-4ae6-b7e8-13f622ee9bcb">
+    <bpmndi:BPMNPlane bpmnElement="pipelineEngine-test" id="BPMNPlane_33359969-957b-4ae6-b7e8-13f622ee9bcb">
       <bpmndi:BPMNShape bpmnElement="startEvent_1ea0ff43-9d78-4fce-aba7-c8bf05827554" id="BPMNShape_027afffd-e789-49ef-b23d-ce3db92c6b2b">
         <dc:Bounds height="36.0" width="36.0" x="100.0" y="100.0"/>
       </bpmndi:BPMNShape>

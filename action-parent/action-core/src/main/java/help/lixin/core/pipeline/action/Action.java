@@ -29,4 +29,8 @@ public interface Action {
     default String name() {
         return null;
     }
+
+    default String meta() {
+        return null;
+    }
 }

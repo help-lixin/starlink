@@ -1,8 +1,8 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <flow-definition plugin="workflow-job@1268.v6eb_e2ee1a_85a">
     <actions>
-        <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2118.v31fd5b_9944b_5"/>
-        <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2118.v31fd5b_9944b_5">
+        <org.jenkinsci.plugins.pipelineEngine.modeldefinition.actions.DeclarativeJobAction plugin="pipelineEngine-model-definition@2.2118.v31fd5b_9944b_5"/>
+        <org.jenkinsci.plugins.pipelineEngine.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipelineEngine-model-definition@2.2118.v31fd5b_9944b_5">
             <jobProperties/>
             <triggers/>
             <parameters>
@@ -10,7 +10,7 @@
                 <string>url</string>
             </parameters>
             <options/>
-        </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+        </org.jenkinsci.plugins.pipelineEngine.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
     </actions>
     <description></description>
     <keepDependencies>false</keepDependencies>
@@ -42,7 +42,7 @@
     </properties>
     <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@3618.v13db_a_21f0fcf">
         <script>
-         pipeline {
+         pipelineEngine {
                 agent any
 
                 parameters {
@@ -91,7 +91,7 @@
                 // end post
                 }
 
-          // end   pipeline
+          // end   pipelineEngine
           }
         </script>
         <sandbox>true</sandbox>

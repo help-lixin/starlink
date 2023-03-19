@@ -13,10 +13,10 @@
     <name>spider-web-platform-admin ${project.version}</name>
 
     <dependencies>
-        <!-- pipeline engine -->
+        <!--  engine -->
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>spider-web-platform-camunda7-engine</artifactId>
+            <artifactId>spider-web-platform-simple-engine</artifactId>
             <version>${project.version}</version>
         </dependency>
 

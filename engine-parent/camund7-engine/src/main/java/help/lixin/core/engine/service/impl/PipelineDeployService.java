@@ -55,6 +55,7 @@ public class PipelineDeployService implements IPipelineDeployService {
                     .addModelInstance(resourceName, bpmnModelInstance)
                     //
                     .deploy();
+
             ProcessDefinition process = queryProcessDefinitionByDeploymentId(deploy.getId());
             PipelineDeploy pipelineDeploy = new PipelineDeploy();
             pipelineDeploy.setId(process.getId());
