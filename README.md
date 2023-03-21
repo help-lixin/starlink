@@ -70,7 +70,7 @@
       "target": "4",
       "sync": true,
       "plugin": "jenkins",
-      "params": "{  \"templateFile\" : \"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" , \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests -X '''  \"  } ] }"
+      "params": "{  \"templateFile\" : \"/Users/lixin/GitRepository/starlink/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" , \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests -X '''  \"  } ] }"
     },
     {
       "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
@@ -120,7 +120,7 @@
       "target": null,
       "sync": true,
       "plugin": "k8s-deploy",
-      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
+      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
     }
   ]
 }
@@ -154,7 +154,7 @@ pipelines:
     target: "4"
     name: "jenkins maven 源码编译"
     clazz: "help.lixin.core.definition.impl.PluginDefinition"
-    params: "{  \"templateFile\" : \"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" ,  \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests  -X '''  \"  } ] }"
+    params: "{  \"templateFile\" : \"/Users/lixin/GitRepository/starlink/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" ,  \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests  -X '''  \"  } ] }"
     plugin: "jenkins"
     sync: true
   - !<help.lixin.core.definition.impl.SequenceFlowDefinition>
@@ -205,7 +205,7 @@ pipelines:
     target: null
     name: "Docker打包镜像并推送给Harbor仓库"
     clazz: "help.lixin.core.definition.impl.PluginDefinition"
-    params: "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\" : \"${projectName}\", \"port\":\"9091\" }"
+    params: "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\" : \"${projectName}\", \"port\":\"9091\" }"
     plugin: "k8s-deploy"
     sync: true
 others: { }
@@ -249,7 +249,7 @@ Jenkins的Action比较复杂:
 # archiveArtifacts   :   构建成功后,最后的成品库位置.  
 
 {
-  "templateFile" : "/Users/lixin/GitRepository/spider-web-platform/admin/src/test/resources/java-service-template.xml",
+  "templateFile" : "/Users/lixin/GitRepository/starlink/admin/src/test/resources/java-service-template.xml",
   "credentialId" : "gitlab",
   "cmd" : "mvn clean install -DskipTests -X",
   "archiveArtifacts" : "target/*.jar"
@@ -362,7 +362,7 @@ DATETIME : yyyy-MM-dd HH:mm:ss
     <serviceTask camunda:topic="jenkins" camunda:type="external" id="serviceTask_5a68b5ac-eb1a-4da1-bab8-f53340eb91f2" name="jenkins maven 源码编译">
       <extensionElements>
         <camunda:inputOutput>
-          <camunda:inputParameter name="_params">{  "templateFile" : "/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/java-service-template.ftl" , "credentialId" : "gitlab" , "archiveArtifacts" : "target/*.jar" , "stages": [ { "name":"Build","steps": " sh  ''' mvn clean install -DskipTests -X '''  "  } ] }</camunda:inputParameter>
+          <camunda:inputParameter name="_params">{  "templateFile" : "/Users/lixin/GitRepository/starlink/admin/src/main/resources/java-service-template.ftl" , "credentialId" : "gitlab" , "archiveArtifacts" : "target/*.jar" , "stages": [ { "name":"Build","steps": " sh  ''' mvn clean install -DskipTests -X '''  "  } ] }</camunda:inputParameter>
         </camunda:inputOutput>
       </extensionElements>
       <incoming>sequenceFlow_abcac0da-58fd-4efd-b89a-1265944c9239</incoming>
@@ -387,7 +387,7 @@ DATETIME : yyyy-MM-dd HH:mm:ss
     <serviceTask camunda:topic="k8s-deploy" camunda:type="external" id="serviceTask_020fa67e-253c-4069-8a20-aad8447bc60e" name="K8S拉取镜像,并发布">
       <extensionElements>
         <camunda:inputOutput>
-          <camunda:inputParameter name="_params">{  "yamlTemplatePath":"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/deployment-template.yml" , "deployName":"${projectName}-deploy" ,"podLabelName":"app" ,"podLabelValue":"spring-web-demo-pod", "imagePullSecretName":"loginharbor" , "containerName":"${projectName}", "port":"9091" }</camunda:inputParameter>
+          <camunda:inputParameter name="_params">{  "yamlTemplatePath":"/Users/lixin/GitRepository/starlink/admin/src/main/resources/deployment-template.yml" , "deployName":"${projectName}-deploy" ,"podLabelName":"app" ,"podLabelValue":"spring-web-demo-pod", "imagePullSecretName":"loginharbor" , "containerName":"${projectName}", "port":"9091" }</camunda:inputParameter>
         </camunda:inputOutput>
       </extensionElements>
       <incoming>sequenceFlow_92981ff9-2d33-4d10-8efb-d89b1ef00fbf</incoming>

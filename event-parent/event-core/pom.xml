@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>help.lixin</groupId>
-        <artifactId>spider-web-platform-event-parent</artifactId>
+        <artifactId>starlink-event-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>spider-web-platform-event-core</artifactId>
+    <artifactId>starlink-event-core</artifactId>
     <packaging>jar</packaging>
-    <name>spider-web-platform-event-core ${project.version}</name>
+    <name>starlink-event-core ${project.version}</name>
 </project>

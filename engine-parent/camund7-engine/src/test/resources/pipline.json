@@ -27,7 +27,7 @@
       "target": "4",
       "sync": true,
       "plugin": "jenkins",
-      "params": "{  \"templateFile\" : \"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" , \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests -X '''  \"  } ] }"
+      "params": "{  \"templateFile\" : \"/Users/lixin/GitRepository/starlink/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" , \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests -X '''  \"  } ] }"
     },
     {
       "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
@@ -77,7 +77,7 @@
       "target": null,
       "sync": true,
       "plugin": "k8s-deploy",
-      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
+      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
     }
   ]
 }

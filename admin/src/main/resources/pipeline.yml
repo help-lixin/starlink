@@ -24,7 +24,7 @@ pipelines:
     target: "4"
     name: "jenkins maven 源码编译"
     clazz: "help.lixin.core.definition.impl.PluginDefinition"
-    params: "{  \"templateFile\" : \"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" ,  \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests  -X '''  \"  } ] }"
+    params: "{  \"templateFile\" : \"/Users/lixin/GitRepository/starlink/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" ,  \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests  -X '''  \"  } ] }"
     plugin: "jenkins"
     sync: true
   - !<help.lixin.core.definition.impl.SequenceFlowDefinition>
@@ -75,7 +75,7 @@ pipelines:
     target: null
     name: "Docker打包镜像并推送给Harbor仓库"
     clazz: "help.lixin.core.definition.impl.PluginDefinition"
-    params: "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\" : \"${projectName}\", \"port\":\"9091\" }"
+    params: "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\" : \"${projectName}\", \"port\":\"9091\" }"
     plugin: "k8s-deploy"
     sync: true
 others: { }

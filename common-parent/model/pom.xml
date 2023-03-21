@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>help.lixin</groupId>
-        <artifactId>spider-web-platform-common-parent</artifactId>
+        <artifactId>starlink-common-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>spider-web-platform-model</artifactId>
+    <artifactId>starlink-model</artifactId>
     <packaging>jar</packaging>
-    <name>spider-web-platform-model ${project.version}</name>
+    <name>starlink-model ${project.version}</name>
 
     <dependencies>
         <!-- 编码解码 -->

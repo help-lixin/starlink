@@ -7,6 +7,7 @@ public class StartPipelineCallbackService implements IStartPipelineCallbackServi
 
     @Override
     public void callback(PipelineInstance instance) {
+        // TODO lixin
         System.out.println(instance);
     }
 }

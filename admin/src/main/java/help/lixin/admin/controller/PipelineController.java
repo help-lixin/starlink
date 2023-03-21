@@ -40,6 +40,7 @@ public class PipelineController {
             if (null == file || file.isEmpty()) {
                 return Response.newBuilder().code(500).msg("要提交的pipeline内容不能为空.").build();
             }
+
             StringWriter output = new StringWriter();
             IOUtils.copy(file.getInputStream(), output, StandardCharsets.UTF_8);
             String body = output.toString();

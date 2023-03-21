@@ -5,17 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>help.lixin</groupId>
-        <artifactId>spider-web-platform-actions-parent</artifactId>
+        <artifactId>starlink-actions-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>spider-web-platform-harbor-action</artifactId>
+    <artifactId>starlink-harbor-action</artifactId>
     <packaging>jar</packaging>
-    <name>spider-web-platform-harbor-action ${project.version}</name>
+    <name>starlink-harbor-action ${project.version}</name>
 
     <dependencies>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>spider-web-platform-action-core</artifactId>
+            <artifactId>starlink-action-core</artifactId>
             <version>${project.version}</version>
         </dependency>
 

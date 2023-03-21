@@ -8,6 +8,7 @@ public class PipelineDeployCallbackService implements IPipelineDeployCallbackSer
 
     @Override
     public void callback(PipelineDefinition pipeline, PipelineDeploy deployResult) {
+        // TODO lixin
         System.out.println(deployResult);
     }
 }

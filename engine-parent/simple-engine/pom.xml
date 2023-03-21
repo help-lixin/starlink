@@ -5,23 +5,23 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>help.lixin</groupId>
-        <artifactId>spider-web-platform-engine-parent</artifactId>
+        <artifactId>starlink-engine-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>spider-web-platform-simple-engine</artifactId>
+    <artifactId>starlink-simple-engine</artifactId>
     <packaging>jar</packaging>
-    <name>spider-web-platform-simple-engine ${project.version}</name>
+    <name>starlink-simple-engine ${project.version}</name>
 
     <dependencies>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>spider-web-platform-engine-core</artifactId>
+            <artifactId>starlink-engine-core</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>spider-web-platform-action-core</artifactId>
+            <artifactId>starlink-action-core</artifactId>
             <version>${project.version}</version>
         </dependency>
 

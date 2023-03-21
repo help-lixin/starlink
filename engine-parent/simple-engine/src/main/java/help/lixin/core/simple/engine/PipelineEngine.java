@@ -25,9 +25,6 @@ public class PipelineEngine {
         // 委派给 execute(PipelineDefinition pipelineDefinition)
     }
 
-    /**
-     * 该类可以优化一下
-     */
     protected void execute(PipelineDefinition pipelineDefinition) throws Exception {
         List<ElementDefinition> pipelines = pipelineDefinition.getPipelines();
         // 找到第一个Action
@@ -68,13 +65,11 @@ public class PipelineEngine {
         globalContext.getVars().put(Constant.Common.SECOND, cal.get(Calendar.SECOND));
         globalContext.getVars().put(Constant.Common.DATETIME, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 
-
         // 从第一个元素的target开始,依次遍历向后执行.
-
-        // TODO lixin 每一个节点执行之前,都要创建一个id(nodeId)
         ElementDefinition curr = first;
         boolean isExecuteFail = Boolean.FALSE;
         isExecuteFail = executeOne(curr, globalContext);
+
         do {
             String nextTarget = curr.getTarget();
             if (null != nextTarget) {
@@ -95,6 +90,8 @@ public class PipelineEngine {
     protected boolean executeOne(ElementDefinition actionElement,
                                  //
                                  PipelineContext globalContext) throws Exception {
+        // TODO lixin
+
         boolean execute = Boolean.FALSE;
         boolean before = Boolean.FALSE;
         boolean after = Boolean.FALSE;
@@ -129,6 +126,8 @@ public class PipelineEngine {
             // 6. 拷贝"阶段性"的变量到global上下文中
             globalContext.copyFor(stageContext);
         }
+
+        // TODO lixin
         return before && execute && after;
     }
 }

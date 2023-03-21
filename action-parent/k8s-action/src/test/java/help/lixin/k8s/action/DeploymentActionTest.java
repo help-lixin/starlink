@@ -30,7 +30,7 @@ public class DeploymentActionTest {
     @Test
     public void testExecute() throws Exception {
         PipelineContext ctx = new StagePipelineContext();
-        ctx.setStageParams("{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/spider-web-platform/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"image\":\"${REPOSITORY_URL}/${projectName}/${projectName}:v${SECOND}\" , \"containerName\":\"${projectName}\", \"port\":\"9091\",\"envs\":[ { \"containerName\":\"${projectName}\" , \"name\":\"app\" , \"value\":\"test\" }  ] }");
+        ctx.setStageParams("{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"image\":\"${REPOSITORY_URL}/${projectName}/${projectName}:v${SECOND}\" , \"containerName\":\"${projectName}\", \"port\":\"9091\",\"envs\":[ { \"containerName\":\"${projectName}\" , \"name\":\"app\" , \"value\":\"test\" }  ] }");
         ctx.getVars().put("REPOSITORY_URL", "103.215.125.86:3080");
         ctx.getVars().put("projectName", "spring-web-demo");
         ctx.getVars().put("SECOND", "1.1.0.1304");

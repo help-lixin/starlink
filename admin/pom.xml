@@ -5,54 +5,54 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>help.lixin</groupId>
-        <artifactId>spider-web-platform-parent</artifactId>
+        <artifactId>starlink-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>spider-web-platform-admin</artifactId>
+    <artifactId>starlink-admin</artifactId>
     <packaging>jar</packaging>
-    <name>spider-web-platform-admin ${project.version}</name>
+    <name>starlink-admin ${project.version}</name>
 
     <dependencies>
         <!--  engine -->
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>spider-web-platform-simple-engine</artifactId>
+            <artifactId>starlink-simple-engine</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <!-- actions -->
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>spider-web-platform-gitlab-action</artifactId>
+            <artifactId>starlink-gitlab-action</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>spider-web-platform-jenkins-action</artifactId>
+            <artifactId>starlink-jenkins-action</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>spider-web-platform-harbor-action</artifactId>
+            <artifactId>starlink-harbor-action</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>spider-web-platform-shell-action</artifactId>
+            <artifactId>starlink-shell-action</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <!--
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>spider-web-platform-k8s-action</artifactId>
+            <artifactId>starlink-k8s-action</artifactId>
             <version>${project.version}</version>
         </dependency>
         -->
 
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>spider-web-platform-trace-log-impl</artifactId>
+            <artifactId>starlink-trace-log-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
 

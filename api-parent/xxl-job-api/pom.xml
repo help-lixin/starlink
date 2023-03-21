@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>help.lixin</groupId>
-        <artifactId>spider-web-platform-api-parent</artifactId>
+        <artifactId>starlink-api-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>spider-web-platform-xxl-job-api</artifactId>
+    <artifactId>starlink-xxl-job-api</artifactId>
     <packaging>jar</packaging>
-    <name>spider-web-platform-xxl-job-api ${project.version}</name>
+    <name>starlink-xxl-job-api ${project.version}</name>
 
     <dependencies>
 
