@@ -9,15 +9,15 @@ import help.lixin.harbor.service.HarborFaceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HarborAction implements Action {
+public class HarborConfigAction implements Action {
 
-    private Logger logger = LoggerFactory.getLogger(HarborAction.class);
+    private Logger logger = LoggerFactory.getLogger(HarborConfigAction.class);
 
-    public static final String HARBOR_ACTION = "harbor";
+    public static final String HARBOR_CONFIG_ACTION = "harbor-config";
 
     private HarborFaceService harborFaceService;
 
-    public HarborAction(HarborFaceService harborFaceService) {
+    public HarborConfigAction(HarborFaceService harborFaceService) {
         this.harborFaceService = harborFaceService;
     }
 
@@ -26,8 +26,14 @@ public class HarborAction implements Action {
         logger.debug("start execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
         RepositoryInfo repositoryInfo = getRepositoryInfo(ctx);
         if (null != repositoryInfo) {
-            String repositoryUrl = repositoryInfo.getUrl().replaceAll("http://", "");
-            ctx.getVars().put(Constant.ImageRepository.REPOSITORY_URL, repositoryUrl);
+            String repositoryUrlVar = null;
+            String url = repositoryInfo.getUrl();
+            if (url.startsWith("http://")) {
+                repositoryUrlVar = repositoryInfo.getUrl().replaceAll("http://", "");
+            } else if (url.startsWith("https://")) {
+                repositoryUrlVar = repositoryInfo.getUrl().replaceAll("https://", "");
+            }
+            ctx.getVars().put(Constant.ImageRepository.REPOSITORY_URL, repositoryUrlVar);
         }
         ctx.getVars().put(Constant.ImageRepository.HTTP_REPOSITORY_URL, repositoryInfo.getUrl());
         ctx.getVars().put(Constant.ImageRepository.REPOSITORY_USERNAME, repositoryInfo.getUserName());
@@ -39,7 +45,7 @@ public class HarborAction implements Action {
 
     @Override
     public String name() {
-        return HARBOR_ACTION;
+        return HARBOR_CONFIG_ACTION;
     }
 
     protected RepositoryInfo getRepositoryInfo(PipelineContext ctx) {

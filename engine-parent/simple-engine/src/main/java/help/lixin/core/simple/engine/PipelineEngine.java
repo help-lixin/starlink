@@ -25,7 +25,7 @@ public class PipelineEngine {
         // 委派给 execute(PipelineDefinition pipelineDefinition)
     }
 
-    protected void execute(PipelineDefinition pipelineDefinition) throws Exception {
+    public void execute(PipelineDefinition pipelineDefinition) throws Exception {
         List<ElementDefinition> pipelines = pipelineDefinition.getPipelines();
         // 找到第一个Action
         Optional<ElementDefinition> firstElement = pipelines.stream()

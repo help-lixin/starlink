@@ -11,14 +11,14 @@ import org.slf4j.LoggerFactory;
 /**
  * gitlab实现
  */
-public class GitlabAction implements Action {
-    public static final String GITLAB_ACTION = "gitlab";
+public class GitlabConfigAction implements Action {
+    public static final String GITLAB_ACTION_CONFIG = "gitlab-config";
 
-    private Logger logger = LoggerFactory.getLogger(GitlabAction.class);
+    private Logger logger = LoggerFactory.getLogger(GitlabConfigAction.class);
 
     private GitlabFaceService gitlabFaceService;
 
-    public GitlabAction(GitlabFaceService gitlabFaceService) {
+    public GitlabConfigAction(GitlabFaceService gitlabFaceService) {
         this.gitlabFaceService = gitlabFaceService;
     }
 
@@ -40,6 +40,6 @@ public class GitlabAction implements Action {
 
     @Override
     public String name() {
-        return GITLAB_ACTION;
+        return GITLAB_ACTION_CONFIG;
     }
 }
