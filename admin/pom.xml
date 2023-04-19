@@ -20,33 +20,34 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!-- actions -->
+        <!-- plugins -->
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-gitlab-action</artifactId>
+            <artifactId>starlink-gitlab-plugin</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-jenkins-action</artifactId>
+            <artifactId>starlink-jenkins-plugin</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-harbor-action</artifactId>
+            <artifactId>starlink-harbor-plugin</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-shell-action</artifactId>
+            <artifactId>starlink-shell-plugin</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-k8s-action</artifactId>
+            <artifactId>starlink-k8s-plugin</artifactId>
             <version>${project.version}</version>
         </dependency>
+
 
         <dependency>
             <groupId>help.lixin</groupId>

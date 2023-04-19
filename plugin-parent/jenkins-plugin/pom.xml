@@ -5,17 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>help.lixin</groupId>
-        <artifactId>starlink-actions-parent</artifactId>
+        <artifactId>starlink-plugins-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>starlink-jenkins-action</artifactId>
+    <artifactId>starlink-jenkins-plugin</artifactId>
     <packaging>jar</packaging>
-    <name>starlink-jenkins-action ${project.version}</name>
+    <name>starlink-jenkins-plugin ${project.version}</name>
 
     <dependencies>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-action-core</artifactId>
+            <artifactId>starlink-plugin-core</artifactId>
             <version>${project.version}</version>
             <exclusions>
                 <exclusion>

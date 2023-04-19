@@ -8,18 +8,17 @@
         <artifactId>starlink-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>starlink-actions-parent</artifactId>
+    <artifactId>starlink-plugins-parent</artifactId>
     <packaging>pom</packaging>
-    <name>starlink-actions-parent ${project.version}</name>
+    <name>starlink-plugins-parent ${project.version}</name>
 
     <modules>
-        <module>action-core</module>
-
-        <module>gitlab-action</module>
-        <module>jenkins-action</module>
-        <module>shell-action</module>
-        <module>harbor-action</module>
-        <module>k8s-action</module>
-        <module>docker-action</module>
+        <module>plugin-core</module>
+        <module>gitlab-plugin</module>
+        <module>jenkins-plugin</module>
+        <module>shell-plugin</module>
+        <module>harbor-plugin</module>
+        <module>k8s-plugin</module>
+        <module>docker-plugin</module>
     </modules>
 </project>
