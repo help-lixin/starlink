@@ -35,10 +35,20 @@
       "id": "4",
       "name": "Docker打包镜像并推送给Harbor仓库",
       "source": "3",
-      "target": null,
+      "target": "5",
       "sync": true,
       "plugin": "shell",
       "params": "{  \"cmds\":[  \" cd ${ARTIFACT_DIR} \" , \" docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${BUILD_NUMBER} . \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} \" , \" docker tag ${projectName}:v${BUILD_NUMBER}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} \"  ] }"
+    },
+    {
+    "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+    "id": "5",
+    "name": "K8S拉取镜像,并进行部署",
+    "source": "4",
+    "target": null,
+    "sync": true,
+    "plugin": "k8s-deploy",
+    "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"harbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
     }
   ]
 }
