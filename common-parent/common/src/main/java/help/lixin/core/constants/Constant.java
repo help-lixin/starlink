@@ -39,7 +39,7 @@ public class Constant {
         public static final String DATETIME = "DATETIME";
     }
 
-    public static class Jenkins {
+    public static class BuildInfo {
         // 触发构建时的唯一id
         public static final String BUILD_NUMBER = "BUILD_NUMBER";
     }

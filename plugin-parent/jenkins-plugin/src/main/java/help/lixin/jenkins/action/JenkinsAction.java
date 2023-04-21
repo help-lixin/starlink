@@ -95,9 +95,9 @@ public class JenkinsAction implements Action {
             return jobInfo;
         }, executor).thenApplyAsync(jobInfo -> { // 3. 配置上下文
             int buildNumber = jobInfo.nextBuildNumber();
-            ctx.getVars().put(Constant.Jenkins.BUILD_NUMBER, buildNumber);
+            ctx.getVars().put(Constant.BuildInfo.BUILD_NUMBER, buildNumber);
             if (logger.isDebugEnabled()) {
-                logger.debug("trigger build job stage,setting ctx key:[{}],value:[{}]", Constant.Jenkins.BUILD_NUMBER, ctx.getVars().get(Constant.Jenkins.BUILD_NUMBER));
+                logger.debug("trigger build job stage,setting ctx key:[{}],value:[{}]", Constant.BuildInfo.BUILD_NUMBER, ctx.getVars().get(Constant.BuildInfo.BUILD_NUMBER));
             }
             return jobInfo;
         }).thenApplyAsync(jobInfo -> { // 4. 触发构建
@@ -161,7 +161,7 @@ public class JenkinsAction implements Action {
                                 //
                                 jobName,
                                 //
-                                (int) ctx.getVar(Constant.Jenkins.BUILD_NUMBER),
+                                (int) ctx.getVar(Constant.BuildInfo.BUILD_NUMBER),
                                 //
                                 artifacts.get(0),
                                 //
@@ -194,7 +194,7 @@ public class JenkinsAction implements Action {
                 logger.debug("start fetch build:[{}] log.", buildInfo);
             }
 
-            int nextNumber = (int) ctx.getVar(Constant.Jenkins.BUILD_NUMBER);
+            int nextNumber = (int) ctx.getVar(Constant.BuildInfo.BUILD_NUMBER);
             ProgressiveText progressiveText = jobService.lookBuildLog(null, jobName, nextNumber, 0);
             if (null != progressiveText.text()) {
                 // TOOD lixin

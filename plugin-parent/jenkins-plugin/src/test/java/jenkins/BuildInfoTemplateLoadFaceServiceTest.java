@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JenkinsTemplateLoadFaceServiceTest {
+public class BuildInfoTemplateLoadFaceServiceTest {
 
     @Test
     public void testLoadAndProcess() throws Exception {
