@@ -44,6 +44,12 @@
 
         <dependency>
             <groupId>help.lixin</groupId>
+            <artifactId>starlink-oci-plugin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>help.lixin</groupId>
             <artifactId>starlink-k8s-plugin</artifactId>
             <version>${project.version}</version>
         </dependency>

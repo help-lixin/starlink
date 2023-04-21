@@ -21,7 +21,6 @@ public class ActionsConfig {
         return new SequenceFlowAction();
     }
 
-
     @Bean
     @ConditionalOnMissingBean
     public ActionMediator actionMediator(@Autowired(required = false) List<Action> actions) {

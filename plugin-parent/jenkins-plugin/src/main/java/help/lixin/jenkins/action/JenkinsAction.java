@@ -219,10 +219,10 @@ public class JenkinsAction implements Action {
                 .get(30, TimeUnit.MINUTES);
 
         // DockerFile
-        String dockerFilePath = getDockerFilePath(actionParams);
-        if (null != dockerFilePath) {
-            ctx.getVars().put(Constant.Docker.DOCKER_FILE, dockerFilePath);
-        }
+//        String dockerFilePath = getDockerFilePath(actionParams);
+//        if (null != dockerFilePath) {
+//            ctx.getVars().put(Constant.Docker.DOCKER_FILE, dockerFilePath);
+//        }
         logger.debug("end execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
         return true;
     }

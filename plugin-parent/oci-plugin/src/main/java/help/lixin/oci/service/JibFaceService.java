@@ -1,16 +1,16 @@
-package help.lixin.shell.service;
+package help.lixin.oci.service;
 
 import help.lixin.core.pipeline.service.IExpressionService;
 
-public class ShellFaceService {
+public class JibFaceService {
 
     private IExpressionService expressionService;
 
-    public ShellFaceService(IExpressionService expressionService) {
-        this.expressionService = expressionService;
-    }
-
     public IExpressionService getExpressionService() {
         return expressionService;
+    }
+
+    public void setExpressionService(IExpressionService expressionService) {
+        this.expressionService = expressionService;
     }
 }

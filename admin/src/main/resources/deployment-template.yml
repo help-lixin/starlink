@@ -15,8 +15,8 @@ spec:
     spec:
       imagePullSecrets:
         - name: ${IMAGE_PULL_SECRET_NAME}
-      containers:
-        - image: ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER}
+      containers: 
+        - image: hub.lixin.help/library/${projectName}:v${BUILD_NUMBER}
           name: ${projectName}
           ports:
             - containerPort: ${PORT}

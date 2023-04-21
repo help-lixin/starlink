@@ -1,7 +1,7 @@
-package help.lixin.shell.service.impl;
+package help.lixin.core.pipeline.service.impl;
 
-import help.lixin.shell.service.IContextCustomizer;
-import help.lixin.shell.service.IExpressionService;
+import help.lixin.core.pipeline.service.IContextCustomizer;
+import help.lixin.core.pipeline.service.IExpressionService;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;

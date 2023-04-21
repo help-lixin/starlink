@@ -47,6 +47,7 @@
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <camunda7.version>7.18.0</camunda7.version>
         <mysql-connector-java.version>5.1.49</mysql-connector-java.version>
+        <jib-core.version>0.23.0</jib-core.version>
     </properties>
 
 

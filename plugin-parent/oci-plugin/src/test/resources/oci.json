@@ -1,0 +1,40 @@
+{
+  "from": {
+    "image": "openjdk:8u302-jdk-oracle"
+  },
+  "to": {
+    "image": "hub.lixin.help/library/spring-web-boot",
+    "credential": {
+      "username": "admin",
+      "password": "Li@88888888"
+    }
+  },
+  "envs": {
+    "APPLICATION_HOME": "/opt/application",
+    "APP": "spring-web-demo-1.1.0.jar",
+    "APPLICATION_BIN_DIR": "${APPLICATION_HOME}/bin",
+    "APPLICATION_CONF_DIR": "${APPLICATION_HOME}/conf",
+    "APPLICATION_LOG_DIR": "${APPLICATION_HOME}/logs",
+    "APPLICATION_DUMP_DIR": "${APPLICATION_HOME}/dumpfiles",
+    "APPLICATION": "${APPLICATION_BIN_DIR}/spring-web-demo-1.1.0.jar"
+  },
+  "copys": [
+    {
+      "files": [
+        "/Users/lixin/Workspace/spring-web-demo/target/${APP}"
+      ],
+      "pathInContainer": "${APPLICATION_BIN_DIR}"
+    }
+  ],
+  "entrypoints": [
+    "java",
+    "-Xms1024m",
+    "-Xmx1024m",
+    "-XX:+HeapDumpOnOutOfMemoryError",
+    "-XX:HeapDumpPath=${APPLICATION_DUMP_DIR}",
+    "-Dfile.encoding=UTF-8",
+    "-Duser.timezone=GMT+8",
+    "-jar",
+    "${APPLICATION}"
+  ]
+}
