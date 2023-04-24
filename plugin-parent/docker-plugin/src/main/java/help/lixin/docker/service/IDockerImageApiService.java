@@ -13,7 +13,7 @@ public interface IDockerImageApiService {
      * @param args
      * @param tags
      */
-    Set<String> buildImage(String dockerFile, List<DockerBuildArg> args, String tags);
+    Set<String> buildImage(String dockerFile, List<DockerBuildArg> args, Set<String> tags);
 
     /**
      * 推送镜像

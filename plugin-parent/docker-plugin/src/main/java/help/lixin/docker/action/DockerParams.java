@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DockerParams {
+    // 成品库目录
+    private String arfifactDir;
+    // 成品库生成后的文件名
+    private String arfifactName;
     // Dockerfile
     private String dockerFile;
     // args
@@ -53,5 +57,21 @@ public class DockerParams {
 
     public void setAutoPush(boolean autoPush) {
         isAutoPush = autoPush;
+    }
+
+    public String getArfifactDir() {
+        return arfifactDir;
+    }
+
+    public void setArfifactDir(String arfifactDir) {
+        this.arfifactDir = arfifactDir;
+    }
+
+    public String getArfifactName() {
+        return arfifactName;
+    }
+
+    public void setArfifactName(String arfifactName) {
+        this.arfifactName = arfifactName;
     }
 }

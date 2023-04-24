@@ -27,42 +27,31 @@ public class DockerImageApiService implements IDockerImageApiService {
         this.dockerClient = dockerClient;
     }
 
-
     @Override
-    public Set<String> buildImage(String dockerFile, List<DockerBuildArg> args, String tags) {
+    public Set<String> buildImage(String dockerFile, List<DockerBuildArg> args, Set<String> tags) {
         Set<String> tagsResult = new HashSet<>();
 
         File dockerFileFile = new File(dockerFile);
-        if (!dockerFileFile.exists()) {
-            String msg = String.format("Dockerfile[%s] not found.", dockerFileFile);
-            // TODO lixin logger
-            logger.error(msg);
-            throw new RuntimeException(msg);
-        } else {
-            BuildImageCmd buildImageCmd = dockerClient.buildImageCmd(dockerFileFile);
+        BuildImageCmd buildImageCmd = dockerClient.buildImageCmd(dockerFileFile);
 
-            if (null != args) {
-                // process arg
-                for (DockerBuildArg arg : args) {
-                    buildImageCmd.withBuildArg(arg.getKey(), arg.getValue());
-                }
+        if (null != args) {
+            for (DockerBuildArg arg : args) {
+                buildImageCmd.withBuildArg(arg.getKey(), arg.getValue());
             }
+        }
 
-            if (null != tags && !tags.isEmpty()) {
-                // process tag
-                String[] tagsArray = tags.split(",");
-                Set<String> tagsSet = Stream.of(tagsArray).collect(Collectors.toSet());
-                tagsResult.addAll(tagsSet);
-                buildImageCmd.withTags(tagsSet);
-            }
+        if (null != tags && !tags.isEmpty()) {
+            buildImageCmd.withTags(tags);
+            //
+            tagsResult.addAll(tags);
+        }
 
-            try {
-                logger.info("START build image,for Dockerfile:[{}]", dockerFile);
-                buildImageCmd.exec(new BuildImageResultCallback()).awaitCompletion();
-                logger.info("END build image,for Dockerfile:[{}]", dockerFile);
-            } catch (InterruptedException e) {
-                logger.error("build cmd:[{}],to image error:[{}]", buildImageCmd, e);
-            }
+        try {
+            logger.info("START build image,for Dockerfile:[{}]", dockerFile);
+            buildImageCmd.exec(new BuildImageResultCallback()).awaitCompletion();
+            logger.info("END build image,for Dockerfile:[{}]", dockerFile);
+        } catch (InterruptedException e) {
+            logger.error("build cmd:[{}],to image error:[{}]", buildImageCmd, e);
         }
         return tagsResult;
     }

@@ -1,0 +1,53 @@
+{
+  "key": "pipeline-test",
+  "name": "测试流水线",
+  "pipelines": [
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "1",
+      "name": "gitlab下载源码",
+      "source": null,
+      "target": "2",
+      "plugin": "gitlab-config",
+      "params": "{  \"url\" : \"ssh://git@192.168.8.10:2222/erp/spring-web-demo.git\" , \"branch\" : \"main\" }"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "2",
+      "name": "jenkins maven 源码编译",
+      "source": "1",
+      "target": "3",
+      "sync": true,
+      "plugin": "jenkins",
+      "params": "{  \"templateFile\" : \"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" , \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests -X '''  \"  } ] }"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "3",
+      "name": "配置harbor仓库",
+      "source": "2",
+      "target": "4",
+      "sync": true,
+      "plugin": "harbor-config"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "4",
+      "name": "本地Docker打包镜像并推送给Harbor仓库",
+      "source": "3",
+      "target": "5",
+      "plugin": "docker-build-image",
+      "params": " { \"dockerFile\":\"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/Dockerfile\" , \"tags\":\"hub.lixin.help/library/spring-web-demo:v${BUILD_NUMBER}\", \"args\":[ { \"key\": \"APP_FILE\" , \"value\":\"${ARTIFACT_NAME}\"  } ] } "
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "5",
+      "name": "K8S拉取镜像,并进行部署",
+      "source": "4",
+      "target": null,
+      "sync": true,
+      "plugin": "k8s-deploy",
+      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"harbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientImpl;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
 import com.github.dockerjava.transport.DockerHttpClient;
+import help.lixin.core.pipeline.service.IExpressionService;
 import help.lixin.docker.properties.DockerProperties;
 import help.lixin.docker.service.DockerFaceService;
 import help.lixin.docker.service.IDockerImageApiService;
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 import java.time.Duration;
 
@@ -22,18 +24,22 @@ public class DockerConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public DefaultDockerClientConfig dockerClientConfig(DockerProperties dockerProperties) {
+    public DefaultDockerClientConfig dockerClientConfig(Environment env, DockerProperties dockerProperties) {
+        String registryUrl = env.getProperty("harbor.url", dockerProperties.getRegistryUrl());
+        String registryUser = env.getProperty("harbor.userName", dockerProperties.getRegistryUser());
+        String registryPwd = env.getProperty("harbor.password", dockerProperties.getRegistryPwd());
+
         DefaultDockerClientConfig config = DefaultDockerClientConfig.createDefaultConfigBuilder()
                 //
                 .withDockerHost(dockerProperties.getHost())
                 //
                 .withDockerTlsVerify(dockerProperties.isDockerTlsVerify())
                 //
-                .withRegistryUrl(dockerProperties.getRegistryUrl())
+                .withRegistryUrl(registryUrl)
                 //
-                .withRegistryUsername(dockerProperties.getRegistryUser())
+                .withRegistryUsername(registryUser)
                 //
-                .withRegistryPassword(dockerProperties.getRegistryPwd())
+                .withRegistryPassword(registryPwd)
                 //
                 .withApiVersion(dockerProperties.getApiVersion())
                 //
@@ -78,10 +84,10 @@ public class DockerConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public DockerFaceService dockerFaceService(DockerProperties dockerProperties,
-                                               //
-                                               IDockerImageApiService dockerImageApiService) {
-        DockerFaceService dockerFaceService = new DockerFaceService(dockerProperties, dockerImageApiService);
+    public DockerFaceService dockerFaceService(DockerProperties dockerProperties, //
+                                               IDockerImageApiService dockerImageApiService, //
+                                               IExpressionService expressionService) {
+        DockerFaceService dockerFaceService = new DockerFaceService(dockerProperties, dockerImageApiService, expressionService);
         return dockerFaceService;
     }
 }

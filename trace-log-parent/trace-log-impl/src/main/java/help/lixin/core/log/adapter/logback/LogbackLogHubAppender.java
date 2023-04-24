@@ -83,7 +83,9 @@ public class LogbackLogHubAppender<E> extends UnsynchronizedAppenderBase<E> {
         // 这样就代表属Pipline的日志.
         PipelineContext ctx = PipelineContextHolder.get();
         if (null != ctx) {
+            // 流水线实例id
             String instanceId = (String) ctx.getVar(Constant.Pipeline.PIPELINE_INSTANCE_ID);
+            // 流水线节点id(流水线步骤id)
             String nodeId = (String) ctx.getVar(Constant.Pipeline.PIPELINE_NODE_ID);
             String actionPlugin = (String) ctx.getVar(Constant.Common.ACTION_NAME);
 

@@ -21,7 +21,7 @@
 
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-action-core</artifactId>
+            <artifactId>starlink-plugin-core</artifactId>
             <version>${project.version}</version>
         </dependency>
 

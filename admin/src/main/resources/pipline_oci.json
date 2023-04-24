@@ -1,0 +1,54 @@
+{
+  "key": "pipeline-test",
+  "name": "测试流水线",
+  "pipelines": [
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "1",
+      "name": "gitlab下载源码",
+      "source": null,
+      "target": "2",
+      "plugin": "gitlab-config",
+      "params": "{  \"url\" : \"ssh://git@192.168.8.10:2222/erp/spring-web-demo.git\" , \"branch\" : \"main\" }"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "2",
+      "name": "jenkins maven 源码编译",
+      "source": "1",
+      "target": "3",
+      "sync": true,
+      "plugin": "jenkins",
+      "params": "{  \"templateFile\" : \"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" , \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests -X '''  \"  } ] }"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "3",
+      "name": "配置harbor仓库",
+      "source": "2",
+      "target": "4",
+      "sync": true,
+      "plugin": "harbor-config"
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "4",
+      "name": "OCI(JIB)打包镜像并推送给Harbor仓库",
+      "source": "3",
+      "target": "5",
+      "sync": true,
+      "plugin": "oci",
+      "params": " {   \"from\": {  \"image\": \"openjdk:8u302-jdk-oracle\"  },  \"to\": {  \"image\": \"hub.lixin.help/library/spring-web-demo:v${BUILD_NUMBER}\",  \"credential\": {  \"username\": \"${REPOSITORY_USERNAME}\",  \"password\": \"${REPOSITORY_PASSWORD}\"  }  },  \"envs\": {  \"APPLICATION_HOME\": \"/opt/application\",  \"APP\": \"${ARTIFACT_NAME}\",  \"APPLICATION_BIN_DIR\": \"${APPLICATION_HOME}/bin\",  \"APPLICATION_CONF_DIR\": \"${APPLICATION_HOME}/conf\",  \"APPLICATION_LOG_DIR\": \"${APPLICATION_HOME}/logs\",  \"APPLICATION_DUMP_DIR\": \"${APPLICATION_HOME}/dumpfiles\",  \"APPLICATION\": \"/opt/application/bin/${ARTIFACT_NAME}\"  },  \"copys\": [  {  \"files\": [  \"${ARTIFACT_FULL_PATH}\"  ],  \"pathInContainer\": \"${APPLICATION_BIN_DIR}\"  }  ],  \"entrypoints\": [  \"java\",  \"-Xms1024m\",  \"-Xmx1024m\",  \"-XX:+HeapDumpOnOutOfMemoryError\",  \"-XX:HeapDumpPath=${APPLICATION_DUMP_DIR}\",  \"-Dfile.encoding=UTF-8\",  \"-Duser.timezone=GMT+8\",  \"-jar\",  \"${APPLICATION}\"  ]  } "
+    },
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "5",
+      "name": "K8S拉取镜像,并进行部署",
+      "source": "4",
+      "target": null,
+      "sync": true,
+      "plugin": "k8s-deploy",
+      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"harbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
+    }
+  ]
+}

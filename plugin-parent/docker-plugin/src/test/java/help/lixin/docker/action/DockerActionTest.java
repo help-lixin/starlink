@@ -23,7 +23,7 @@ public class DockerActionTest {
     @Before
     public void initApplication() throws Exception {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("docker.registryUrl", "http://103.215.125.86:3080");
+        properties.put("docker.registryUrl", "https://hub.lixin.help");
         properties.put("docker.registryUser", "admin");
         properties.put("docker.registryPwd", getPassword());
 
@@ -37,7 +37,7 @@ public class DockerActionTest {
 
     @Test
     public void testActionExecute() throws Exception {
-        String params = "{ \"dockerFile\":\"/Users/lixin/tmp/Dockerfile\" , \"tags\":\"103.215.125.86:3080/spring-web-demo/spring-web-demo:v1.0-1519\", \"args\":[ { \"key\": \"APP_FILE\" , \"value\":\"spring-web-demo-1.1.0.jar\"  } ] }";
+        String params = "{ \"dockerFile\":\"/tmp/spring-web-demo/Dockerfile\" , \"tags\":\"hub.lixin.help/spring-web-demo/spring-web-demo:v1.0-1519\", \"args\":[ { \"key\": \"APP_FILE\" , \"value\":\"spring-web-demo-1.1.0.jar\"  } ] }";
         Action action = applicationContext.getBean(Action.class);
         StagePipelineContext ctx = new StagePipelineContext();
         ctx.setStageParams(params);
