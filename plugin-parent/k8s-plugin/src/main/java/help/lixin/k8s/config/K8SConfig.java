@@ -60,6 +60,7 @@ public class K8SConfig {
         k8sFaceService.setK8SProperties(k8sProperties);
         k8sFaceService.setKubernetesClient(kubernetesClient);
         k8sFaceService.setDeploymentApiService(deploymentApiService);
+        k8sFaceService.setExpressionService(expressionService);
         if (null != k8sFaceServiceCustomizer) {
             k8sFaceServiceCustomizer.customizer(k8sFaceService);
         }

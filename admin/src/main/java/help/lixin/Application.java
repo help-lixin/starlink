@@ -19,13 +19,13 @@ public class Application {
     private static String PIPELINE_DSL = "pipline-docker.json";
 
     public static void main(String[] args) throws Exception {
-        URL resource = Application.class.getClassLoader().getResource(PIPELINE_DSL);
-        String pipelineDSLPath = resource.getFile();
-        String jsonDSL = FileUtils.readFileToString(new File(pipelineDSLPath), "UTF-8");
-        ObjectMapper mapper = new ObjectMapper();
-        PipelineDefinition pipelineDefinition = mapper.readValue(jsonDSL, PipelineDefinition.class);
+//        URL resource = Application.class.getClassLoader().getResource(PIPELINE_DSL);
+//        String pipelineDSLPath = resource.getFile();
+//        String jsonDSL = FileUtils.readFileToString(new File(pipelineDSLPath), "UTF-8");
+//        ObjectMapper mapper = new ObjectMapper();
+//        PipelineDefinition pipelineDefinition = mapper.readValue(jsonDSL, PipelineDefinition.class);
         ConfigurableApplicationContext ctx = SpringApplication.run(Application.class, args);
-        PipelineEngine pipelineBean = ctx.getBean(PipelineEngine.class);
-        pipelineBean.execute(pipelineDefinition);
+//        PipelineEngine pipelineBean = ctx.getBean(PipelineEngine.class);
+//        pipelineBean.execute(pipelineDefinition);
     }
 }

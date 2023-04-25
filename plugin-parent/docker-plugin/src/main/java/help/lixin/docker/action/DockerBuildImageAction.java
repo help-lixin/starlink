@@ -26,15 +26,16 @@ public class DockerBuildImageAction implements Action {
 
     @Override
     public boolean execute(PipelineContext ctx) throws Exception {
+        if (logger.isDebugEnabled()) {
+            logger.debug("START execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
+        }
+
         String stageParams = ctx.getStageParams();
         ObjectMapper mapper = new ObjectMapper();
         DockerParams actionParams = mapper.readValue(stageParams, DockerParams.class);
 
-        String dockerFile = dockerFaceService.getExpressionService().prase(actionParams.getDockerFile(), ctx.getVars());
+        String dockerFile = expression(actionParams.getDockerFile(), ctx.getVars());
         String arfifactDir = getArfifactDir(actionParams, ctx.getVars());
-        // String arfifactName = getArfifactName(actionParams, ctx.getVars());
-
-        // String arfifactFullPath = String.format("%s%s%s", arfifactDir, File.separator, arfifactName);
         String arfifactDockerFullPath = String.format("%s%s%s", arfifactDir, File.separator, "Dockerfile");
 
         // 拷贝DockerFile到成品库目录底下,因为:Dockerfile需要与成品库在同一目录下的.
@@ -57,6 +58,10 @@ public class DockerBuildImageAction implements Action {
             for (String imageName : images) {
                 dockerFaceService.getDockerImageApiService().pushImage(imageName);
             }
+        }
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("END execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
         }
         return true;
     }
@@ -111,10 +116,6 @@ public class DockerBuildImageAction implements Action {
     }
 
 
-    protected String expression(String template, Map<String, Object> ctx) {
-        return dockerFaceService.getExpressionService().prase(template, ctx);
-    }
-
     protected String getArfifactDir(DockerParams actionParams, Map<String, Object> ctx) {
         String result = actionParams.getArfifactDir();
         if (null == result) {
@@ -122,7 +123,7 @@ public class DockerBuildImageAction implements Action {
         }
         // 处理表达式
         if (null != result) {
-            result = dockerFaceService.getExpressionService().prase(result, ctx);
+            result = expression(result, ctx);
         }
         return result;
     }
@@ -134,9 +135,13 @@ public class DockerBuildImageAction implements Action {
         }
         // 处理表达式
         if (null != result) {
-            result = dockerFaceService.getExpressionService().prase(result, ctx);
+            result = expression(result, ctx);
         }
         return result;
+    }
+
+    protected String expression(String template, Map<String, Object> ctx) {
+        return dockerFaceService.getExpressionService().prase(template, ctx);
     }
 
     @Override

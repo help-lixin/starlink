@@ -37,6 +37,7 @@ public class DeploymentAction implements Action {
         if (logger.isDebugEnabled()) {
             logger.debug("start execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
         }
+
         // 1. 参数解析
         String stageParams = ctx.getStageParams();
         ObjectMapper mapper = new ObjectMapper();
@@ -50,7 +51,7 @@ public class DeploymentAction implements Action {
         Map<String, Object> tempContext = new HashMap<>(ctx.getVars());
 
         // 系统要求的变量
-        tempContext.put(Constant.NAMESPACE, null == params.getNamespace() ? Constant.DEFAULT_NAMESPACE : params.getNamespace());
+        tempContext.put(Constant.NAMESPACE, null == params.getNamespace() ? Constant.DEFAULT_NAMESPACE : varProcess(params.getNamespace(), tempContext));
         tempContext.put(Constant.DEPLOYMENT_NAME, varProcess(params.getDeployName(), tempContext));   // 部署名称
         tempContext.put(Constant.POD_LABEL_NAME, varProcess(params.getPodLabelName(), tempContext));   // 标签名称
         tempContext.put(Constant.POD_LABEL_VALUE, varProcess(params.getPodLabelValue(), tempContext)); // 标签Value
@@ -63,7 +64,7 @@ public class DeploymentAction implements Action {
         paddingContext(params.getVars(), tempContext);
 
         // 4. 把yaml中的变量进行替换
-        String ymlContent = k8sFaceService.getExpressionService().prase(yamlTemplateContent.toString(), tempContext);
+        String ymlContent = varProcess(yamlTemplateContent.toString(), tempContext);
 
         if (logger.isDebugEnabled()) {
             logger.debug("ready apply yaml:\n{}", ymlContent);
@@ -85,7 +86,7 @@ public class DeploymentAction implements Action {
     }
 
     protected String varProcess(String varValue, Map<String, Object> tempContext) throws Exception {
-        if (null != varValue && varValue.startsWith("$")) {
+        if (null != varValue) {
             String var = k8sFaceService.getExpressionService().prase(varValue, tempContext);
             return var;
         }

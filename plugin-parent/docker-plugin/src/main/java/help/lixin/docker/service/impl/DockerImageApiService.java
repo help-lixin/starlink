@@ -65,7 +65,6 @@ public class DockerImageApiService implements IDockerImageApiService {
             throw new RuntimeException(msg);
         } else {
             logger.info("START  Push image:[{}]", imageId);
-
             try {
                 dockerClient.pushImageCmd(imageId).exec(new PushImageResultCallback()).awaitCompletion();
             } catch (InterruptedException e) {

@@ -221,15 +221,6 @@ public class JenkinsAction implements Action {
         return true;
     }
 
-    protected String getDockerFilePath(JenkinsActionParams params) {
-        String dockerFile = params.getDockerFile();
-        if (null == dockerFile) {
-            dockerFile = jenkinsFaceService.getJenkinsProperties().getDockerFile();
-        }
-        return dockerFile;
-    }
-
-
     protected IntegerResponse triggerBuild(String jobName, String branch, String url) {
         IJobService jobService = jenkinsFaceService.getJobService();
         TriggerBuildContext buildContext = TriggerBuildContext.newBuilder()

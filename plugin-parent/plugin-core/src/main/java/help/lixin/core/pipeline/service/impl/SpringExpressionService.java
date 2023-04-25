@@ -2,13 +2,15 @@ package help.lixin.core.pipeline.service.impl;
 
 import help.lixin.core.pipeline.service.IContextCustomizer;
 import help.lixin.core.pipeline.service.IExpressionService;
+import org.springframework.context.expression.MapAccessor;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
-import org.springframework.expression.ParseException;
 import org.springframework.expression.ParserContext;
 import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,10 +46,13 @@ public class SpringExpressionService implements IExpressionService {
                 contextCustomizer.customizer(tempContext);
             }
 
+            StandardEvaluationContext evaluationCtx = new StandardEvaluationContext(context);
+            evaluationCtx.setPropertyAccessors(Collections.singletonList(new MapAccessor()));
+
             Expression expression = parser.parseExpression(expressionString, parserContext);
-            String value = expression.getValue(tempContext, String.class);
+            String value = expression.getValue(evaluationCtx, String.class);
             return value;
-        } catch (ParseException e) {
+        } catch (Exception e) {
             return expressionString;
         }
     }

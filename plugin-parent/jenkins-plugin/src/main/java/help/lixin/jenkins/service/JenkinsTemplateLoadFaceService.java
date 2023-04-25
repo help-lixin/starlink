@@ -1,11 +1,9 @@
 package help.lixin.jenkins.service;
 
 import freemarker.cache.StringTemplateLoader;
-import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import help.lixin.core.exception.jenkins.JenkinsTemplateNotFoundException;
-import help.lixin.jenkins.action.JenkinsAction;
 import help.lixin.jenkins.action.JenkinsActionParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +45,6 @@ public class JenkinsTemplateLoadFaceService {
                         }
                     }
                 }
-
                 Template template = configuration.getTemplate(JENKINS_SERVICE_TEMPLATE_NAME);
                 StringWriter stringWriter = new StringWriter();
                 template.process(ctx, stringWriter);

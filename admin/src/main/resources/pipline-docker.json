@@ -37,7 +37,7 @@
       "source": "3",
       "target": "5",
       "plugin": "docker-build-image",
-      "params": " { \"dockerFile\":\"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/Dockerfile\" , \"tags\":\"hub.lixin.help/library/spring-web-demo:v${BUILD_NUMBER}\", \"args\":[ { \"key\": \"APP_FILE\" , \"value\":\"${ARTIFACT_NAME}\"  } ] } "
+      "params": " { \"dockerFile\":\"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/Dockerfile\" , \"tags\":\"${REPOSITORY_URL}/library/${projectName}:v${BUILD_NUMBER}\", \"args\":[ { \"key\": \"APP_FILE\" , \"value\":\"${ARTIFACT_NAME}\"  } ] } "
     },
     {
       "clazz": "help.lixin.core.definition.impl.PluginDefinition",
