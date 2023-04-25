@@ -201,7 +201,6 @@
         <module>engine-parent</module>
         <module>trace-log-parent</module>
         <module>plugin-parent</module>
-        <module>event-parent</module>
         <module>admin</module>
     </modules>
 </project>
