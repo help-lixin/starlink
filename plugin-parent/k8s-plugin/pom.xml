@@ -20,11 +20,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.ibeetl</groupId>
-            <artifactId>beetl</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>io.fabric8</groupId>
             <artifactId>kubernetes-client</artifactId>
         </dependency>

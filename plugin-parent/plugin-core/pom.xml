@@ -24,9 +24,10 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!-- 表达式解析 -->
         <dependency>
-            <groupId>com.ibeetl</groupId>
-            <artifactId>beetl</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
         </dependency>
 
         <dependency>

@@ -20,11 +20,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.ibeetl</groupId>
-            <artifactId>beetl</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.google.cloud.tools</groupId>
             <artifactId>jib-core</artifactId>
             <version>${jib-core.version}</version>

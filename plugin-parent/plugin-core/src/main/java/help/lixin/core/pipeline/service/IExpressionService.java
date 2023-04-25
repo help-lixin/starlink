@@ -7,5 +7,5 @@ public interface IExpressionService {
 
     IContextCustomizer getContextCustomizer();
 
-    String prase(String template, Map<String, Object> context);
+    String prase(String expressionString, Map<String, Object> context);
 }

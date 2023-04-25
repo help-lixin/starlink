@@ -25,7 +25,6 @@
         <gitlab4j-api.version>5.0.1</gitlab4j-api.version>
         <junit.version>4.13.2</junit.version>
         <commons-io.version>2.11.0</commons-io.version>
-        <beetl.version>3.14.1.RELEASE</beetl.version>
         <thymeleaf.version>3.1.1.RELEASE</thymeleaf.version>
         <kubernetes-client.version>6.4.1</kubernetes-client.version>
         <jenkins-rest.version>1.0.2</jenkins-rest.version>
@@ -103,12 +102,6 @@
                 <groupId>io.fabric8</groupId>
                 <artifactId>kubernetes-client</artifactId>
                 <version>${kubernetes-client.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.ibeetl</groupId>
-                <artifactId>beetl</artifactId>
-                <version>${beetl.version}</version>
             </dependency>
 
             <dependency>

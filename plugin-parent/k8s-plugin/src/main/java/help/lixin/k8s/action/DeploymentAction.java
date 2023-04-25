@@ -10,10 +10,6 @@ import io.fabric8.kubernetes.api.model.EnvVar;
 import io.fabric8.kubernetes.api.model.EnvVarBuilder;
 import io.fabric8.kubernetes.api.model.apps.Deployment;
 import org.apache.commons.io.IOUtils;
-import org.beetl.core.Configuration;
-import org.beetl.core.GroupTemplate;
-import org.beetl.core.Template;
-import org.beetl.core.resource.StringTemplateResourceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +25,6 @@ import java.util.Map;
 public class DeploymentAction implements Action {
     private Logger logger = LoggerFactory.getLogger(DeploymentAction.class);
     public static final String K8S_DEPLOYMENT_ACTION = "k8s-deploy";
-
-    private StringTemplateResourceLoader resourceLoader = new StringTemplateResourceLoader();
 
     private K8SFaceService k8sFaceService;
 
@@ -69,10 +63,7 @@ public class DeploymentAction implements Action {
         paddingContext(params.getVars(), tempContext);
 
         // 4. 把yaml中的变量进行替换
-        GroupTemplate gt = new GroupTemplate(resourceLoader, Configuration.defaultConfiguration());
-        Template t = gt.getTemplate(yamlTemplateContent.toString());
-        t.binding(tempContext);
-        String ymlContent = t.render();
+        String ymlContent = k8sFaceService.getExpressionService().prase(yamlTemplateContent.toString(), tempContext);
 
         if (logger.isDebugEnabled()) {
             logger.debug("ready apply yaml:\n{}", ymlContent);
@@ -95,10 +86,7 @@ public class DeploymentAction implements Action {
 
     protected String varProcess(String varValue, Map<String, Object> tempContext) throws Exception {
         if (null != varValue && varValue.startsWith("$")) {
-            GroupTemplate gt = new GroupTemplate(resourceLoader, Configuration.defaultConfiguration());
-            Template t = gt.getTemplate(varValue);
-            t.binding(tempContext);
-            String var = t.render();
+            String var = k8sFaceService.getExpressionService().prase(varValue, tempContext);
             return var;
         }
         return varValue;

@@ -1,5 +1,6 @@
 package help.lixin.k8s.config;
 
+import help.lixin.core.pipeline.service.IExpressionService;
 import help.lixin.k8s.properties.K8SProperties;
 import help.lixin.k8s.service.*;
 import help.lixin.k8s.service.impl.DeploymentApiService;
@@ -47,6 +48,8 @@ public class K8SConfig {
 
     @Bean
     public K8SFaceService k8sFaceService(@Autowired K8SProperties k8sProperties,
+                                         //
+                                         @Autowired IExpressionService expressionService,
                                          //
                                          @Autowired KubernetesClient kubernetesClient,
                                          //
