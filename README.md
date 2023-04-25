@@ -41,7 +41,7 @@
 
 ```
 {
-  "key": "pipelineEngine-test",
+  "key": "pipeline-test",
   "name": "测试流水线",
   "pipelines": [
     {
@@ -50,76 +50,46 @@
       "name": "gitlab下载源码",
       "source": null,
       "target": "2",
-      "plugin": "gitlab",
-      "params": "{  \"url\" : \"ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git\" , \"branch\" : \"main\" }"
+      "plugin": "gitlab-config",
+      "params": "{  \"url\" : \"ssh://git@192.168.8.10:2222/erp/spring-web-demo.git\" , \"branch\" : \"main\" }"
     },
     {
-      "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
       "id": "2",
-      "name": "流水线-1",
+      "name": "jenkins maven 源码编译",
       "source": "1",
       "target": "3",
-      "params": ""
+      "sync": true,
+      "plugin": "jenkins",
+      "params": "{  \"templateFile\" : \"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" , \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests -X '''  \"  } ] }"
     },
     {
       "clazz": "help.lixin.core.definition.impl.PluginDefinition",
       "id": "3",
-      "name": "jenkins maven 源码编译",
+      "name": "配置harbor仓库",
       "source": "2",
       "target": "4",
       "sync": true,
-      "plugin": "jenkins",
-      "params": "{  \"templateFile\" : \"/Users/lixin/GitRepository/starlink/admin/src/main/resources/java-service-template.ftl\" , \"credentialId\" : \"gitlab\" , \"archiveArtifacts\" : \"target/*.jar\" , \"stages\": [ { \"name\":\"Build\",\"steps\": \" sh  ''' mvn clean install -DskipTests -X '''  \"  } ] }"
+      "plugin": "harbor-config"
     },
     {
-      "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
       "id": "4",
-      "name": "流水线-2",
+      "name": "本地Docker打包镜像并推送给Harbor仓库",
       "source": "3",
-      "target": "5"
+      "target": "5",
+      "plugin": "docker-build-image",
+      "params": " { \"dockerFile\":\"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/Dockerfile\" , \"tags\":\"hub.lixin.help/library/spring-web-demo:v${BUILD_NUMBER}\", \"args\":[ { \"key\": \"APP_FILE\" , \"value\":\"${ARTIFACT_NAME}\"  } ] } "
     },
     {
       "clazz": "help.lixin.core.definition.impl.PluginDefinition",
       "id": "5",
-      "name": "配置harbor仓库",
+      "name": "K8S拉取镜像,并进行部署",
       "source": "4",
-      "target": "6",
-      "sync": true,
-      "plugin": "harbor"
-    },
-    {
-      "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
-      "id": "6",
-      "name": "流水线-3",
-      "source": "5",
-      "target": "7"
-    },
-    {
-      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
-      "id": "7",
-      "name": "Docker打包镜像并推送给Harbor仓库",
-      "source": "6",
-      "target": "8",
-      "sync": true,
-      "plugin": "shell",
-      "params": "{  \"cmds\":[  \" cd ${ARTIFACT_DIR} \" , \" docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${BUILD_NUMBER} . \" , \" docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} \" , \" docker tag ${projectName}:v${BUILD_NUMBER}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} \" , \" docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} \"  ] }"
-    },
-    {
-      "clazz": "help.lixin.core.definition.impl.SequenceFlowDefinition",
-      "id": "8",
-      "name": "流水线-4",
-      "source": "7",
-      "target": "9"
-    },
-    {
-      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
-      "id": "9",
-      "name": "K8S拉取镜像,并发布",
-      "source": "8",
       "target": null,
       "sync": true,
       "plugin": "k8s-deploy",
-      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"loginharbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
+      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"harbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
     }
   ]
 }
@@ -308,8 +278,7 @@ DATETIME : yyyy-MM-dd HH:mm:ss
 ```
 
 ### 11. 流水线引擎
-为了让框架更加的通用,没有自己研发流水线引擎,而是向"流程引擎"靠拢,
-也没有与具体的某一个"流程引擎"厂商绑定,而是:自己定义"流水线引擎操作接口",让各个"流程引擎"实现这个接口,这样就不存在选型问题,目前:只支持Camunda,后续会支持更多(Flowable/Activiti). 
+对各个流程引擎进行了研究与使用,发现流程引擎有与我想要的业务有一点的差距,所以,通过状态机,自研了一套流水线引擎出来. 
 
 ### 12. 流水线执行日志查看
 某个Pipline的执行过程会比较耗时,为了增加体验,期望能"实时"的查看每一个Pipline节点,"此时",正在做什么操作.
@@ -322,133 +291,3 @@ DATETIME : yyyy-MM-dd HH:mm:ss
 1) AOP只能拦截到方法上,粒度太粗了.  
 2) 为了这个日志收集功能,AOP会强制要求:开发必须把每一个细小的操作,都转换成方法,这种约束过强.     
 3) 有一定约束和规范有好处,亦有坏处,越是有规范的东西,能减少异同和学习成本,但是,也会局限你,阻碍你的认知,它会给你灌输一种思想,让你从骨子里就认为,形成规范的东西一定是最好的,会影响你对未知的探索.          
-
-### 13. 事件总线
-事件总线产生的背景,本系统有一整套管理模型(比如:用户/项目),而其它组件(比如:gitlab/harbor/camunda...)也都有一套模型,期望:在本系统进行管理时,能够自动与其它组件(比如:gitlab/harbor)进行同步,(例如:用户在本系统创建用户时:gitlab也能创建用户),实现方式有以下几种:      
-
-1) 同步调用    
-   比如:在本系统创建:用户/角色/项目时,同步调用其它组件(比如:gitlab/harbor),缺点:代码过于耦合,如果,新增一个组件咋办?所以Pass掉.      
-2) MQ方案(Kakfa/RocketMQ/Pulsar)       
-   不推荐MQ的原因是有两点:    
-   2.1) MQ(RocketMQ/Kafka)会自动删除过期的消息,不符合我的业务,例如:用户刚开始使用的组件是:阿里docker仓库,后面(几年后),把docker仓库切换成:harbor(由于,本系统要协助用户自动在harbor创建Project),而此时,如果harbor组件去订阅消息时,发现以前的消息不复存在了.              
-   2.2) MQ太重了,因为,这个项目是Plugin模式开发,期望:一个普通开发人员拿下代码后,能直接运行,而且,一旦启动时,依赖其它的外部框架,会给开发人员造成学习成本的增加.    
-   2.3) 其实:Pulsar符合我的业务要求.  
-4) outbox模式(推荐)         
-   针对同步调用的缺点,相应的解决方案是,通过:"事件发布"进行解耦,将消息载体通过DB进行存储,而且,还能,保证在一个事务之内(该思想源于:eventuate-tram-core),这样,就能保证,绝对不会丢失消息,不同的组件(gitlab)在订阅时,记住最后一次同步的id(lastId),一批一批的拉取消息进行处理.             
-5) 设计考虑      
-   为了应对将来大数据量以及多租户隔离机制,event组件,要求按照面向对象编程的原则(迪米特/开闭/里氏替换/接口隔离),根据使用情况,可切换到其它的开源MQ,比如:Pulsar.            
-### 14. Pipeline转换成BPMN效果图
-![Pipeline 转换成BPMN后效果图](docs/desgin/pipline-bpmn.png)
-
-### 15. 上面Pipeline转换成Camunda xml的内容
-```
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<definitions xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="definitions_ed4324e7-ae1f-4741-a359-d5bb8454c530" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL">
-  <process id="pipelineEngine-test" isExecutable="true" name="测试流水线">
-    <startEvent id="startEvent_1ea0ff43-9d78-4fce-aba7-c8bf05827554">
-      <outgoing>sequenceFlow_cba7c820-c00c-40df-8ecb-67b1222aa034</outgoing>
-    </startEvent>
-    <serviceTask camunda:topic="gitlab" camunda:type="external" id="serviceTask_f18e889a-531f-499f-92d5-142aa845cb12" name="gitlab下载源码">
-      <extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="_params">{  "url" : "ssh://git@103.215.125.86:2222/order-group/spring-web-demo.git" , "branch" : "main" }</camunda:inputParameter>
-        </camunda:inputOutput>
-      </extensionElements>
-      <incoming>sequenceFlow_cba7c820-c00c-40df-8ecb-67b1222aa034</incoming>
-      <outgoing>sequenceFlow_abcac0da-58fd-4efd-b89a-1265944c9239</outgoing>
-    </serviceTask>
-    <sequenceFlow id="sequenceFlow_cba7c820-c00c-40df-8ecb-67b1222aa034" sourceRef="startEvent_1ea0ff43-9d78-4fce-aba7-c8bf05827554" targetRef="serviceTask_f18e889a-531f-499f-92d5-142aa845cb12"/>
-    <serviceTask camunda:topic="jenkins" camunda:type="external" id="serviceTask_5a68b5ac-eb1a-4da1-bab8-f53340eb91f2" name="jenkins maven 源码编译">
-      <extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="_params">{  "templateFile" : "/Users/lixin/GitRepository/starlink/admin/src/main/resources/java-service-template.ftl" , "credentialId" : "gitlab" , "archiveArtifacts" : "target/*.jar" , "stages": [ { "name":"Build","steps": " sh  ''' mvn clean install -DskipTests -X '''  "  } ] }</camunda:inputParameter>
-        </camunda:inputOutput>
-      </extensionElements>
-      <incoming>sequenceFlow_abcac0da-58fd-4efd-b89a-1265944c9239</incoming>
-      <outgoing>sequenceFlow_94561705-1178-4d14-8d47-794518afcef8</outgoing>
-    </serviceTask>
-    <sequenceFlow id="sequenceFlow_abcac0da-58fd-4efd-b89a-1265944c9239" sourceRef="serviceTask_f18e889a-531f-499f-92d5-142aa845cb12" targetRef="serviceTask_5a68b5ac-eb1a-4da1-bab8-f53340eb91f2"/>
-    <serviceTask camunda:topic="harbor" camunda:type="external" id="serviceTask_228efccb-047d-4d4b-a9fb-2e32d94b9fa1" name="配置harbor仓库">
-      <incoming>sequenceFlow_94561705-1178-4d14-8d47-794518afcef8</incoming>
-      <outgoing>sequenceFlow_18bd9c91-89ef-4c31-89ac-7dc5a87b19fa</outgoing>
-    </serviceTask>
-    <sequenceFlow id="sequenceFlow_94561705-1178-4d14-8d47-794518afcef8" sourceRef="serviceTask_5a68b5ac-eb1a-4da1-bab8-f53340eb91f2" targetRef="serviceTask_228efccb-047d-4d4b-a9fb-2e32d94b9fa1"/>
-    <serviceTask camunda:topic="shell" camunda:type="external" id="serviceTask_5674b6da-8d3f-4477-bbac-c7cfd289c075" name="Docker打包镜像并推送给Harbor仓库">
-      <extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="_params">{  "cmds":[  " cd ${ARTIFACT_DIR} " , " docker build -f ${DOCKER_FILE} --build-arg APP_FILE=${ARTIFACT_NAME}  -t ${projectName}:v${BUILD_NUMBER} . " , " docker login ${REPOSITORY_URL} -u ${REPOSITORY_USERNAME} -p ${REPOSITORY_PASSWORD} " , " docker tag ${projectName}:v${BUILD_NUMBER}  ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} " , " docker push ${REPOSITORY_URL}/${projectName}/${projectName}:v${BUILD_NUMBER} "  ] }</camunda:inputParameter>
-        </camunda:inputOutput>
-      </extensionElements>
-      <incoming>sequenceFlow_18bd9c91-89ef-4c31-89ac-7dc5a87b19fa</incoming>
-      <outgoing>sequenceFlow_92981ff9-2d33-4d10-8efb-d89b1ef00fbf</outgoing>
-    </serviceTask>
-    <sequenceFlow id="sequenceFlow_18bd9c91-89ef-4c31-89ac-7dc5a87b19fa" sourceRef="serviceTask_228efccb-047d-4d4b-a9fb-2e32d94b9fa1" targetRef="serviceTask_5674b6da-8d3f-4477-bbac-c7cfd289c075"/>
-    <serviceTask camunda:topic="k8s-deploy" camunda:type="external" id="serviceTask_020fa67e-253c-4069-8a20-aad8447bc60e" name="K8S拉取镜像,并发布">
-      <extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="_params">{  "yamlTemplatePath":"/Users/lixin/GitRepository/starlink/admin/src/main/resources/deployment-template.yml" , "deployName":"${projectName}-deploy" ,"podLabelName":"app" ,"podLabelValue":"spring-web-demo-pod", "imagePullSecretName":"loginharbor" , "containerName":"${projectName}", "port":"9091" }</camunda:inputParameter>
-        </camunda:inputOutput>
-      </extensionElements>
-      <incoming>sequenceFlow_92981ff9-2d33-4d10-8efb-d89b1ef00fbf</incoming>
-      <outgoing>sequenceFlow_bef88dea-628a-4cb3-8a34-59b38cd58dc9</outgoing>
-    </serviceTask>
-    <sequenceFlow id="sequenceFlow_92981ff9-2d33-4d10-8efb-d89b1ef00fbf" sourceRef="serviceTask_5674b6da-8d3f-4477-bbac-c7cfd289c075" targetRef="serviceTask_020fa67e-253c-4069-8a20-aad8447bc60e"/>
-    <endEvent id="endEvent_e436a048-f9ef-4663-988c-6edf9c528d91">
-      <incoming>sequenceFlow_bef88dea-628a-4cb3-8a34-59b38cd58dc9</incoming>
-    </endEvent>
-    <sequenceFlow id="sequenceFlow_bef88dea-628a-4cb3-8a34-59b38cd58dc9" sourceRef="serviceTask_020fa67e-253c-4069-8a20-aad8447bc60e" targetRef="endEvent_e436a048-f9ef-4663-988c-6edf9c528d91"/>
-  </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_fb17dfc5-6da8-4f53-9d72-d09eb379c571">
-    <bpmndi:BPMNPlane bpmnElement="pipelineEngine-test" id="BPMNPlane_33359969-957b-4ae6-b7e8-13f622ee9bcb">
-      <bpmndi:BPMNShape bpmnElement="startEvent_1ea0ff43-9d78-4fce-aba7-c8bf05827554" id="BPMNShape_027afffd-e789-49ef-b23d-ce3db92c6b2b">
-        <dc:Bounds height="36.0" width="36.0" x="100.0" y="100.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="serviceTask_f18e889a-531f-499f-92d5-142aa845cb12" id="BPMNShape_33826a0d-58db-4cbb-ae1f-f4a37491cffd">
-        <dc:Bounds height="80.0" width="100.0" x="186.0" y="78.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_cba7c820-c00c-40df-8ecb-67b1222aa034" id="BPMNEdge_e4122b00-d231-4b34-8b27-d31778df5225">
-        <di:waypoint x="136.0" y="118.0"/>
-        <di:waypoint x="186.0" y="118.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape bpmnElement="serviceTask_5a68b5ac-eb1a-4da1-bab8-f53340eb91f2" id="BPMNShape_78cb0897-43ee-4fb1-84d0-32612741e8bd">
-        <dc:Bounds height="80.0" width="100.0" x="336.0" y="78.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_abcac0da-58fd-4efd-b89a-1265944c9239" id="BPMNEdge_88ff2bcb-4eb9-448c-a673-b1c048ce73d5">
-        <di:waypoint x="286.0" y="118.0"/>
-        <di:waypoint x="336.0" y="118.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape bpmnElement="serviceTask_228efccb-047d-4d4b-a9fb-2e32d94b9fa1" id="BPMNShape_390830be-824e-4c91-abc6-9136ae816d62">
-        <dc:Bounds height="80.0" width="100.0" x="486.0" y="78.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_94561705-1178-4d14-8d47-794518afcef8" id="BPMNEdge_184239f6-2601-418f-affa-4aebe1ef50db">
-        <di:waypoint x="436.0" y="118.0"/>
-        <di:waypoint x="486.0" y="118.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape bpmnElement="serviceTask_5674b6da-8d3f-4477-bbac-c7cfd289c075" id="BPMNShape_07cd8b97-c314-4ffc-9bd3-2a9650d1ffd4">
-        <dc:Bounds height="80.0" width="100.0" x="636.0" y="78.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_18bd9c91-89ef-4c31-89ac-7dc5a87b19fa" id="BPMNEdge_0509ce09-1e68-46ec-bb81-467f0c7558bf">
-        <di:waypoint x="586.0" y="118.0"/>
-        <di:waypoint x="636.0" y="118.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape bpmnElement="serviceTask_020fa67e-253c-4069-8a20-aad8447bc60e" id="BPMNShape_141b4f4f-8bbb-44c3-88a0-8521bd1cbdf8">
-        <dc:Bounds height="80.0" width="100.0" x="786.0" y="78.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_92981ff9-2d33-4d10-8efb-d89b1ef00fbf" id="BPMNEdge_b67e75e4-c104-49ff-8cac-c11cd978f82c">
-        <di:waypoint x="736.0" y="118.0"/>
-        <di:waypoint x="786.0" y="118.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape bpmnElement="endEvent_e436a048-f9ef-4663-988c-6edf9c528d91" id="BPMNShape_6978de87-6de0-4ff6-ba69-289bd8a06a9e">
-        <dc:Bounds height="36.0" width="36.0" x="936.0" y="100.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_bef88dea-628a-4cb3-8a34-59b38cd58dc9" id="BPMNEdge_3711fb64-7394-4c61-a853-09b5b14744dd">
-        <di:waypoint x="886.0" y="118.0"/>
-        <di:waypoint x="936.0" y="118.0"/>
-      </bpmndi:BPMNEdge>
-    </bpmndi:BPMNPlane>
-  </bpmndi:BPMNDiagram>
-</definitions>
-```
-
-### 16. 感谢其它开源作者 
-1) [Camunda BPMN Converter](https://github.com/lzgabel/camunda-bpmn-converter)
