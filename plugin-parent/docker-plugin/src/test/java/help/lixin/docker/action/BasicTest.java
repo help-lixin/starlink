@@ -17,23 +17,32 @@ public abstract class BasicTest {
 
     protected DockerClient dockerClient;
 
+    protected String registryUrl;
+    protected String registryUser;
+    protected String registryPwd;
+
+    protected DefaultDockerClientConfig config;
+
+    protected String dockerHost = "tcp://192.168.8.17:2375";
+
+
     @Before
     public void init() throws Exception {
-        String registryUrl = "http://103.215.125.86:3080";
-        String registryUser = "admin";
-        String registryPass = getPassword();
+        registryUrl = "https://hub.lixin.help";
+        registryUser = "admin";
+        registryPwd = getPassword();
 
-        DefaultDockerClientConfig config = DefaultDockerClientConfig.createDefaultConfigBuilder()
-                //
-                .withDockerHost("unix:///var/run/docker.sock")
+        config = DefaultDockerClientConfig.createDefaultConfigBuilder()
+                // .withDockerHost("unix:///var/run/docker.sock")
+                .withDockerHost(dockerHost)
                 //
                 .withDockerTlsVerify(false)
-                //
-                .withRegistryUrl(registryUrl)
-                //
-                .withRegistryUsername(registryUser)
-                //
-                .withRegistryPassword(registryPass)
+                // 这里的仓库信息为docker hub信息
+//                .withRegistryUrl(registryUrl)
+                // 这里的仓库信息为docker hub信息
+//                .withRegistryUsername(registryUser)
+                // 这里的仓库信息为docker hub信息
+//                .withRegistryPassword(registryPwd)
                 //
 //                .withApiVersion("1.41")
                 //

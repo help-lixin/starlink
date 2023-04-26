@@ -1,4 +1,4 @@
-package help.lixin.gitlab.action;
+package help.lixin.gitlab.action.entity;
 
 public class GitlabActionParams {
     private String projectName;

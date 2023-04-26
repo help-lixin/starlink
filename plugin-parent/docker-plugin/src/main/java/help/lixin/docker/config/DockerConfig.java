@@ -25,25 +25,25 @@ public class DockerConfig {
     @Bean
     @ConditionalOnMissingBean
     public DefaultDockerClientConfig dockerClientConfig(Environment env, DockerProperties dockerProperties) {
-        String registryUrl = env.getProperty("harbor.url", dockerProperties.getRegistryUrl());
-        String registryUser = env.getProperty("harbor.userName", dockerProperties.getRegistryUser());
-        String registryPwd = env.getProperty("harbor.password", dockerProperties.getRegistryPwd());
-
         DefaultDockerClientConfig config = DefaultDockerClientConfig.createDefaultConfigBuilder()
                 //
                 .withDockerHost(dockerProperties.getHost())
                 //
                 .withDockerTlsVerify(dockerProperties.isDockerTlsVerify())
                 //
-                .withRegistryUrl(registryUrl)
+                .withRegistryUrl(dockerProperties.getRegistryUrl())
                 //
-                .withRegistryUsername(registryUser)
+                .withRegistryUsername(dockerProperties.getRegistryUser())
                 //
-                .withRegistryPassword(registryPwd)
+                .withRegistryPassword(dockerProperties.getRegistryPwd())
                 //
                 .withApiVersion(dockerProperties.getApiVersion())
                 //
                 .build();
+
+        // 为自己的私有仓库,配置认证信息
+//        config.getDockerConfig().getAuths().put(null,null)
+
         // TODO lixin 留一个Customizer
         return config;
     }

@@ -23,6 +23,7 @@
         <spring-cloud-tencent.version>1.8.5-2020.0.5</spring-cloud-tencent.version>
 
         <gitlab4j-api.version>5.0.1</gitlab4j-api.version>
+        <jgit.version>5.13.1.202206130422-r</jgit.version>
         <junit.version>4.13.2</junit.version>
         <commons-io.version>2.11.0</commons-io.version>
         <thymeleaf.version>3.1.1.RELEASE</thymeleaf.version>
@@ -96,6 +97,16 @@
                 <groupId>org.gitlab4j</groupId>
                 <artifactId>gitlab4j-api</artifactId>
                 <version>${gitlab4j-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jgit</groupId>
+                <artifactId>org.eclipse.jgit</artifactId>
+                <version>${jgit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jgit</groupId>
+                <artifactId>org.eclipse.jgit.ssh.jsch</artifactId>
+                <version>${jgit.version}</version>
             </dependency>
 
             <dependency>

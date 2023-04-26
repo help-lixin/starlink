@@ -4,12 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import help.lixin.core.constants.Constant;
 import help.lixin.core.pipeline.action.Action;
 import help.lixin.core.pipeline.ctx.PipelineContext;
+import help.lixin.gitlab.action.entity.GitlabActionParams;
 import help.lixin.gitlab.service.GitlabFaceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * gitlab实现
+ * gitlab 配置实现
  */
 public class GitlabConfigAction implements Action {
     public static final String GITLAB_ACTION_CONFIG = "gitlab-config";

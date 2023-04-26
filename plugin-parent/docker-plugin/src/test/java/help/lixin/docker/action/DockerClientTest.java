@@ -2,6 +2,7 @@ package help.lixin.docker.action;
 
 import com.github.dockerjava.api.command.BuildImageResultCallback;
 import com.github.dockerjava.api.command.PullImageResultCallback;
+import com.github.dockerjava.api.model.AuthConfig;
 import com.github.dockerjava.api.model.AuthResponse;
 import com.github.dockerjava.api.model.Image;
 import com.github.dockerjava.api.model.PullResponseItem;
@@ -63,8 +64,17 @@ public class DockerClientTest extends BasicTest {
 
     @Test
     public void testPushImage() throws Exception {
-        String imageId = "103.215.125.86:3080/library/nginx:v1.0";
+        String imageId = "hub.lixin.help/library/nginx:v1.0";
+
+        // 为会话级配置认证信息
+        AuthConfig authConfig = new AuthConfig()
+                .withRegistryAddress(registryUrl)
+                .withUsername(registryUser)
+                .withPassword(registryPwd);
+
+        config.getDockerConfig().getAuths().put("hub.lixin.help", authConfig);
         dockerClient.pushImageCmd(imageId).exec(new PushImageResultCallback()).awaitCompletion();
+        System.out.println();
     }
 
     @Test
