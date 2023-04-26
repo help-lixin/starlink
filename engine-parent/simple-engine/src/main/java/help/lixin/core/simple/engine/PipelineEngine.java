@@ -74,6 +74,8 @@ public class PipelineEngine {
             String nextTarget = curr.getTarget();
             if (null != nextTarget) {
                 curr = all.get(nextTarget);
+            } else if (null == nextTarget) {
+                break;
             } else {
                 curr = last;
             }
@@ -91,7 +93,6 @@ public class PipelineEngine {
                                  //
                                  PipelineContext globalContext) throws Exception {
         // TODO lixin
-
         boolean execute = Boolean.FALSE;
         boolean before = Boolean.FALSE;
         boolean after = Boolean.FALSE;
@@ -100,7 +101,8 @@ public class PipelineEngine {
         String params = actionElement.getParams();
         Action action = actionMediator.getAction(pluginName);
         if (null == action) {
-            throw new Exception("");
+            String msg = String.format("执行异常,没有找到插件:[%s]", pluginName);
+            throw new Exception(msg);
         }
 
         // 1. 创建"阶段性"的的上下文
@@ -121,7 +123,8 @@ public class PipelineEngine {
                 after = action.after(stageContext);
             }
         } catch (Exception e) {
-            // TODO lixin
+            String msg = String.format("执行插件:[%s]出现异常,异常详细如下:[\n%s]", pluginName, e.getMessage());
+            throw new Exception(msg);
         } finally {
             // 6. 拷贝"阶段性"的变量到global上下文中
             globalContext.copyFor(stageContext);

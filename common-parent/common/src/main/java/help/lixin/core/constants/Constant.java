@@ -17,6 +17,10 @@ public class Constant {
     public static class CodeRepository {
         // gitlab/svn/git/github
         public static final String CODE_REPOSITORY = "CODE_REPOSITORY";
+        public static final String BRANCH = "branch";
+        public static final String URL = "url";
+        // clone下载回来之后的,源代码目录
+        public static final String WORKSPACE_DIR = "WORKSPACE_DIR";
     }
 
     public static class Common {

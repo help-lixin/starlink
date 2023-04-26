@@ -34,7 +34,6 @@ public class GitlabConfigAction implements Action {
         ctx.addVar("projectName", gitlabProperties.getProjectName());
         ctx.addVar("branch", gitlabProperties.getBranch());
         ctx.addVar("url", gitlabProperties.getUrl());
-        ctx.addVar("version", gitlabProperties.getBranch());
         logger.debug("end execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
         return true;
     }

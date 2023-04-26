@@ -1,0 +1,15 @@
+{
+  "key": "pipeline-test",
+  "name": "测试流水线",
+  "pipelines": [
+    {
+      "clazz": "help.lixin.core.definition.impl.PluginDefinition",
+      "id": "1",
+      "name": "gitlab下载源码",
+      "source": null,
+      "target": null,
+      "plugin": "gitlab-clone",
+      "params": "{  \"url\" : \"http://192.168.8.10/erp/spring-web-demo.git\" , \"branch\" : \"main\" , \"credential\": {  \"type\" : \"username-password\" , \"username\":\"123456\" , \"password\":\"123456\" }   }"
+    }
+  ]
+}

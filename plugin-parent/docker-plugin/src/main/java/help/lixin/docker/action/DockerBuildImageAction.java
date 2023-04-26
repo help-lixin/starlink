@@ -14,11 +14,11 @@ import java.io.IOException;
 import java.util.*;
 
 public class DockerBuildImageAction implements Action {
-    private Logger logger = LoggerFactory.getLogger(DockerBuildImageAction.class);
+    private final Logger logger = LoggerFactory.getLogger(DockerBuildImageAction.class);
 
     private static final String DOCKER_BUILD_IMAGE_ACTION = "docker-build-image";
 
-    private DockerFaceService dockerFaceService;
+    private final DockerFaceService dockerFaceService;
 
     public DockerBuildImageAction(DockerFaceService dockerFaceService) {
         this.dockerFaceService = dockerFaceService;
@@ -39,7 +39,7 @@ public class DockerBuildImageAction implements Action {
         String arfifactDockerFullPath = String.format("%s%s%s", arfifactDir, File.separator, "Dockerfile");
 
         // 拷贝DockerFile到成品库目录底下,因为:Dockerfile需要与成品库在同一目录下的.
-        copyDockerFileToArfifactDir(dockerFile, arfifactDir);
+        copyDockerFileToArfifactDir(dockerFile, arfifactDockerFullPath);
 
         // args
         List<DockerBuildArg> buildArgs = processArgs(actionParams.getArgs(), ctx.getVars());
@@ -66,23 +66,25 @@ public class DockerBuildImageAction implements Action {
         return true;
     }
 
-    protected void copyDockerFileToArfifactDir(String dockerFile, String arfifactDir) throws Exception {
+    protected void copyDockerFileToArfifactDir(String dockerFile, String arfifactDockerFullPath) throws Exception {
         File dockerFileRef = new File(dockerFile);
-        File arfifactDirRef = new File(arfifactDir);
+        File arfifactDockerFullPathRef = new File(arfifactDockerFullPath);
+
         if (!dockerFileRef.exists()) {
             String msg = String.format("Dockerfile:[%s]不存在", dockerFile);
             throw new RuntimeException(msg);
         }
 
+        File arfifactDirRef = arfifactDockerFullPathRef.getParentFile();
         if (!arfifactDirRef.exists()) {
-            String msg = String.format("成品库位置:[%s]不存在", arfifactDir);
+            String msg = String.format("成品库位置:[%s]不存在", arfifactDirRef.getPath());
             throw new RuntimeException(msg);
         }
 
         try {
-            FileUtils.copyFileToDirectory(dockerFileRef, arfifactDirRef);
+            FileUtils.copyFile(dockerFileRef, arfifactDockerFullPathRef);
         } catch (IOException e) {
-            String msg = String.format("拷贝Dockerfile:[%s]到目录:[%s],出现错误,错误详细内容为:[%s]", dockerFile, arfifactDir, e.getMessage());
+            String msg = String.format("拷贝Dockerfile:[%s]到目录:[%s],出现错误,错误详细内容为:[%s]", dockerFile, arfifactDirRef.getPath(), e.getMessage());
             throw new RuntimeException(msg);
         }
     }
@@ -120,18 +122,6 @@ public class DockerBuildImageAction implements Action {
         String result = actionParams.getArfifactDir();
         if (null == result) {
             result = (String) ctx.get(Constant.Artifact.ARTIFACT_DIR);
-        }
-        // 处理表达式
-        if (null != result) {
-            result = expression(result, ctx);
-        }
-        return result;
-    }
-
-    protected String getArfifactName(DockerParams actionParams, Map<String, Object> ctx) {
-        String result = actionParams.getArfifactName();
-        if (null == result) {
-            result = (String) ctx.get(Constant.Artifact.ARTIFACT_NAME);
         }
         // 处理表达式
         if (null != result) {
