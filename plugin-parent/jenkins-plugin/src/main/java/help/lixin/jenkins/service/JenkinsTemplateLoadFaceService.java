@@ -4,7 +4,7 @@ import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import help.lixin.core.exception.jenkins.JenkinsTemplateNotFoundException;
-import help.lixin.jenkins.action.JenkinsActionParams;
+import help.lixin.jenkins.action.entity.JenkinsActionParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,8 +49,10 @@ public class JenkinsTemplateLoadFaceService {
                 StringWriter stringWriter = new StringWriter();
                 template.process(ctx, stringWriter);
                 result = stringWriter.toString();
-            } catch (Exception ignore) {
-                logger.error("process template:[{}],error:[{}]", templateString, ignore);
+            } catch (Exception e) {
+                String msg = String.format("模板内容:[\n%s]\n渲染出现错误,异常信息如下:[\n%s\n]", templateString, e.getMessage());
+                logger.error(msg);
+                throw new JenkinsTemplateNotFoundException(msg);
             }
         }
         return result;

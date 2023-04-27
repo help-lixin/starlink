@@ -1,4 +1,4 @@
-package help.lixin.jenkins.action;
+package help.lixin.jenkins.action.entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

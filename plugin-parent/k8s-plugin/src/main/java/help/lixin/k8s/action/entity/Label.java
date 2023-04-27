@@ -1,4 +1,4 @@
-package help.lixin.k8s.action;
+package help.lixin.k8s.action.entity;
 
 import java.io.Serializable;
 

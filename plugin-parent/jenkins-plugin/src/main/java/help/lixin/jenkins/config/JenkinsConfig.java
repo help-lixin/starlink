@@ -1,7 +1,7 @@
 package help.lixin.jenkins.config;
 
 import com.cdancy.jenkins.rest.JenkinsClient;
-import help.lixin.jenkins.action.DownloadStrategy;
+import help.lixin.jenkins.action.entity.DownloadStrategy;
 import help.lixin.jenkins.properties.JenkinsProperties;
 import help.lixin.jenkins.schedule.CrumbSchedule;
 import help.lixin.jenkins.service.*;

@@ -12,6 +12,7 @@ import help.lixin.core.constants.Constant;
 import help.lixin.core.exception.jenkins.JenkinsTemplateNotFoundException;
 import help.lixin.core.pipeline.action.Action;
 import help.lixin.core.pipeline.ctx.PipelineContext;
+import help.lixin.jenkins.action.entity.JenkinsActionParams;
 import help.lixin.jenkins.model.CreateJobContext;
 import help.lixin.jenkins.model.TriggerBuildContext;
 import help.lixin.jenkins.properties.JenkinsProperties;
@@ -59,9 +60,7 @@ public class JenkinsAction implements Action {
 
     @Override
     public boolean execute(PipelineContext ctx) throws Exception {
-        if (logger.isDebugEnabled()) {
-            logger.debug("start execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
-        }
+        logger.info("开始运行插件:[{}]", this.getClass().getName());
 
         // 参数解析
         String stageParams = ctx.getStageParams();
@@ -86,7 +85,7 @@ public class JenkinsAction implements Action {
             try {
                 template = jenkinsFaceService.getJenkinsTemplateLoadFaceService().loadAndProcess(actionParams, tempContext);
             } catch (JenkinsTemplateNotFoundException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException(e.getMessage());
             }
             return template;
         }, executor).thenApplyAsync(template -> { // 2. 创建job或者获取已经存在的job
@@ -96,9 +95,7 @@ public class JenkinsAction implements Action {
         }, executor).thenApplyAsync(jobInfo -> { // 3. 配置上下文
             int buildNumber = jobInfo.nextBuildNumber();
             ctx.getVars().put(Constant.BuildInfo.BUILD_NUMBER, buildNumber);
-            if (logger.isDebugEnabled()) {
-                logger.debug("trigger build job stage,setting ctx key:[{}],value:[{}]", Constant.BuildInfo.BUILD_NUMBER, ctx.getVars().get(Constant.BuildInfo.BUILD_NUMBER));
-            }
+            logger.info("Jenkins准备构建,获取构建前的唯一ID:[%s]", Constant.BuildInfo.BUILD_NUMBER);
             return jobInfo;
         }).thenApplyAsync(jobInfo -> { // 4. 触发构建
             //  触发构建
@@ -115,29 +112,26 @@ public class JenkinsAction implements Action {
                 if (null == buildInfo) {
                     try {
                         // 后期从参数配置里拿取来这个休眠时间
-                        TimeUnit.SECONDS.sleep(30);
+                        TimeUnit.SECONDS.sleep(20);
                     } catch (InterruptedException e) {
                     }
                 }
-
-                if (logger.isDebugEnabled()) {
-                    logger.debug("start while wait build finish[{}]...", i);
-                }
-
+                logger.info("第[{}]次等待jenkins构建完成.", i);
                 buildInfo = getBuildInfo(jobName, jobInfo.nextBuildNumber());
-
-                if (logger.isDebugEnabled()) {
-                    logger.debug("end while wait build finish[{}]...", i);
-                }
+                logger.info("第[{}]次等待jenkins构建结束.", i);
                 i++;
             } while (null == buildInfo || null == buildInfo.result());
 
             // 经过几轮测试,发现:result有值的时候,代表这次build是结束了的,至于是成功还是失败,要看result具体的值
             if ("FAILURE".equals(buildInfo.result())) {
                 if (logger.isDebugEnabled()) {
-                    logger.debug("trigger build FAIL,fail details:[{}]", buildInfo);
-                    throw new RuntimeException();
+                    String msg = String.format("构建失败,失败详细信息如下:[%s]", buildInfo);
+                    logger.error(msg);
+                    throw new RuntimeException(msg);
                 }
+            } else {
+                String msg = String.format("构建成功");
+                logger.info(msg);
             }
             return buildInfo;
         }, executor);
@@ -149,7 +143,8 @@ public class JenkinsAction implements Action {
             // 存储构建物
             List<Artifact> artifacts = buildInfo.artifacts();
             if (null != artifacts && artifacts.size() > 1) {
-                throw new RuntimeException();
+                String msg = String.format("打包完成后,成品库在多个.");
+                throw new RuntimeException(msg);
             }
 
             try {
@@ -175,11 +170,9 @@ public class JenkinsAction implements Action {
                                         ctx.getVars().put(Constant.Artifact.ARTIFACT_NAME, artifactInfo.getArtifactFileName());
                                         ctx.getVars().put(Constant.Artifact.ARTIFACT_FULL_PATH, artifactInfo.getArtifactFullName());
 
-                                        if (logger.isDebugEnabled()) {
-                                            logger.debug("download artifact stage,setting ctx key:[{}],value:[{}]", Constant.Artifact.ARTIFACT_DIR, ctx.getVars().get(Constant.Artifact.ARTIFACT_DIR));
-                                            logger.debug("download artifact stage,setting ctx key:[{}],value:[{}]", Constant.Artifact.ARTIFACT_NAME, ctx.getVars().get(Constant.Artifact.ARTIFACT_NAME));
-                                            logger.debug("download artifact stage,setting ctx key:[{}],value:[{}]", Constant.Artifact.ARTIFACT_FULL_PATH, ctx.getVars().get(Constant.Artifact.ARTIFACT_FULL_PATH));
-                                        }
+                                        logger.info("制品库下载后的目录:[{}]", Constant.Artifact.ARTIFACT_DIR, ctx.getVars().get(Constant.Artifact.ARTIFACT_DIR));
+                                        logger.info("制品库下载后的文件名:[{}]", Constant.Artifact.ARTIFACT_NAME, ctx.getVars().get(Constant.Artifact.ARTIFACT_NAME));
+                                        logger.info("制品库下载后的绝对路径:[{}]", Constant.Artifact.ARTIFACT_FULL_PATH, ctx.getVars().get(Constant.Artifact.ARTIFACT_FULL_PATH));
                                     }
                                 });
             } catch (IOException e) {
@@ -190,20 +183,15 @@ public class JenkinsAction implements Action {
 
         // 6.1 注意:下载成品与获取日志是两个线程来着的,因为,只要有了BuildInfo信息后,就能知道结果了的,不必同步去操作,只是这样的话,Jenkins性能能否Hold得住
         CompletableFuture<ProgressiveText> fetchBuildLogFuture = buildInfoCompletableFuture.thenApplyAsync((buildInfo) -> {
-            if (logger.isDebugEnabled()) {
-                logger.debug("start fetch build:[{}] log.", buildInfo);
-            }
-
+            logger.info("开始拉取构建日志信息");
             int nextNumber = (int) ctx.getVar(Constant.BuildInfo.BUILD_NUMBER);
             ProgressiveText progressiveText = jobService.lookBuildLog(null, jobName, nextNumber, 0);
             if (null != progressiveText.text()) {
                 // TOOD lixin
                 // 保存日志内容到DB里.
             }
-
-            if (logger.isDebugEnabled()) {
-                logger.debug("end fetch build:[{}] log,log content:\n{}", buildInfo, progressiveText.text());
-            }
+            logger.info("结束拉取构建日志信息");
+            logger.info(progressiveText.text());
             return progressiveText;
         }, executor);
 
@@ -217,7 +205,7 @@ public class JenkinsAction implements Action {
                         fetchBuildLogFuture)
                 //
                 .get(30, TimeUnit.MINUTES);
-        logger.debug("end execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
+        logger.debug("结束插件:[{}]运行", this.getClass().getName());
         return true;
     }
 
@@ -232,13 +220,9 @@ public class JenkinsAction implements Action {
                 .properties("url", url)
                 //
                 .build();
-        if (logger.isDebugEnabled()) {
-            logger.debug("start trigger job:[{}],trigger ctx:[{}]", buildContext.getJobName(), buildContext);
-        }
+        logger.info("开始触发构建,jobName:[{}] url:[{}] branch:[{}]", jobName, url, branch);
         IntegerResponse response = jobService.triggerBuild(buildContext);
-        if (logger.isDebugEnabled()) {
-            logger.debug("end trigger job:[{}],trigger ctx:[{}]", buildContext.getJobName(), buildContext);
-        }
+        logger.info("结束触发构建,jobName:[{}] url:[{}] branch:[{}]", jobName, url, branch);
         return response;
     }
 
@@ -254,19 +238,19 @@ public class JenkinsAction implements Action {
                     .configXML(template)
                     //
                     .build();
-            if (logger.isDebugEnabled()) {
-                logger.debug("create job stage,start create job name:[{}],xml conent:\n{}", createJobContext.getJobName(), createJobContext.getConfigXML());
-            }
+            String msg = String.format("Jenkins开始创建Job:[%s],xml内容:[\n%s\n]", createJobContext.getJobName(), createJobContext.getConfigXML());
+            logger.info(msg);
+
             RequestStatus status = jobService.createJob(createJobContext);
             if (status.errors().size() > 0) {
-                // 返回错误处理
-                throw new RuntimeException();
+                msg = String.format("Jenkins创建Job:[%s]失败,异常信息如下:[\n%s\n]", createJobContext.getJobName(), status.errors());
+                logger.error(msg);
+                throw new RuntimeException(msg);
             } else {
                 // 3.2 创建完job后,重新获取job信息
                 jobInfo = jobService.getJobInfo(null, jobName);
-                if (logger.isDebugEnabled()) {
-                    logger.debug("create job stage,end create job name:[{}],jobinfo:[{}]", createJobContext.getJobName(), jobInfo);
-                }
+                msg = String.format("Jenkins创建Job:[%s]结束", createJobContext.getJobName());
+                logger.info(msg);
             }
         }
         return jobInfo;

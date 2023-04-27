@@ -1,4 +1,4 @@
-package help.lixin.jenkins.action;
+package help.lixin.jenkins.action.entity;
 
 public class JenkinsStage {
     private String name;

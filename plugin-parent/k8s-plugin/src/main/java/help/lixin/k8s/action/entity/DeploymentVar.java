@@ -1,19 +1,10 @@
-package help.lixin.k8s.action;
+package help.lixin.k8s.action.entity;
 
 import java.io.Serializable;
 
-public class DeploymentEnv implements Serializable {
-    private String containerName;
+public class DeploymentVar implements Serializable {
     private String name;
     private String value;
-
-    public String getContainerName() {
-        return containerName;
-    }
-
-    public void setContainerName(String containerName) {
-        this.containerName = containerName;
-    }
 
     public String getName() {
         return name;

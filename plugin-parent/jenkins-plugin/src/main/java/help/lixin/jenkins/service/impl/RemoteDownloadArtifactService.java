@@ -1,7 +1,7 @@
 package help.lixin.jenkins.service.impl;
 
 import com.cdancy.jenkins.rest.domain.job.Artifact;
-import help.lixin.jenkins.action.DownloadStrategy;
+import help.lixin.jenkins.action.entity.DownloadStrategy;
 import help.lixin.jenkins.service.IDownloadArtifactService;
 import help.lixin.jenkins.service.IJobService;
 import org.apache.commons.io.FileUtils;

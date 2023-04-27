@@ -1,4 +1,4 @@
-package help.lixin.harbor.action;
+package help.lixin.harbor.action.entity;
 
 import java.io.Serializable;
 

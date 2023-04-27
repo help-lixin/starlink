@@ -13,8 +13,9 @@
     <name>starlink-plugins-parent ${project.version}</name>
 
     <modules>
-        <module>plugin-core</module>
+        <module>core-plugin</module>
         <module>gitlab-plugin</module>
+        <module>svn-plugin</module>
         <module>jenkins-plugin</module>
         <module>shell-plugin</module>
         <module>harbor-plugin</module>

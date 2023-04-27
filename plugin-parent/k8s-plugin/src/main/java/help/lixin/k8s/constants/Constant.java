@@ -2,7 +2,6 @@ package help.lixin.k8s.constants;
 
 public class Constant {
     public static final String DEFAULT_NAMESPACE = "default";
-
     public static final String DEPLOYMENT_NAME = "DEPLOYMENT_NAME";
     public static final String NAMESPACE = "NAMESPACE";
     public static final String POD_LABEL_NAME = "POD_LABEL_NAME";

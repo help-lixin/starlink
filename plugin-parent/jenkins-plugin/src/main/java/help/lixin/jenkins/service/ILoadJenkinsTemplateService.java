@@ -1,7 +1,7 @@
 package help.lixin.jenkins.service;
 
 import help.lixin.core.exception.jenkins.JenkinsTemplateNotFoundException;
-import help.lixin.jenkins.action.JenkinsActionParams;
+import help.lixin.jenkins.action.entity.JenkinsActionParams;
 
 /**
  * 加载jenkins模板文件

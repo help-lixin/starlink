@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import help.lixin.core.constants.Constant;
 import help.lixin.core.pipeline.action.Action;
 import help.lixin.core.pipeline.ctx.PipelineContext;
+import help.lixin.harbor.action.entity.HarborActionParams;
 import help.lixin.harbor.properties.HarborProperties;
 import help.lixin.harbor.service.HarborFaceService;
 import org.slf4j.Logger;
