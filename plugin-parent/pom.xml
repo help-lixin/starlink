@@ -20,6 +20,6 @@
         <module>harbor-plugin</module>
         <module>k8s-plugin</module>
         <module>docker-plugin</module>
-        <module>oci-plugin</module>
+        <module>jib-plugin</module>
     </modules>
 </project>

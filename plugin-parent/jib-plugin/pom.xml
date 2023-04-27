@@ -8,9 +8,9 @@
         <artifactId>starlink-plugins-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>starlink-oci-plugin</artifactId>
+    <artifactId>starlink-jib-plugin</artifactId>
     <packaging>jar</packaging>
-    <name>starlink-oci-plugin ${project.version}</name>
+    <name>starlink-jib-plugin ${project.version}</name>
 
     <dependencies>
         <dependency>
