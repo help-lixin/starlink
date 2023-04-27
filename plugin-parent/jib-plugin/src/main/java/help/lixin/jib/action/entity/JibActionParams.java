@@ -1,11 +1,11 @@
-package help.lixin.oci.action.entity;
+package help.lixin.jib.action.entity;
 
 import java.util.*;
 
 /**
  * 可参考: https://www.cnblogs.com/nm666/p/15325164.html
  */
-public class OCIActionParams {
+public class JibActionParams {
     // FROM centos:latest
     private FromImage from = new FromImage();
     // hub.lixin.help/library/centos:latest

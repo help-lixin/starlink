@@ -6,7 +6,7 @@ import help.lixin.core.pipeline.config.ExpressionConfig;
 import help.lixin.core.pipeline.ctx.PipelineContext;
 import help.lixin.core.pipeline.ctx.impl.StagePipelineContext;
 import help.lixin.core.pipeline.mediator.ActionMediator;
-import help.lixin.oci.config.OCIActionConfig;
+import help.lixin.jib.config.JibActionConfig;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class OCIActionTest {
 
     @Test
     public void testExecute() throws Exception {
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(ActionsConfig.class, ExpressionConfig.class, OCIActionConfig.class);
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(ActionsConfig.class, ExpressionConfig.class, JibActionConfig.class);
 
         ActionMediator actionMediator = applicationContext.getBean(ActionMediator.class);
         Action action = actionMediator.getAction("oci");

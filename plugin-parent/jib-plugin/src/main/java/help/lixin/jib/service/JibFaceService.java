@@ -1,4 +1,4 @@
-package help.lixin.oci.service;
+package help.lixin.jib.service;
 
 import help.lixin.core.pipeline.service.IExpressionService;
 

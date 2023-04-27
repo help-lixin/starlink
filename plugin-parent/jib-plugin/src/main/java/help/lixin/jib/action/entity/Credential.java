@@ -1,4 +1,4 @@
-package help.lixin.oci.action.entity;
+package help.lixin.jib.action.entity;
 
 public class Credential {
     private String username;

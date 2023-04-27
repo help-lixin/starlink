@@ -1,4 +1,4 @@
-package help.lixin.oci.action;
+package help.lixin.jib.action;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,9 +6,9 @@ import com.google.cloud.tools.jib.api.*;
 import com.google.cloud.tools.jib.api.buildplan.AbsoluteUnixPath;
 import help.lixin.core.pipeline.action.Action;
 import help.lixin.core.pipeline.ctx.PipelineContext;
-import help.lixin.oci.action.entity.*;
-import help.lixin.oci.action.entity.Credential;
-import help.lixin.oci.service.JibFaceService;
+import help.lixin.jib.action.entity.*;
+import help.lixin.jib.service.JibFaceService;
+import help.lixin.jib.action.entity.Credential;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,14 +16,14 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class OCIAction implements Action {
-    private Logger logger = LoggerFactory.getLogger(OCIAction.class);
+public class JibAction implements Action {
+    private Logger logger = LoggerFactory.getLogger(JibAction.class);
 
     public static final String IMAGE_BUILD_ACTION = "oci";
 
     private JibFaceService jibFaceService;
 
-    public OCIAction(JibFaceService jibFaceService) {
+    public JibAction(JibFaceService jibFaceService) {
         this.jibFaceService = jibFaceService;
     }
 
@@ -38,7 +38,7 @@ public class OCIAction implements Action {
 
         String stageParams = ctx.getStageParams();
         ObjectMapper mapper = new ObjectMapper();
-        OCIActionParams actionParams = mapper.readValue(stageParams, OCIActionParams.class);
+        JibActionParams actionParams = mapper.readValue(stageParams, JibActionParams.class);
 
 
         // 待处理模型
@@ -202,7 +202,7 @@ public class OCIAction implements Action {
 
     protected RegistryImage registryImage(TargetImage targetImage, Map<String, Object> ctx) throws Exception {
         RegistryImage registryFromImage = RegistryImage.named(expression(targetImage.getImage(), ctx));
-        Credential credential = targetImage.getCredential();
+        help.lixin.jib.action.entity.Credential credential = targetImage.getCredential();
         if (null != credential) {
             String username = expression(credential.getUsername(), ctx);
             String password = expression(credential.getPassword(), ctx);

@@ -1,6 +1,6 @@
-package help.lixin.oci.action.entity;
+package help.lixin.jib.action.entity;
 
-public class TargetImage {
+public class FromImage {
     private String image;
     private Credential credential;
 
