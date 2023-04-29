@@ -16,7 +16,7 @@ import java.util.List;
 
 @SpringBootApplication(scanBasePackages = "help.lixin")
 public class Application {
-    private static String PIPELINE_DSL = "pipline-git-clone.json";
+    private static String PIPELINE_DSL = "pipline-svn-checkout.json";
 
     public static void main(String[] args) throws Exception {
         URL resource = Application.class.getClassLoader().getResource(PIPELINE_DSL);

@@ -23,6 +23,11 @@
         <!-- plugins -->
         <dependency>
             <groupId>help.lixin</groupId>
+            <artifactId>starlink-svn-plugin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>help.lixin</groupId>
             <artifactId>starlink-gitlab-plugin</artifactId>
             <version>${project.version}</version>
         </dependency>
