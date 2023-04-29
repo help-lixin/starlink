@@ -13,7 +13,6 @@ import java.util.List;
 
 @Configuration
 public class ActionsConfig {
-
     // 定义默认的流
     @Bean
     @ConditionalOnMissingBean(name = "sequenceFlowAction")

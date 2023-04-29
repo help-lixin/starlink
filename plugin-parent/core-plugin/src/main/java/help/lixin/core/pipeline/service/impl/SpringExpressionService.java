@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SpringExpressionService implements IExpressionService {
-
     private static final String EXPRESSION_PREFIX = "${";
 
     private static final String EXPRESSION_SUFFIX = "}";
@@ -23,8 +22,8 @@ public class SpringExpressionService implements IExpressionService {
 
     private IContextCustomizer contextCustomizer;
 
-    private ExpressionParser parser = new SpelExpressionParser();
-    private ParserContext parserContext = new TemplateParserContext(EXPRESSION_PREFIX, EXPRESSION_SUFFIX);
+    private final ExpressionParser parser = new SpelExpressionParser();
+    private final ParserContext parserContext = new TemplateParserContext(EXPRESSION_PREFIX, EXPRESSION_SUFFIX);
 
     @Override
     public void setContextCustomizer(IContextCustomizer contextCustomizer) {

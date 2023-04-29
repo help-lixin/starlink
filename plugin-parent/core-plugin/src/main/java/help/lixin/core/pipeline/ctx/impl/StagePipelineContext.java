@@ -9,10 +9,9 @@ import java.util.Map;
  * 阶段上下文
  */
 public class StagePipelineContext implements PipelineContext {
-
     private String stageParams;
 
-    private Map<String, Object> vars = new HashMap<>();
+    private final Map<String, Object> vars = new HashMap<>();
 
 
     @Override

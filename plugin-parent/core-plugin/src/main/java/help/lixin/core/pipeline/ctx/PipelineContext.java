@@ -3,7 +3,6 @@ package help.lixin.core.pipeline.ctx;
 import java.util.Map;
 
 public interface PipelineContext {
-
     default void addVar(String varName, Object varValue) {
     }
 

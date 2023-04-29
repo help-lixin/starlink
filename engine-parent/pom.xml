@@ -15,6 +15,6 @@
     <modules>
         <module>engine-core</module>
         <module>simple-engine</module>
-        <module>camund7-engine</module>
+<!--        <module>camund7-engine</module>-->
     </modules>
 </project>

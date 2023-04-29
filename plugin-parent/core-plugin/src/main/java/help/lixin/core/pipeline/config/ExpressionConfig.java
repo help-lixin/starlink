@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ExpressionConfig {
-
     @Bean
     @ConditionalOnMissingBean
     public IExpressionService expressionService(@Autowired(required = false) IContextCustomizer contextCustomizer) {

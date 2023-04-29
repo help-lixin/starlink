@@ -15,13 +15,14 @@
         <maven.compiler.target>11</maven.compiler.target>
 
         <spring-cloud.version>2020.0.1</spring-cloud.version>
-<!--        <spring-boot-dependencies.version>2.7.3</spring-boot-dependencies.version>-->
+        <!--        <spring-boot-dependencies.version>2.7.3</spring-boot-dependencies.version>-->
 
         <spring-boot-dependencies.version>2.4.2</spring-boot-dependencies.version>
         <spring-cloud-netflix.version>3.0.0</spring-cloud-netflix.version>
         <spring-cloud-alibaba-dependencies>2021.1</spring-cloud-alibaba-dependencies>
         <spring-cloud-tencent.version>1.8.5-2020.0.5</spring-cloud-tencent.version>
 
+        <svnkit.version>1.10.1</svnkit.version>
         <gitlab4j-api.version>5.0.1</gitlab4j-api.version>
         <jgit.version>5.13.1.202206130422-r</jgit.version>
         <junit.version>4.13.2</junit.version>
@@ -91,6 +92,12 @@
                 <version>${commons-collections.version}</version>
             </dependency>
 
+            <!-- svn -->
+            <dependency>
+                <groupId>org.tmatesoft.svnkit</groupId>
+                <artifactId>svnkit</artifactId>
+                <version>${svnkit.version}</version>
+            </dependency>
 
             <!-- gitlab -->
             <dependency>

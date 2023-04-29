@@ -9,8 +9,7 @@ import java.util.Map;
  * Global级别的上下文.
  */
 public class GlobalPipelineContext implements PipelineContext {
-
-    private Map<String, Object> vars = new HashMap<>();
+    private final Map<String, Object> vars = new HashMap<>();
 
     @Override
     public void addVar(String varName, Object varValue) {

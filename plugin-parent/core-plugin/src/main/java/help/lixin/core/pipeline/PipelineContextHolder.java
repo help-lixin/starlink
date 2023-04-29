@@ -3,8 +3,7 @@ package help.lixin.core.pipeline;
 import help.lixin.core.pipeline.ctx.PipelineContext;
 
 public class PipelineContextHolder {
-
-    private static ThreadLocal<PipelineContext> CTX = new ThreadLocal<>();
+    private static final ThreadLocal<PipelineContext> CTX = new ThreadLocal<>();
 
     public static PipelineContext get() {
         return CTX.get();

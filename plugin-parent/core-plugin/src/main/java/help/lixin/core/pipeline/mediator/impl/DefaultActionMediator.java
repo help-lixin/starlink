@@ -6,7 +6,6 @@ import help.lixin.core.pipeline.mediator.ActionMediator;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DefaultActionMediator implements ActionMediator {
-
     private static final ConcurrentHashMap<String, Action> ACTIONS = new ConcurrentHashMap<>();
 
     @Override
