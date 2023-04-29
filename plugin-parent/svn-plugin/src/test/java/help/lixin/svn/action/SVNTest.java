@@ -22,7 +22,8 @@ public class SVNTest {
 
     @Test
     public void testCheckout() throws Exception {
-        ISVNAuthenticationManager authenticationManager = BasicAuthenticationManager.newInstance("admin", "88888888".toCharArray());
+        ISVNAuthenticationManager authenticationManager = null;
+        // BasicAuthenticationManager.newInstance(null, null);
         SVNURL url = SVNURL.parseURIEncoded("svn://192.168.8.16/spring_web_demo");
         SVNRepository repository = SVNRepositoryFactory.create(url, null);
         repository.setAuthenticationManager(authenticationManager);
