@@ -31,6 +31,7 @@
         <kubernetes-client.version>6.4.1</kubernetes-client.version>
         <jenkins-rest.version>1.0.2</jenkins-rest.version>
 
+        <ant.version>1.6.5</ant.version>
         <jackson.version>2.13.5</jackson.version>
         <cloudevents-json-jackson.version>2.3.0</cloudevents-json-jackson.version>
         <unirest-java.version>3.14.1</unirest-java.version>
@@ -126,6 +127,12 @@
                 <groupId>io.github.cdancy</groupId>
                 <artifactId>jenkins-rest</artifactId>
                 <version>${jenkins-rest.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ant</groupId>
+                <artifactId>ant</artifactId>
+                <version>${ant.version}</version>
             </dependency>
 
             <dependency>

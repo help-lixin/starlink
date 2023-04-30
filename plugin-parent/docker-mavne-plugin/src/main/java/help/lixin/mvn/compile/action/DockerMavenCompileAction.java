@@ -1,14 +1,17 @@
 package help.lixin.mvn.compile.action;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import help.lixin.core.artifact.ArtifactInfo;
 import help.lixin.core.constants.Constant;
 import help.lixin.core.pipeline.action.Action;
 import help.lixin.core.pipeline.ctx.PipelineContext;
 import help.lixin.mvn.compile.action.entity.MavenSourceCompileParams;
 import help.lixin.mvn.compile.service.DockerMvnFaceService;
+import org.apache.tools.ant.DirectoryScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,8 +23,13 @@ public class DockerMavenCompileAction implements Action {
 
     private static final String DOCKER_MAVEN_CONTAINER_WORK_DIR = "/usr/src/mymaven";
 
-    public static final String MAVEN_COMPILE_ACTION = "docker-mvn-compile";
+    private static final List<String> CMDS = Arrays.asList("mvn", "clean", "install", "-DskipTests", "-X");
 
+    private static final String MAVEN_IMAGE = "registry.cn-hangzhou.aliyuncs.com/acs/maven";
+
+    private static final String ARCHIVE_ARTIFACTS = "target/*.jar";
+
+    public static final String MAVEN_COMPILE_ACTION = "docker-mvn-compile";
     private DockerMvnFaceService dockerMvnFaceService;
 
     public DockerMavenCompileAction(DockerMvnFaceService dockerMvnFaceService) {
@@ -52,10 +60,11 @@ public class DockerMavenCompileAction implements Action {
         List<String> cmds = processCmds(mavenSourceCompileParams.getCmds(), context);
         // workingDir
         String workingDir = expression(mavenSourceCompileParams.getWorkingDir(), context);
-
+        // 构建完成后:成品库路径表达式(requirce)
+        String archiveArtifacts = expression(mavenSourceCompileParams.getArchiveArtifacts(), context);
 
         if (null == image) {
-            image = "registry.cn-hangzhou.aliyuncs.com/acs/maven";
+            image = MAVEN_IMAGE;
         }
 
         if (binds.isEmpty()) {
@@ -67,7 +76,11 @@ public class DockerMavenCompileAction implements Action {
         }
 
         if (cmds.isEmpty()) {
-            cmds.addAll(Arrays.asList("mvn", "clean", "install", "-DskipTests", "-X"));
+            cmds.addAll(CMDS);
+        }
+
+        if (null == archiveArtifacts) {
+            archiveArtifacts = ARCHIVE_ARTIFACTS;
         }
 
         // 容器名称
@@ -75,8 +88,45 @@ public class DockerMavenCompileAction implements Action {
 
         String containerId = dockerMvnFaceService.getContainerService() //
                 .mvnCompile(containerUniqueName, image, workingDir, binds, cmds);
+
+        ArtifactInfo artifactInfo = getArtifact(sourceDir, archiveArtifacts);
+        ctx.getVars().put(Constant.Artifact.ARTIFACT_DIR, artifactInfo.getArtifactDir());
+        ctx.getVars().put(Constant.Artifact.ARTIFACT_NAME, artifactInfo.getArtifactFileName());
+        ctx.getVars().put(Constant.Artifact.ARTIFACT_FULL_PATH, artifactInfo.getArtifactFullName());
+        logger.info("制品库下载后的目录:[{}]", ctx.getVars().get(Constant.Artifact.ARTIFACT_DIR));
+        logger.info("制品库下载后的文件名:[{}]", ctx.getVars().get(Constant.Artifact.ARTIFACT_NAME));
+        logger.info("制品库下载后的绝对路径:[{}]", ctx.getVars().get(Constant.Artifact.ARTIFACT_FULL_PATH));
+
         logger.info("maven源码编译插件执行结束");
         return true;
+    }
+
+
+    protected ArtifactInfo getArtifact(String sourceDir, String... includes) throws Exception {
+        ArtifactInfo artifactInfo = null;
+
+        DirectoryScanner ds = new DirectoryScanner();
+        ds.setIncludes(includes);
+        ds.setBasedir(new File(sourceDir));
+        ds.setCaseSensitive(true);
+        ds.scan();
+
+
+        String[] includedFiles = ds.getIncludedFiles();
+        if (includedFiles.length > 0) {
+            String includedFile = includedFiles[0];
+            String dest = String.format("%s%s%s", sourceDir, File.separator, includedFile);
+
+            File testFile = new File(dest);
+            if (testFile.exists()) {
+                artifactInfo = new ArtifactInfo();
+                artifactInfo.setArtifactFullName(dest);
+            } else {
+                String msg = String.format("获取制品库文件:[%s]出错,文件不存在", dest);
+                throw new RuntimeException(msg);
+            }
+        }
+        return artifactInfo;
     }
 
 
@@ -107,7 +157,6 @@ public class DockerMavenCompileAction implements Action {
             return (String) ctx.get("projectName");
         }
     }
-
 
     protected String processSourceDir(String sourceDir, Map<String, Object> ctx) {
         if (null != sourceDir) {

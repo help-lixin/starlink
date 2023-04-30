@@ -22,6 +22,9 @@ public class MavenSourceCompileParams {
     // 容器执行的命令
     private List<String> cmds = new ArrayList<>(0);
 
+    // 成品位置(最后构建成功后的文件,比如:/tmp/spring-web-demo/target/spring-web-demo.jar)
+    private String archiveArtifacts;
+
     public String getProjectName() {
         return projectName;
     }
@@ -76,5 +79,13 @@ public class MavenSourceCompileParams {
 
     public void setCmds(List<String> cmds) {
         this.cmds = cmds;
+    }
+
+    public String getArchiveArtifacts() {
+        return archiveArtifacts;
+    }
+
+    public void setArchiveArtifacts(String archiveArtifacts) {
+        this.archiveArtifacts = archiveArtifacts;
     }
 }
