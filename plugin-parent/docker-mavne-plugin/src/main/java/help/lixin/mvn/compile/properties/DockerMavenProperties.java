@@ -1,27 +1,37 @@
-package help.lixin.docker.properties;
+package help.lixin.mvn.compile.properties;
 
 import help.lixin.core.credentials.AbstractCredentials;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties("docker")
-public class DockerProperties extends AbstractCredentials {
+@ConfigurationProperties("mvn.docker")
+public class DockerMavenProperties extends AbstractCredentials {
     // docker hub仓库用户名
+    @Value("${docker.registryUser:null}")
     private String registryUser;
+
     //  docker hub仓库密码
+    @Value("${docker.registryPwd:null}")
     private String registryPwd;
 
+    @Value("${docker.host:null}")
     // unix:///var/run/docker.sock
     private String host;
 
+    @Value("${docker.apiVersion:null}")
     private String apiVersion;
 
+    @Value("${docker.maxConnections:2000}")
     private int maxConnections = 2000;
 
+    @Value("${docker.connectionTimeout:5}")
     private int connectionTimeout = 5;
 
+    @Value("${docker.responseTimeout:5}")
     private int responseTimeout = 5;
 
     // 是否开启tsl验证
+    @Value("${docker.dockerTlsVerify:false}")
     private boolean dockerTlsVerify = false;
 
     // 仓库的URL

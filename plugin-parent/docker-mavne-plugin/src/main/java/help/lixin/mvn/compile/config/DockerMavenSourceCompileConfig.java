@@ -1,15 +1,13 @@
-package help.lixin.docker.config;
+package help.lixin.mvn.compile.config;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientImpl;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
 import com.github.dockerjava.transport.DockerHttpClient;
-import help.lixin.core.pipeline.service.IExpressionService;
-import help.lixin.docker.properties.DockerProperties;
-import help.lixin.docker.service.DockerFaceService;
-import help.lixin.docker.service.IDockerImageApiService;
-import help.lixin.docker.service.impl.DockerImageApiService;
+import help.lixin.mvn.compile.properties.DockerMavenProperties;
+import help.lixin.mvn.compile.service.IContainerService;
+import help.lixin.mvn.compile.service.impl.ContainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -20,12 +18,12 @@ import org.springframework.context.annotation.Configuration;
 import java.time.Duration;
 
 @Configuration
-@EnableConfigurationProperties(DockerProperties.class)
-public class DockerConfig {
+@EnableConfigurationProperties(DockerMavenProperties.class)
+public class DockerMavenSourceCompileConfig {
 
     @Bean
-    @ConditionalOnMissingBean(name = "dockerClientConfig")
-    public DefaultDockerClientConfig dockerClientConfig(DockerProperties dockerProperties) {
+    @ConditionalOnMissingBean(name = "mavenDockerClientConfig")
+    public DefaultDockerClientConfig mavenDockerClientConfig(DockerMavenProperties dockerProperties) {
         DefaultDockerClientConfig config = DefaultDockerClientConfig.createDefaultConfigBuilder()
                 //
                 .withDockerHost(dockerProperties.getHost())
@@ -51,14 +49,14 @@ public class DockerConfig {
 
 
     @Bean
-    @ConditionalOnMissingBean(name = "dockerHttpClient")
-    public DockerHttpClient dockerHttpClient(DockerProperties dockerProperties, //
-                                             @Autowired @Qualifier("dockerClientConfig") DefaultDockerClientConfig dockerClientConfig) {
+    @ConditionalOnMissingBean(name = "mavenDockerHttpClient")
+    public DockerHttpClient mavenDockerHttpClient(DockerMavenProperties dockerProperties, //
+                                                  @Autowired @Qualifier("mavenDockerClientConfig") DefaultDockerClientConfig mavenDockerClientConfig) {
         DockerHttpClient httpClient = new ApacheDockerHttpClient.Builder()
                 //
-                .dockerHost(dockerClientConfig.getDockerHost())
+                .dockerHost(mavenDockerClientConfig.getDockerHost())
                 //
-                .sslConfig(dockerClientConfig.getSSLConfig())
+                .sslConfig(mavenDockerClientConfig.getSSLConfig())
                 //
                 .maxConnections(dockerProperties.getMaxConnections())
                 //
@@ -72,25 +70,16 @@ public class DockerConfig {
     }
 
     @Bean
-    @ConditionalOnMissingBean(name = "dockerClient")
-    public DockerClient dockerClient(DefaultDockerClientConfig dockerClientConfig, //
-                                     @Autowired @Qualifier("dockerHttpClient") DockerHttpClient dockerHttpClient) {
+    @ConditionalOnMissingBean(name = "mavenDockerClient")
+    public DockerClient mavenDockerClient(DefaultDockerClientConfig dockerClientConfig, //
+                                          @Autowired @Qualifier("mavenDockerHttpClient") DockerHttpClient mavenDockerHttpClient) {
         // TODO lixin 留一个Customizer
-        return DockerClientImpl.getInstance(dockerClientConfig, dockerHttpClient);
+        return DockerClientImpl.getInstance(dockerClientConfig, mavenDockerHttpClient);
     }
 
     @Bean
-    @ConditionalOnMissingBean
-    public IDockerImageApiService dockerImageApiService(@Autowired @Qualifier("dockerClient") DockerClient dockerClient) {
-        return new DockerImageApiService(dockerClient);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(name = "dockerFaceService")
-    public DockerFaceService dockerFaceService(DockerProperties dockerProperties, //
-                                               IDockerImageApiService dockerImageApiService, //
-                                               IExpressionService expressionService) {
-        DockerFaceService dockerFaceService = new DockerFaceService(dockerProperties, dockerImageApiService, expressionService);
-        return dockerFaceService;
+    @ConditionalOnMissingBean(name = "containerService")
+    public IContainerService containerService(@Autowired @Qualifier("mavenDockerClient") DockerClient mavenDockerClient) {
+        return new ContainerService(mavenDockerClient);
     }
 }

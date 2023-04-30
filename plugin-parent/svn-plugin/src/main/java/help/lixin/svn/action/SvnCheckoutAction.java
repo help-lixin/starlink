@@ -31,21 +31,16 @@ public class SvnCheckoutAction implements Action {
 
     public static final String SVN_CHECKOUT_ACTION = "svn-checkout";
 
-    private java.util.zip.CRC32 crc32 = new java.util.zip.CRC32();
-
     @Override
     public boolean execute(PipelineContext ctx) throws Exception {
-        logger.debug("开始执行插件:[{}]", this.getClass().getName());
+        logger.debug("开始执行插件:SVN代码下载");
         String stageParams = ctx.getStageParams();
         ObjectMapper objectMapper = new ObjectMapper();
         SvnCheckoutParams svnCheckoutParams = objectMapper.readValue(stageParams, SvnCheckoutParams.class);
 
         // 根据:URL+分支来定位
         String resource = String.format("%s", svnCheckoutParams.getUrl());
-        crc32.update(resource.getBytes());
-        long dirName = crc32.getValue();
-        String workspaceDir = String.format("%s/%s", svnCheckoutParams.getWorkspaceDir(), dirName);
-
+        String workspaceDir = genWorkspaceDir(svnCheckoutParams.getWorkspaceDir(), resource);
         File workspaceFileDir = new File(workspaceDir);
         if (workspaceFileDir.exists()) { // 存在目录,则先删了目录
             FileUtils.forceDelete(workspaceFileDir);
@@ -87,8 +82,16 @@ public class SvnCheckoutAction implements Action {
         ctx.addVar(Constant.CodeRepository.WORKSPACE_DIR, workspaceDir);
         ctx.addVar("projectName", projectName);
         ctx.addVar("url", svnCheckoutParams.getUrl());
-        logger.debug("结束插件执行: [{}]", this.getClass().getName());
+        logger.debug("SVN代码下载完成");
         return true;
+    }
+
+    protected String genWorkspaceDir(String workspaceDir, String resource) {
+        java.util.zip.CRC32 crc32 = new java.util.zip.CRC32();
+        crc32.update(resource.getBytes());
+        long dirName = crc32.getValue();
+        String newWorkspaceDir = String.format("%s/%s", workspaceDir, dirName);
+        return newWorkspaceDir;
     }
 
     protected String getProjectName(String urlString) throws Exception {

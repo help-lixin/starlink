@@ -37,6 +37,9 @@ public class SpringExpressionService implements IExpressionService {
 
     @Override
     public String prase(String expressionString, Map<String, Object> context) {
+        if (null == expressionString) {
+            return null;
+        }
         // 拷贝一份上下文出来
         Map<String, Object> tempContext = new HashMap<>(context);
         try {

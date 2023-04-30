@@ -1,8 +1,6 @@
 package help.lixin;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import help.lixin.core.definition.ElementDefinition;
 import help.lixin.core.definition.PipelineDefinition;
 import help.lixin.core.simple.engine.PipelineEngine;
 import org.apache.commons.io.FileUtils;
@@ -12,11 +10,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.File;
 import java.net.URL;
-import java.util.List;
 
 @SpringBootApplication(scanBasePackages = "help.lixin")
 public class Application {
-    private static String PIPELINE_DSL = "pipline-svn-checkout.json";
+    private static String PIPELINE_DSL = "pipline-svn-checkout-mvn.json";
 
     public static void main(String[] args) throws Exception {
         URL resource = Application.class.getClassLoader().getResource(PIPELINE_DSL);

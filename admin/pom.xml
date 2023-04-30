@@ -33,6 +33,11 @@
         </dependency>
         <dependency>
             <groupId>help.lixin</groupId>
+            <artifactId>starlink-docker-maven-plugin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>help.lixin</groupId>
             <artifactId>starlink-jenkins-plugin</artifactId>
             <version>${project.version}</version>
         </dependency>

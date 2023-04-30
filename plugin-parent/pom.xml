@@ -17,6 +17,7 @@
         <module>gitlab-plugin</module>
         <module>svn-plugin</module>
         <module>jenkins-plugin</module>
+        <module>docker-mavne-plugin</module>
         <module>shell-plugin</module>
         <module>harbor-plugin</module>
         <module>k8s-plugin</module>
