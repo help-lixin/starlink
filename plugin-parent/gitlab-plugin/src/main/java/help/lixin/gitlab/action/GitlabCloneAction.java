@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Map;
 
 public class GitlabCloneAction implements Action {
     private Logger logger = LoggerFactory.getLogger(GitlabCloneAction.class);
@@ -28,24 +29,21 @@ public class GitlabCloneAction implements Action {
 
     private GitlabFaceService gitlabFaceService;
 
-    private java.util.zip.CRC32 crc32 = new java.util.zip.CRC32();
-
     public GitlabCloneAction(GitlabFaceService gitlabFaceService) {
         this.gitlabFaceService = gitlabFaceService;
     }
 
     @Override
     public boolean execute(PipelineContext ctx) throws Exception {
-        logger.debug("start execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
+        logger.info("开始执行Git Clone插件");
+        Map<String, Object> context = ctx.getVars();
         String stageParams = ctx.getStageParams();
         ObjectMapper objectMapper = new ObjectMapper();
         GitCloneParams gitCloneParams = objectMapper.readValue(stageParams, GitCloneParams.class);
 
         // 根据:URL+分支来定位
         String resource = String.format("%s/%s", gitCloneParams.getUrl(), gitCloneParams.getBranch());
-        crc32.update(resource.getBytes());
-        long dirName = crc32.getValue();
-        String workspaceDir = String.format("%s/%s", gitCloneParams.getWorkspaceDir(), dirName);
+        String workspaceDir = genWorkspaceDir(gitCloneParams.getWorkspaceDir(), resource);
 
         File workspaceFileDir = new File(workspaceDir);
         if (workspaceFileDir.exists()) { // 存在目录,则先删了目录
@@ -83,14 +81,14 @@ public class GitlabCloneAction implements Action {
         } else if (credential instanceof UsernamePasswordCredentialsProvider) { // 用户名和密码
             UsernamePasswordCredentialsProvider usernamePasswordCredentialsProvider = (UsernamePasswordCredentialsProvider) credential;
             cloneCommand.setCredentialsProvider(new org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider(//
-                    usernamePasswordCredentialsProvider.getUsername(),//
-                    usernamePasswordCredentialsProvider.getPassword()));
+                    expression(usernamePasswordCredentialsProvider.getUsername(), context),//
+                    expression(usernamePasswordCredentialsProvider.getPassword(), context)));
         } else if (credential instanceof TokenCredentialsProvider) { // token
             TokenCredentialsProvider tokenCredentialsProvider = (TokenCredentialsProvider) credential;
             cloneCommand.setCredentialsProvider(new org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider( //
                     "PRIVATE-TOKEN",
                     //
-                    tokenCredentialsProvider.getToken()));
+                    expression(tokenCredentialsProvider.getToken(), context)));
         }
 
         // 配置url/branch/directory
@@ -109,9 +107,22 @@ public class GitlabCloneAction implements Action {
         ctx.addVar("projectName", projectName);
         ctx.addVar("branch", gitCloneParams.getBranch());
         ctx.addVar("url", gitCloneParams.getUrl());
-        logger.debug("end execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
+        logger.info("Git Clone插件执行结束");
         return true;
     }
+
+    protected String expression(String template, Map<String, Object> ctx) {
+        return gitlabFaceService.getExpressionService().prase(template, ctx);
+    }
+
+    protected String genWorkspaceDir(String workspaceDir, String resource) {
+        java.util.zip.CRC32 crc32 = new java.util.zip.CRC32();
+        crc32.update(resource.getBytes());
+        long dirName = crc32.getValue();
+        String newWorkspaceDir = String.format("%s/%s", workspaceDir, dirName);
+        return newWorkspaceDir;
+    }
+
 
     protected String getProjectName(String urlString) throws Exception {
         String result = null;

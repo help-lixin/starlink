@@ -71,10 +71,10 @@ public class DockerMavenSourceCompileConfig {
 
     @Bean
     @ConditionalOnMissingBean(name = "mavenDockerClient")
-    public DockerClient mavenDockerClient(DefaultDockerClientConfig dockerClientConfig, //
+    public DockerClient mavenDockerClient(DefaultDockerClientConfig mavenDockerClientConfig, //
                                           @Autowired @Qualifier("mavenDockerHttpClient") DockerHttpClient mavenDockerHttpClient) {
         // TODO lixin 留一个Customizer
-        return DockerClientImpl.getInstance(dockerClientConfig, mavenDockerHttpClient);
+        return DockerClientImpl.getInstance(mavenDockerClientConfig, mavenDockerHttpClient);
     }
 
     @Bean

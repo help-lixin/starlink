@@ -16,7 +16,7 @@ spec:
       imagePullSecrets:
         - name: ${IMAGE_PULL_SECRET_NAME}
       containers: 
-        - image: ${REPOSITORY_URL}/library/${projectName}:v${BUILD_NUMBER}
+        - image: ${REPOSITORY_URL}/library/${projectName}:v${SECOND}
           name: ${projectName}
           ports:
             - containerPort: ${PORT}

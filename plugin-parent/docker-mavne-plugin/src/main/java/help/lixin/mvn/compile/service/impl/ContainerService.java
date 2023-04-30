@@ -3,10 +3,7 @@ package help.lixin.mvn.compile.service.impl;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.async.ResultCallback;
 import com.github.dockerjava.api.command.CreateContainerResponse;
-import com.github.dockerjava.api.model.Bind;
-import com.github.dockerjava.api.model.Container;
-import com.github.dockerjava.api.model.Frame;
-import com.github.dockerjava.api.model.Volume;
+import com.github.dockerjava.api.model.*;
 import help.lixin.mvn.compile.service.IContainerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +31,30 @@ public class ContainerService implements IContainerService {
             Map<String, String> binds,
             // "mvn", "clean", "install" , "-X"
             List<String> cmds) throws Exception {
+
+
+        List<Image> images = mavenDockerClient.listImagesCmd()
+                //
+                .withImageNameFilter(image)
+                //
+                .withShowAll(Boolean.TRUE)
+                //
+                .exec();
+        if (images.isEmpty()) {
+            logger.info("开始拉取镜像:[{}]", image);
+            // 镜像不存的情况下,先拉取镜像.
+            mavenDockerClient.pullImageCmd(image) //
+                    .exec(new ResultCallback.Adapter<>() {
+                        @Override
+                        public void onNext(PullResponseItem object) {
+                            if (null != object.getProgress()) {
+                                logger.info(object.getProgress());
+                            }
+                        }
+                    }) //
+                    .awaitCompletion();
+        }
+
         // 1. 先看下这个容器实例是否存在,如果存在,则先删除容器
         List<Container> containers = mavenDockerClient.listContainersCmd() //
                 .withNameFilter(Collections.singletonList(containerUniqueName)) //

@@ -5,6 +5,7 @@ import help.lixin.core.constants.Constant;
 import help.lixin.core.pipeline.action.Action;
 import help.lixin.core.pipeline.ctx.PipelineContext;
 import help.lixin.svn.action.entity.SvnCheckoutParams;
+import help.lixin.svn.service.SvnFaceService;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import org.tmatesoft.svn.core.wc.SVNUpdateClient;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
+import java.util.Map;
 
 /**
  * 参考地址: https://wiki.svnkit.com/Managing_A_Working_Copy
@@ -31,9 +33,16 @@ public class SvnCheckoutAction implements Action {
 
     public static final String SVN_CHECKOUT_ACTION = "svn-checkout";
 
+    private SvnFaceService svnFaceService;
+
+    public SvnCheckoutAction(SvnFaceService svnFaceService) {
+        this.svnFaceService = svnFaceService;
+    }
+
     @Override
     public boolean execute(PipelineContext ctx) throws Exception {
         logger.debug("开始执行插件:SVN代码下载");
+        Map<String, Object> context = ctx.getVars();
         String stageParams = ctx.getStageParams();
         ObjectMapper objectMapper = new ObjectMapper();
         SvnCheckoutParams svnCheckoutParams = objectMapper.readValue(stageParams, SvnCheckoutParams.class);
@@ -55,8 +64,8 @@ public class SvnCheckoutAction implements Action {
         }
 
         // 用户名和密码
-        String userName = svnCheckoutParams.getUserName();
-        String password = svnCheckoutParams.getPassword();
+        String userName = expression(svnCheckoutParams.getUserName(), context);
+        String password = expression(svnCheckoutParams.getPassword(), context);
         char[] passwordArray = null;
         if (null != password) {
             passwordArray = password.toCharArray();
@@ -85,6 +94,11 @@ public class SvnCheckoutAction implements Action {
         logger.debug("SVN代码下载完成");
         return true;
     }
+
+    protected String expression(String template, Map<String, Object> ctx) {
+        return svnFaceService.getExpressionService().prase(template, ctx);
+    }
+
 
     protected String genWorkspaceDir(String workspaceDir, String resource) {
         java.util.zip.CRC32 crc32 = new java.util.zip.CRC32();

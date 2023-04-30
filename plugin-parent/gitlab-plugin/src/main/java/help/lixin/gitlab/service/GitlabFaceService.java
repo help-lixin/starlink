@@ -1,5 +1,7 @@
 package help.lixin.gitlab.service;
 
+import help.lixin.core.pipeline.service.IExpressionService;
+
 public class GitlabFaceService {
 
     private IGroupService groupService;
@@ -10,13 +12,18 @@ public class GitlabFaceService {
 
     private IUserService userService;
 
-    public GitlabFaceService(IGroupService groupService,
+    private IExpressionService expressionService;
+
+    public GitlabFaceService(IExpressionService expressionService,
+                             //
+                             IGroupService groupService,
                              //
                              IProjectService projectService,
                              //
                              IRepositoryService repositoryService,
                              //
                              IUserService userService) {
+        this.expressionService = expressionService;
         this.groupService = groupService;
         this.projectService = projectService;
         this.repositoryService = repositoryService;
@@ -37,5 +44,9 @@ public class GitlabFaceService {
 
     public IUserService getUserService() {
         return userService;
+    }
+
+    public IExpressionService getExpressionService() {
+        return expressionService;
     }
 }

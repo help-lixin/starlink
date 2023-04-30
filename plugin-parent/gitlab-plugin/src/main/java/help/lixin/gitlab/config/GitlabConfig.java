@@ -1,5 +1,6 @@
 package help.lixin.gitlab.config;
 
+import help.lixin.core.pipeline.service.IExpressionService;
 import help.lixin.gitlab.properties.GitlabProperties;
 import help.lixin.gitlab.service.*;
 import help.lixin.gitlab.service.impl.GroupService;
@@ -80,13 +81,15 @@ public class GitlabConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public GitlabFaceService gitlabFaceService(IGroupService gitlabGroupService,
+    public GitlabFaceService gitlabFaceService(IExpressionService expressionService,
+                                               //
+                                               IGroupService gitlabGroupService,
                                                //
                                                IRepositoryService gitlabRepositoryService,
                                                //
                                                IProjectService gitlabProjectService,
                                                //
                                                IUserService gitlabUserService) {
-        return new GitlabFaceService(gitlabGroupService, gitlabProjectService, gitlabRepositoryService, gitlabUserService);
+        return new GitlabFaceService(expressionService, gitlabGroupService, gitlabProjectService, gitlabRepositoryService, gitlabUserService);
     }
 }
