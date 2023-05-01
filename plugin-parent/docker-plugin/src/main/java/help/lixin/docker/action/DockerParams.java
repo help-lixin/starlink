@@ -18,6 +18,25 @@ public class DockerParams {
     private boolean isAutoBuild = true;
     // 是否自动推送
     private boolean isAutoPush = true;
+    private String repositoryUserName;
+    // 私有仓库的密码
+    private String repositoryPassword;
+
+    public String getRepositoryUserName() {
+        return repositoryUserName;
+    }
+
+    public void setRepositoryUserName(String repositoryUserName) {
+        this.repositoryUserName = repositoryUserName;
+    }
+
+    public String getRepositoryPassword() {
+        return repositoryPassword;
+    }
+
+    public void setRepositoryPassword(String repositoryPassword) {
+        this.repositoryPassword = repositoryPassword;
+    }
 
     public String getDockerFile() {
         return dockerFile;

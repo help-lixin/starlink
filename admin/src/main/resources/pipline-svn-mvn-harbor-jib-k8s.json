@@ -7,7 +7,7 @@
       "id": "1",
       "name": "svn下载源码",
       "source": null,
-      "target": null,
+      "target": "2",
       "plugin": "svn-checkout",
       "params": "{ \"url\" : \"svn://192.168.8.16/spring_web_demo\" , \"userName\" : \"${SVN_USERNAME}\" , \"password\" : \"${SVN_PWD}\" , \"projectName\":\"spring-web-demo\"  }"
     },
@@ -46,7 +46,7 @@
       "target": null,
       "sync": true,
       "plugin": "k8s-deploy",
-      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"harbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
+      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/deployment-template.ftl\" , \"image\": \"${REPOSITORY_URL}/library/${projectName}:v${SECOND}\" , \"deployName\":\"${projectName}-deploy\" , \"imagePullSecretName\":\"harbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
     }
   ]
 }

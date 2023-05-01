@@ -46,7 +46,7 @@
       "target": null,
       "sync": true,
       "plugin": "k8s-deploy",
-      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/deployment-template.yml\" , \"deployName\":\"${projectName}-deploy\" ,\"podLabelName\":\"app\" ,\"podLabelValue\":\"spring-web-demo-pod\", \"imagePullSecretName\":\"harbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
+      "params": "{  \"yamlTemplatePath\":\"/Users/lixin/GitRepository/starlink-ce/admin/src/main/resources/deployment-template.ftl\" , \"image\": \"${REPOSITORY_URL}/library/${projectName}:v${SECOND}\" , \"deployName\":\"${projectName}-deploy\" , \"imagePullSecretName\":\"harbor\" , \"containerName\":\"${projectName}\", \"port\":\"9091\" }"
     }
   ]
 }

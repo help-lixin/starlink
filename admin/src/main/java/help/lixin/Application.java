@@ -13,8 +13,8 @@ import java.net.URL;
 
 @SpringBootApplication(scanBasePackages = "help.lixin")
 public class Application {
-    private static String PIPELINE_DSL = "pipline-svn-mvn-harbor-jib-k8s.json";
-    // private static String PIPELINE_DSL = "pipline-git-mvn-harbor-jib-k8s.json";
+    //    private static String PIPELINE_DSL = "pipline-svn-mvn-harbor-jib-k8s.json";
+    private static String PIPELINE_DSL = "pipline-git-mvn-harbor-jib-k8s.json";
 
     public static void main(String[] args) throws Exception {
         URL resource = Application.class.getClassLoader().getResource(PIPELINE_DSL);

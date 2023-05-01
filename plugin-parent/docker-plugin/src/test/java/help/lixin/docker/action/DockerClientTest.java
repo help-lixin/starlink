@@ -11,6 +11,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,7 +67,6 @@ public class DockerClientTest extends BasicTest {
     @Test
     public void testPushImage() throws Exception {
         String imageId = "hub.lixin.help/library/nginx:v1.0";
-
         // 为会话级配置认证信息
         AuthConfig authConfig = new AuthConfig()
                 .withRegistryAddress(registryUrl)

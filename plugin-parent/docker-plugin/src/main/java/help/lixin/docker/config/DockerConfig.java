@@ -41,10 +41,6 @@ public class DockerConfig {
                 .withApiVersion(dockerProperties.getApiVersion())
                 //
                 .build();
-
-        // 为自己的私有仓库,配置认证信息
-//        config.getDockerConfig().getAuths().put(null,null)
-
         // TODO lixin 留一个Customizer
         return config;
     }
@@ -81,8 +77,9 @@ public class DockerConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public IDockerImageApiService dockerImageApiService(@Autowired @Qualifier("dockerClient") DockerClient dockerClient) {
-        return new DockerImageApiService(dockerClient);
+    public IDockerImageApiService dockerImageApiService(@Autowired @Qualifier("dockerClientConfig") DefaultDockerClientConfig dockerClientConfig, //
+                                                        @Autowired @Qualifier("dockerClient") DockerClient dockerClient) {
+        return new DockerImageApiService(dockerClientConfig, dockerClient);
     }
 
     @Bean

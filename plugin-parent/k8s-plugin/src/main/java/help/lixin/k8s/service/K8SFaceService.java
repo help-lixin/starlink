@@ -2,6 +2,7 @@ package help.lixin.k8s.service;
 
 import help.lixin.core.pipeline.service.IExpressionService;
 import help.lixin.k8s.properties.K8SProperties;
+import help.lixin.k8s.service.impl.DeploymentTemplateService;
 import io.fabric8.kubernetes.client.KubernetesClient;
 
 public class K8SFaceService {
@@ -13,6 +14,16 @@ public class K8SFaceService {
     private IDeploymentApiService deploymentApiService;
 
     private IExpressionService expressionService;
+
+    private DeploymentTemplateService deploymentTemplateService;
+
+    public DeploymentTemplateService getDeploymentTemplateService() {
+        return deploymentTemplateService;
+    }
+
+    public void setDeploymentTemplateService(DeploymentTemplateService deploymentTemplateService) {
+        this.deploymentTemplateService = deploymentTemplateService;
+    }
 
     public IExpressionService getExpressionService() {
         return expressionService;

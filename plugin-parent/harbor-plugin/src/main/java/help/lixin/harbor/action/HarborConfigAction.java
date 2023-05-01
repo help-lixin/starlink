@@ -36,6 +36,7 @@ public class HarborConfigAction implements Action {
             }
             ctx.getVars().put(Constant.ImageRepository.REPOSITORY_URL, repositoryUrlVar);
         }
+
         ctx.getVars().put(Constant.ImageRepository.HTTP_REPOSITORY_URL, repositoryInfo.getUrl());
         ctx.getVars().put(Constant.ImageRepository.REPOSITORY_USERNAME, repositoryInfo.getUserName());
         ctx.getVars().put(Constant.ImageRepository.REPOSITORY_PASSWORD, repositoryInfo.getPassword());

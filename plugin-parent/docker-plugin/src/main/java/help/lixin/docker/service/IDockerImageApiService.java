@@ -20,5 +20,5 @@ public interface IDockerImageApiService {
      *
      * @param imageId
      */
-    void pushImage(String imageId);
+    void pushImage(String imageId, String userName, String password);
 }

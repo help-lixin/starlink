@@ -42,7 +42,6 @@ public class DeploymentApiService implements IDeploymentApiService {
             Deployment newDeploy = apps.deployments().load(ymlStream).createOrReplace();
             return newDeploy;
         } catch (Exception e) {
-            System.out.println(e);
             // TODO lixin
         }
         return null;

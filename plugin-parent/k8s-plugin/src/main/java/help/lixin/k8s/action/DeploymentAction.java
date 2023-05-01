@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,14 +39,13 @@ public class DeploymentAction implements Action {
 
     @Override
     public boolean execute(PipelineContext ctx) throws Exception {
-        if (logger.isDebugEnabled()) {
-            logger.debug("start execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
-        }
+        logger.info("开始执行K8S Deployment插件.");
 
         // 1. 参数解析
         String stageParams = ctx.getStageParams();
         ObjectMapper mapper = new ObjectMapper();
         DeploymentParams params = mapper.readValue(stageParams, DeploymentParams.class);
+
 
         // 2. 加载模板文件
         StringWriter yamlTemplateContent = new StringWriter();
@@ -57,85 +57,73 @@ public class DeploymentAction implements Action {
         // 系统要求的变量
         tempContext.put(Constant.NAMESPACE, null == params.getNamespace() ? Constant.DEFAULT_NAMESPACE : varProcess(params.getNamespace(), tempContext));
         tempContext.put(Constant.DEPLOYMENT_NAME, varProcess(params.getDeployName(), tempContext));   // 部署名称
-        tempContext.put(Constant.POD_LABEL_NAME, varProcess(params.getPodLabelName(), tempContext));   // 标签名称
-        tempContext.put(Constant.POD_LABEL_VALUE, varProcess(params.getPodLabelValue(), tempContext)); // 标签Value
         tempContext.put(Constant.IMAGE_PULL_SECRET_NAME, varProcess(params.getImagePullSecretName(), tempContext)); // 拉取镜像的Secret名称
         tempContext.put(Constant.IMAGE, varProcess(params.getImage(), tempContext));   // 镜像
         tempContext.put(Constant.CONTAINER_NAME, varProcess(params.getContainerName(), tempContext));  // pod名称
         tempContext.put(Constant.PORT, varProcess(params.getPort(), tempContext));         // pod端口
 
         // 填充用户自己写的变量名和变量值
-        paddingContext(params.getVars(), tempContext);
+        appendVars(params.getVars(), tempContext);
+
+        // 为容器配置环境变量
+        List<DeploymentEnv> envs = processEnv(params.getEnvs(), tempContext);
+
+        // 为Deployment配置标签
+        Map<String, String> lables = processLables(params.getLabels(), tempContext);
+        lables.put("app", (String) ctx.getVars().get("projectName"));
+
+        tempContext.put("envs", envs);
+        tempContext.put("lables", lables);
 
         // 4. 把yaml中的变量进行替换
-        String ymlContent = varProcess(yamlTemplateContent.toString(), tempContext);
+        String ymlContent = k8sFaceService.getDeploymentTemplateService()//
+                .process(yamlTemplateContent.toString(), tempContext);
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("ready apply yaml:\n{}", ymlContent);
-        }
+        logger.info("向K8S提交如下YAML内容:\n{}", ymlContent);
 
-        // 5. 根据yml模板转换成:Deployment对象,目的是还需要填充一些其它信息到Deployment上
-        Deployment deployment = k8sFaceService.getDeploymentApiService().yamlConvertDeployment(ymlContent);
+        // 5. 根据yml模板转换成:Deployment对象
+        Deployment deployment = k8sFaceService.getDeploymentApiService() //
+                .yamlConvertDeployment(ymlContent);
 
-        // 6. 填充env和lables到:Deployment上
-        paddingEnv(deployment, params.getEnvs(), tempContext);
-        paddingLables(deployment, params.getLabels(), tempContext);
-
-        // 7. 向K8S,提交Deployment
+        // 6. 向K8S,提交Deployment
         k8sFaceService.getDeploymentApiService().apply(deployment);
-        if (logger.isDebugEnabled()) {
-            logger.debug("end execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
-        }
+        logger.info("结束K8S Deployment插件的执行.");
         return true;
     }
 
     protected String varProcess(String varValue, Map<String, Object> tempContext) throws Exception {
-        if (null != varValue) {
-            String var = k8sFaceService.getExpressionService().prase(varValue, tempContext);
-            return var;
-        }
+        varValue = k8sFaceService.getExpressionService().prase(varValue, tempContext);
         return varValue;
     }
 
-
-    protected void paddingLables(Deployment deployment, List<Label> labelList, Map<String, Object> tempContext) throws Exception {
-        Map<String, String> deploylabels = deployment.getSpec().getSelector().getMatchLabels();
-        Map<String, String> podlabels = deployment.getSpec().getTemplate().getMetadata().getLabels();
-        if (null != labelList && labelList.isEmpty()) {
+    protected Map<String, String> processLables(List<Label> labelList,
+                                                //
+                                                Map<String, Object> tempContext) throws Exception {
+        Map<String, String> lables = new HashMap<>(0);
+        if (null != labelList && !labelList.isEmpty()) {
             for (Label label : labelList) {
-                deploylabels.put(varProcess(label.getKey(), tempContext), varProcess(label.getValue(), tempContext));
-                podlabels.put(varProcess(label.getKey(), tempContext), varProcess(label.getValue(), tempContext));
+                lables.put( //
+                        varProcess(label.getKey(), tempContext), //
+                        varProcess(label.getValue(), tempContext));
             }
         }
+        return lables;
     }
 
 
-    protected void paddingEnv(Deployment deployment, List<DeploymentEnv> envs, Map<String, Object> tempContext) throws Exception {
+    protected List<DeploymentEnv> processEnv(List<DeploymentEnv> envs, Map<String, Object> tempContext) throws Exception {
         if (null != envs && !envs.isEmpty()) {
-            // 定位到多个容器
-            List<Container> containers = deployment.getSpec().getTemplate().getSpec().getContainers();
             // 遍历所有的变量
             for (DeploymentEnv env : envs) {
-                for (Container container : containers) {
-                    // 容器名称
-                    String containerName = container.getName();
-                    List<EnvVar> envVars = container.getEnv();
-                    String paramContainerName = varProcess(env.getContainerName(), tempContext);
-                    if (paramContainerName.equals(containerName)) {
-                        envVars.add(new EnvVarBuilder()
-                                //
-                                .withName(varProcess(env.getName(), tempContext))
-                                //
-                                .withValue(varProcess(env.getValue(), tempContext))
-                                //
-                                .build());
-                    }
-                }
+                env.setContainerName(varProcess(env.getContainerName(), tempContext));
+                env.setName(varProcess(env.getName(), tempContext));
+                env.setValue(varProcess(env.getValue(), tempContext));
             }
         }
+        return envs;
     }
 
-    protected void paddingContext(List<DeploymentVar> vars, Map<String, Object> tempContext) throws Exception {
+    protected void appendVars(List<DeploymentVar> vars, Map<String, Object> tempContext) throws Exception {
         if (null != vars && !vars.isEmpty()) {
             for (DeploymentVar var : vars) {
                 tempContext.put(varProcess(var.getName(), tempContext), varProcess(var.getValue(), tempContext));

@@ -26,9 +26,7 @@ public class DockerBuildImageAction implements Action {
 
     @Override
     public boolean execute(PipelineContext ctx) throws Exception {
-        if (logger.isDebugEnabled()) {
-            logger.debug("START execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
-        }
+        logger.info("开始执行Docker镜像构建插件");
 
         String stageParams = ctx.getStageParams();
         ObjectMapper mapper = new ObjectMapper();
@@ -46,6 +44,11 @@ public class DockerBuildImageAction implements Action {
         // tags
         Set<String> tags = processTags(actionParams.getTags(), ctx.getVars());
 
+        // 私有仓库的账号和密码
+        String userName = expression(actionParams.getRepositoryUserName(), ctx.getVars());
+        String userPwd = expression(actionParams.getRepositoryPassword(), ctx.getVars());
+
+
         Set<String> images = dockerFaceService.getDockerImageApiService().buildImage(
                 //
                 arfifactDockerFullPath,
@@ -56,13 +59,11 @@ public class DockerBuildImageAction implements Action {
 
         if (!images.isEmpty()) {
             for (String imageName : images) {
-                dockerFaceService.getDockerImageApiService().pushImage(imageName);
+                dockerFaceService.getDockerImageApiService().pushImage(imageName, userName, userPwd);
             }
         }
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("END execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
-        }
+        logger.info("Docker镜像构建插件执行结束");
         return true;
     }
 

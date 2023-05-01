@@ -20,3 +20,8 @@ spec:
           name: ${projectName}
           ports:
             - containerPort: ${PORT}
+          env:
+            - name: appName
+              value: spring-web-demo-env
+            - name: appVersion
+              value: 1.1.0.1304

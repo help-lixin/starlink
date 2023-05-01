@@ -4,6 +4,7 @@ import help.lixin.core.pipeline.service.IExpressionService;
 import help.lixin.k8s.properties.K8SProperties;
 import help.lixin.k8s.service.*;
 import help.lixin.k8s.service.impl.DeploymentApiService;
+import help.lixin.k8s.service.impl.DeploymentTemplateService;
 import io.fabric8.kubernetes.client.Config;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
@@ -47,6 +48,12 @@ public class K8SConfig {
     }
 
     @Bean
+    @ConditionalOnMissingBean
+    public DeploymentTemplateService deploymentTemplateService() {
+        return new DeploymentTemplateService();
+    }
+
+    @Bean
     public K8SFaceService k8sFaceService(@Autowired K8SProperties k8sProperties,
                                          //
                                          @Autowired IExpressionService expressionService,
@@ -55,12 +62,15 @@ public class K8SConfig {
                                          //
                                          @Autowired IDeploymentApiService deploymentApiService,
                                          //
+                                         @Autowired DeploymentTemplateService deploymentTemplateService,
+                                         //
                                          @Autowired(required = false) IK8SFaceServiceCustomizer k8sFaceServiceCustomizer) {
         K8SFaceService k8sFaceService = new K8SFaceService();
         k8sFaceService.setK8SProperties(k8sProperties);
         k8sFaceService.setKubernetesClient(kubernetesClient);
         k8sFaceService.setDeploymentApiService(deploymentApiService);
         k8sFaceService.setExpressionService(expressionService);
+        k8sFaceService.setDeploymentTemplateService(deploymentTemplateService);
         if (null != k8sFaceServiceCustomizer) {
             k8sFaceServiceCustomizer.customizer(k8sFaceService);
         }

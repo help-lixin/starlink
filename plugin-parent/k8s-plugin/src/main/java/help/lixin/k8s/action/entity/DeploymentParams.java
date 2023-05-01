@@ -11,17 +11,11 @@ public class DeploymentParams implements Serializable {
     private String deployId;
     // 指定具体的deploy yaml位置(例如:/tmp/deploy.yml)
     private String yamlTemplatePath;
-
     // 命名空间
     private String namespace = Constant.DEFAULT_NAMESPACE;
     // 部署的名称
     private String deployName;
-
-
-    // pod的标签信息
-    private String podLabelName;
-    private String podLabelValue;
-    // 指定镜像拉取密钥
+    // 指定镜像拉取密钥名称
     private String imagePullSecretName;
     // 镜像名称
     private String image;
@@ -67,22 +61,6 @@ public class DeploymentParams implements Serializable {
 
     public void setDeployName(String deployName) {
         this.deployName = deployName;
-    }
-
-    public String getPodLabelName() {
-        return podLabelName;
-    }
-
-    public void setPodLabelName(String podLabelName) {
-        this.podLabelName = podLabelName;
-    }
-
-    public String getPodLabelValue() {
-        return podLabelValue;
-    }
-
-    public void setPodLabelValue(String podLabelValue) {
-        this.podLabelValue = podLabelValue;
     }
 
     public String getImagePullSecretName() {
