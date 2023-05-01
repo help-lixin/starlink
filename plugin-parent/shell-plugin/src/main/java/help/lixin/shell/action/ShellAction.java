@@ -27,9 +27,7 @@ public class ShellAction implements Action {
 
     @Override
     public boolean execute(PipelineContext ctx) throws Exception {
-        if (logger.isDebugEnabled()) {
-            logger.debug("start execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
-        }
+        logger.info("开始执行Shell插件");
         String stageParams = ctx.getStageParams();
         ObjectMapper mapper = new ObjectMapper();
         ShellParams shellParams = mapper.readValue(stageParams, ShellParams.class);
@@ -37,33 +35,30 @@ public class ShellAction implements Action {
         String batchCommand = commands.stream().collect(Collectors.joining(" && "));
         Process process = null;
         try {
-            if (logger.isDebugEnabled()) {
-                logger.debug("start execute batch shell command:[{}]", batchCommand);
-            }
+            logger.debug("开始执行Shell:[{}]", batchCommand);
             // 要把所有的命令,拼装成一条语句.
             ProcessBuilder processBuilder = new ProcessBuilder(new String[]{"/bin/bash", "-c", batchCommand});
             process = processBuilder.start();
             int exitCode = process.waitFor();
             InputStream inputStream = process.getInputStream();
             if (exitCode == 0) { // 正常退出
-                String success = IOUtils.readLines(inputStream, "UTF-8").stream().collect(Collectors.joining(" \n "));
-                if (logger.isDebugEnabled()) {
-                    logger.debug("end execute batch shell command:[{}],SUCCESS:[{}]", batchCommand, success);
-                }
+                String success = IOUtils.readLines(inputStream, "UTF-8")
+                        //
+                        .stream()
+                        //
+                        .collect(Collectors.joining(" \n "));
+                logger.error("执行Shell Command:[{}]成功,执行过程如下:[{}]", batchCommand, success);
             } else {
                 String error = IOUtils.readLines(process.getErrorStream(), "UTF-8").stream().collect(Collectors.joining(" \n "));
-                if (logger.isDebugEnabled()) {
-                    logger.debug("end execute batch shell command:[{}],FAIL:[{}]", batchCommand, error);
-                }
+                logger.error("执行Shell Command:[{}]失败,失败详细信息如下:[{}]", batchCommand, error);
+                throw new RuntimeException(error);
             }
         } finally {
             if (null != process) {
                 process.destroy();
             }
         }
-        if (logger.isDebugEnabled()) {
-            logger.debug("end execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
-        }
+        logger.info("执行Shell插件结束");
         return true;
     }
 

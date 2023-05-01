@@ -29,9 +29,7 @@ public class JibAction implements Action {
 
     @Override
     public boolean execute(PipelineContext ctx) throws Exception {
-        if (logger.isDebugEnabled()) {
-            logger.debug("start execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
-        }
+        logger.info("开始执行Jib插件生成镜像");
 
         HashMap<String, Object> tmpCtx = new HashMap<>();
         tmpCtx.putAll(ctx.getVars());
@@ -129,7 +127,7 @@ public class JibAction implements Action {
         // 生成目标镜像
         container.containerize(Containerizer.to(toRegistryImage) //
                 .setAllowInsecureRegistries(true));
-        logger.debug("end execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
+        logger.info("执行Jib插件生成镜像结束");
         return true;
     }
 

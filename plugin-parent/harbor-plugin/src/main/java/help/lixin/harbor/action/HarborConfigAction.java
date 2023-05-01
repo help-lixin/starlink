@@ -24,7 +24,7 @@ public class HarborConfigAction implements Action {
 
     @Override
     public boolean execute(PipelineContext ctx) throws Exception {
-        logger.debug("start execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
+        logger.info("开始执行Harbor配置插件");
         RepositoryInfo repositoryInfo = getRepositoryInfo(ctx);
         if (null != repositoryInfo) {
             String repositoryUrlVar = null;
@@ -36,11 +36,16 @@ public class HarborConfigAction implements Action {
             }
             ctx.getVars().put(Constant.ImageRepository.REPOSITORY_URL, repositoryUrlVar);
         }
-
         ctx.getVars().put(Constant.ImageRepository.HTTP_REPOSITORY_URL, repositoryInfo.getUrl());
         ctx.getVars().put(Constant.ImageRepository.REPOSITORY_USERNAME, repositoryInfo.getUserName());
         ctx.getVars().put(Constant.ImageRepository.REPOSITORY_PASSWORD, repositoryInfo.getPassword());
-        logger.debug("end execute action: [{}],ctx:[{}]", this.getClass().getName(), ctx);
+
+        logger.info("镜像仓库URL地址:[{}]", (String) ctx.getVars().get(Constant.ImageRepository.REPOSITORY_URL));
+        logger.info("镜像名称:[{}]", repositoryInfo.getUrl());
+        logger.info("镜像仓库用户名为:[{}]", repositoryInfo.getUserName());
+        logger.info("镜像仓库密码:[{}]", repositoryInfo.getPassword());
+
+        logger.info("执行Harbor配置插件结束");
         return true;
     }
 
