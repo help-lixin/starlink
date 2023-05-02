@@ -26,7 +26,7 @@ public class PipelineRuntimeTemplate {
                                                       //
                                                       String businessKey,
                                                       //
-                                                      Map<String, Object> vars) {
+                                                      Map<String, Object> vars) throws Exception{
         PipelineInstance pipelineInstance = pipelineRuntimeService.startPipelineInstanceById(pipelineDeployId, businessKey, vars);
         callback(pipelineInstance);
         return pipelineInstance;
@@ -38,7 +38,7 @@ public class PipelineRuntimeTemplate {
                                                        //
                                                        String businessKey,
                                                        //
-                                                       Map<String, Object> vars) {
+                                                       Map<String, Object> vars) throws Exception{
         PipelineInstance pipelineInstance = pipelineRuntimeService.startPipelineInstanceByKey(pipelineDeployKey, businessKey, version, vars);
         callback(pipelineInstance);
         return pipelineInstance;

@@ -18,14 +18,16 @@ public class SimpleEngineConfig {
     }
 
     @Bean
-    public IPipelineRuntimeService pipelineRuntimeService(PipelineEngine pipelineEngine) {
-        PipelineRuntimeService pipelineRuntimeService = new PipelineRuntimeService(pipelineEngine);
-        return pipelineRuntimeService;
-    }
-
-    @Bean
     public IPipelineDeployService pipelineDeployService() {
         PipelineDeployService pipelineDeployService = new PipelineDeployService();
         return pipelineDeployService;
+    }
+
+    @Bean
+    public IPipelineRuntimeService pipelineRuntimeService(IPipelineDeployService pipelineDeployService,
+                                                          //
+                                                          PipelineEngine pipelineEngine) {
+        PipelineRuntimeService pipelineRuntimeService = new PipelineRuntimeService(pipelineDeployService, pipelineEngine);
+        return pipelineRuntimeService;
     }
 }

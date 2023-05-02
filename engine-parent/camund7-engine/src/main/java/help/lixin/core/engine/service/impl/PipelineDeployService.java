@@ -68,4 +68,9 @@ public class PipelineDeployService implements IPipelineDeployService {
         }
         return null;
     }
+
+    @Override
+    public PipelineDeploy get(String deployId) {
+        return null;
+    }
 }

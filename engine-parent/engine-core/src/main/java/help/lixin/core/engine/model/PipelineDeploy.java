@@ -1,10 +1,23 @@
 package help.lixin.core.engine.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import help.lixin.core.definition.PipelineDefinition;
+
 public class PipelineDeploy {
     private String id;
     private String name;
     private String key;
     private int version;
+    @JsonIgnore
+    private PipelineDefinition pipelineDefinition;
+
+    public PipelineDefinition getPipelineDefinition() {
+        return pipelineDefinition;
+    }
+
+    public void setPipelineDefinition(PipelineDefinition pipelineDefinition) {
+        this.pipelineDefinition = pipelineDefinition;
+    }
 
     public String getId() {
         return id;

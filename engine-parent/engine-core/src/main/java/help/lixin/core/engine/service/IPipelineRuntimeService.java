@@ -10,11 +10,11 @@ import java.util.Map;
  */
 public interface IPipelineRuntimeService {
 
-    default PipelineInstance startPipelineInstanceById(String pipelineDeployId) {
+    default PipelineInstance startPipelineInstanceById(String pipelineDeployId) throws Exception {
         return startPipelineInstanceById(pipelineDeployId, null);
     }
 
-    default PipelineInstance startPipelineInstanceById(String pipelineDeployId, String businessKey) {
+    default PipelineInstance startPipelineInstanceById(String pipelineDeployId, String businessKey) throws Exception {
         return startPipelineInstanceById(pipelineDeployId, businessKey, new HashMap<>());
     }
 
@@ -22,16 +22,16 @@ public interface IPipelineRuntimeService {
                                                //
                                                String businessKey,
                                                //
-                                               Map<String, Object> vars);
+                                               Map<String, Object> vars) throws Exception ;
 
 
-    default PipelineInstance startPipelineInstanceByKey(String pipelineDeployKey) {
+    default PipelineInstance startPipelineInstanceByKey(String pipelineDeployKey) throws Exception {
         return startPipelineInstanceByKey(pipelineDeployKey, null);
     }
 
     default PipelineInstance startPipelineInstanceByKey(String pipelineDeployKey,
                                                         //
-                                                        String businessKey) {
+                                                        String businessKey) throws Exception {
         return startPipelineInstanceByKey(pipelineDeployKey, businessKey, null);
     }
 
@@ -40,7 +40,7 @@ public interface IPipelineRuntimeService {
                                                         //
                                                         String businessKey,
                                                         //
-                                                        Integer version) {
+                                                        Integer version) throws Exception {
         return startPipelineInstanceByKey(pipelineDeployKey, businessKey, version, new HashMap<>());
     }
 
@@ -50,5 +50,5 @@ public interface IPipelineRuntimeService {
                                                 //
                                                 Integer version,
                                                 //
-                                                Map<String, Object> vars);
+                                                Map<String, Object> vars) throws Exception ;
 }

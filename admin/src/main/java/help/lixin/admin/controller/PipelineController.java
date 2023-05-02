@@ -49,7 +49,7 @@ public class PipelineController {
             PipelineDefinition pipelineDefinition = pipelineParseFaceService.parse(body);
 
             if (logger.isDebugEnabled()) {
-                logger.debug("apply pipeline:\n{}\n", body);
+                logger.debug("开始应用流水线内容:\n{}\n", body);
             }
             PipelineDeploy deploy = pipelineDeployTemplate.deploy(pipelineDefinition);
             return Response.<PipelineDeploy>newBuilder().code(200).data(deploy).build();
@@ -59,26 +59,8 @@ public class PipelineController {
     }
 
     @PostMapping("/startById")
-    public Response<PipelineInstance> startById(@RequestBody StartPipelineByIdParam param) {
+    public Response<PipelineInstance> startById(@RequestBody StartPipelineByIdParam param) throws Exception {
         PipelineInstance instance = pipelineRuntimeTemplate.startPipelineInstanceById(param.getDeployId(),
-                //
-                param.getBusinessKey(),
-                //
-                param.getVars());
-        return Response.<PipelineInstance>newBuilder()
-                //
-                .code(200)
-                //
-                .data(instance)
-                //
-                .build();
-    }
-
-    @PostMapping("/startByKey")
-    public Response<PipelineInstance> startByKey(@RequestBody StartPipelineByKeyParam param) {
-        PipelineInstance instance = pipelineRuntimeTemplate.startPipelineInstanceByKey(param.getKey(),
-                //
-                param.getVersion(),
                 //
                 param.getBusinessKey(),
                 //

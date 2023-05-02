@@ -20,11 +20,6 @@ public class PipelineEngine {
         this.actionMediator = actionMediator;
     }
 
-    public void execute(String pipelineInstaceId) throws Exception {
-        // TODO lixin
-        // 委派给 execute(PipelineDefinition pipelineDefinition)
-    }
-
     public void execute(PipelineDefinition pipelineDefinition) throws Exception {
         List<ElementDefinition> pipelines = pipelineDefinition.getPipelines();
         // 找到第一个Action
@@ -92,7 +87,6 @@ public class PipelineEngine {
     protected boolean executeOne(ElementDefinition actionElement,
                                  //
                                  PipelineContext globalContext) throws Exception {
-        // TODO lixin
         boolean execute = Boolean.FALSE;
         boolean before = Boolean.FALSE;
         boolean after = Boolean.FALSE;
@@ -130,7 +124,6 @@ public class PipelineEngine {
             globalContext.copyFor(stageContext);
         }
 
-        // TODO lixin
         return before && execute && after;
     }
 }

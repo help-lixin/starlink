@@ -1,5 +1,6 @@
 package help.lixin.core.definition;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Map;
 /**
  * 流水线定义
  */
-public class PipelineDefinition {
+public class PipelineDefinition implements Serializable {
     // 唯一的key
     private String key;
     // 流水性描述
