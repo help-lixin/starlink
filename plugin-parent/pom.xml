@@ -14,14 +14,19 @@
 
     <modules>
         <module>core-plugin</module>
-        <module>gitlab-plugin</module>
-        <module>svn-plugin</module>
-        <module>jenkins-plugin</module>
-        <module>docker-mavne-plugin</module>
-        <module>shell-plugin</module>
-        <module>harbor-plugin</module>
-        <module>k8s-plugin</module>
-        <module>docker-plugin</module>
-        <module>jib-plugin</module>
+        <module>credential-plugin-parent</module>
+        <module>gitlab-plugin-parent</module>
+        <module>svn-plugin-parent</module>
+        <module>github-plugin-parent</module>
+        <module>eureka-plugin-parent</module>
+        <module>jenkins-plugin-parent</module>
+        <module>harbor-plugin-parent</module>
+        <module>xxl-job-plugin-parent</module>
+        <module>nacos-plugin-parent</module>
+        <module>rocketmq-plugin-parent</module>
+        <module>km-plugin-parent</module>
+        <module>k8s-plugin-parent</module>
+        <module>jsch-plugin-parent</module>
+        <module>ansible-plugin-parent</module>
     </modules>
 </project>

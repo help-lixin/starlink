@@ -13,74 +13,360 @@
     <name>starlink-admin ${project.version}</name>
 
     <dependencies>
-        <!--  engine -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+
+        <!-- ===================================engine================================================== -->
+        <!-- camunda7 engine -->
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-simple-engine</artifactId>
+            <artifactId>camunda7-bridge</artifactId>
             <version>${project.version}</version>
         </dependency>
 
-        <!-- plugins -->
+
+        <!-- flowable 6.8
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-svn-plugin</artifactId>
+            <artifactId>flowable6-bridge</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        -->
+
+        <!-- activiti 7
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>activiti-bridge</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        -->
+
+        <!-- camunda8 zeebe engine
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>camunda8-bridge</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        -->
+
+        <!-- ===================================plugin================================================== -->
+
+        <!-- start ansible  -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-ansible-web</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-gitlab-plugin</artifactId>
+            <artifactId>starlink-ansible-job</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- end ansible  -->
+
+        <!-- start shell  -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-jsch-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- end shell  -->
+
+        <!-- start  svn -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-svn-action</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- end  svn -->
+
+        <!-- start gitlab -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-gitlab-web</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-docker-maven-plugin</artifactId>
+            <artifactId>starlink-gitlab-action</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-jenkins-plugin</artifactId>
+            <artifactId>starlink-gitlab-job</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- end gitlab -->
+
+        <!-- start harbor -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-harbor-web</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-harbor-plugin</artifactId>
+            <artifactId>starlink-harbor-action</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-shell-plugin</artifactId>
+            <artifactId>starlink-harbor-job</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- end harbor -->
+
+        <!-- start jenkins -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-jenkins-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-jenkins-action</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-jenkins-job</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- end jenkins -->
+
+        <!-- start k8s  -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-k8s-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-k8s-job</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-k8s-action</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- end k8s  -->
+
+        <!-- start xxl-job  -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-xxl-job-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- end xxl-job  -->
+
+        <!-- start nacos  -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-nacos-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- end nacos  -->
+
+        <!-- start eureka -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-eureka-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- end eureka -->
+
+        <!-- start km -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-km-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- end km -->
+
+        <!-- start rocketmq -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-rocketmq-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>help.lixin</groupId>-->
+        <!--            <artifactId>starlink-rocketmq-job</artifactId>-->
+        <!--            <version>${project.version}</version>-->
+        <!--        </dependency>-->
+        <!-- end rocketmq -->
+
+        <!-- start jib action -->
+        <!--        <dependency>-->
+        <!--            <groupId>help.lixin</groupId>-->
+        <!--            <artifactId>starlink-jib-action</artifactId>-->
+        <!--            <version>${project.version}</version>-->
+        <!--        </dependency>-->
+        <!-- end jib action -->
+
+        <!-- start credential -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-credential-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- end credential -->
+
+        <!-- 需要注意:maven compile的依赖有一定的要求,要求能够访问到磁盘 -->
+        <!--        <dependency>-->
+        <!--            <groupId>help.lixin</groupId>-->
+        <!--            <artifactId>starlink-docker-maven-compile-action</artifactId>-->
+        <!--            <version>${project.version}</version>-->
+        <!--        </dependency>-->
+
+        <!-- 需要注意:docker Dockerfile的依赖有一定的要求,要求能够访问到磁盘 -->
+        <!--        <dependency>-->
+        <!--            <groupId>help.lixin</groupId>-->
+        <!--            <artifactId>starlink-docker-image-action</artifactId>-->
+        <!--            <version>${project.version}</version>-->
+        <!--        </dependency>-->
+
+        <!-- start jsch  -->
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-jsch-job</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>starlink-jsch-action</artifactId>
             <version>${project.version}</version>
         </dependency>
 
+        <!-- end jsch  -->
+
+        <!-- start github  -->
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-jib-plugin</artifactId>
+            <artifactId>starlink-github-action</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- end github  -->
 
-        <dependency>
-            <groupId>help.lixin</groupId>
-            <artifactId>starlink-docker-plugin</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
+        <!--
         <dependency>
             <groupId>help.lixin</groupId>
             <artifactId>starlink-k8s-plugin</artifactId>
             <version>${project.version}</version>
         </dependency>
+        -->
 
+        <!-- start nexus -->
+        <!--        <dependency>-->
+        <!--            <groupId>help.lixin</groupId>-->
+        <!--            <artifactId>starlink-nexus-web</artifactId>-->
+        <!--            <version>${project.version}</version>-->
+        <!--        </dependency>-->
+        <!-- end nexus -->
 
+        <!-- ===================================log================================================== -->
         <dependency>
             <groupId>help.lixin</groupId>
-            <artifactId>starlink-trace-log-impl</artifactId>
-            <version>${project.version}</version>
+            <artifactId>trace-log-web</artifactId>
+            <version>${trace-log.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>help.lixin</groupId>
+            <artifactId>trace-log-mysql-store</artifactId>
+            <version>${trace-log.version}</version>
+        </dependency>
+
+        <!-- ===================================system================================================== -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!-- ===================================推送================================================== -->
+        <dependency>
+            <groupId>help.lixin.transport.client</groupId>
+            <artifactId>transport-client</artifactId>
+            <version>${transport-client.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- lock -->
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-provider-jdbc-template</artifactId>
+        </dependency>
+
+        <!-- 编码解码 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-jwt</artifactId>
+        </dependency>
+
+        <!-- ===================================test================================================== -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -88,12 +374,101 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <!-- 针对测试/预生产/生产环境打包时,需要清除掉yml配置文件 -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>help.lixin.eventuate</groupId>
+                    <artifactId>eventuate-tram-spring-in-memory-starter</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>test</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>*.yml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>help.lixin.eventuate</groupId>
+                    <artifactId>eventuate-tram-spring-rocketmq-starter</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>pre</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>*.yml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>help.lixin.eventuate</groupId>
+                    <artifactId>eventuate-tram-spring-rocketmq-starter</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>pro</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>*.yml</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>help.lixin.eventuate</groupId>
+                    <artifactId>eventuate-tram-spring-rocketmq-starter</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.3.3.RELEASE</version>
+                <configuration>
+                    <mainClass>help.lixin.Application</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

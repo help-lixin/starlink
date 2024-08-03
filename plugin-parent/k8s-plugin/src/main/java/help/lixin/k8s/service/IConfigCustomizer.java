@@ -1,8 +1,0 @@
-package help.lixin.k8s.service;
-
-import help.lixin.k8s.properties.K8SProperties;
-import io.fabric8.kubernetes.client.Config;
-
-public interface IConfigCustomizer {
-    void customizer(K8SProperties k8sPoperties, Config config);
-}

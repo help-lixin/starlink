@@ -31,7 +31,7 @@
         <kubernetes-client.version>6.4.1</kubernetes-client.version>
         <jenkins-rest.version>1.0.2</jenkins-rest.version>
 
-        <ant.version>1.6.5</ant.version>
+        <ant.version>1.10.13</ant.version>
         <jackson.version>2.13.5</jackson.version>
         <cloudevents-json-jackson.version>2.3.0</cloudevents-json-jackson.version>
         <unirest-java.version>3.14.1</unirest-java.version>
@@ -48,8 +48,59 @@
 
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <camunda7.version>7.18.0</camunda7.version>
-        <mysql-connector-java.version>5.1.49</mysql-connector-java.version>
+        <mysql-connector-java.version>8.0.20</mysql-connector-java.version>
         <jib-core.version>0.23.0</jib-core.version>
+
+        <mybatis.plus.version>3.4.2</mybatis.plus.version>
+        <pagehelp.version>1.4.5</pagehelp.version>
+        <swagger.version>3.0.0</swagger.version>
+
+        <spring.version>5.3.9</spring.version>
+        <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
+        <shedlock.version>4.23.0</shedlock.version>
+        <jasypt-spring-boot-starter.version>3.0.4</jasypt-spring-boot-starter.version>
+        <jasypt.version>1.9.3</jasypt.version>
+
+        <validation.version>6.2.0.Final</validation.version>
+
+        <guava.version>31.0.1-jre</guava.version>
+        <flowable6.version>6.8.0</flowable6.version>
+
+        <activiti.version>7.0.0.GA</activiti.version>
+
+        <zeebe-client.version>8.2.7</zeebe-client.version>
+
+        <log4j-core.version>2.17.2</log4j-core.version>
+        <log4j-slf4j-impl.version>2.17.2</log4j-slf4j-impl.version>
+
+        <jdom.version>2.0.6</jdom.version>
+        <caffeine.version>2.9.3</caffeine.version>
+        <eureka.version>1.10.18</eureka.version>
+        <rocketmq.version>4.3.2</rocketmq.version>
+
+        <commons-lang3.version>3.9</commons-lang3.version>
+
+        <spring-boot-starter-web.version>2.4.2</spring-boot-starter-web.version>
+        <spring-security-oauth2.version>2.5.0.RELEASE</spring-security-oauth2.version>
+        <spring-security-jwt.version>1.1.1.RELEASE</spring-security-jwt.version>
+
+        <jsch.version>0.1.55</jsch.version>
+        <github-api.version>1.314</github-api.version>
+
+        <aliyun.version>0.0.6</aliyun.version>
+        <eventuate-tram.version>0.31.0.RELEASE</eventuate-tram.version>
+
+
+
+        <system-event.version>1.0.0</system-event.version>
+        <action.version>1.0.0</action.version>
+        <engine.version>1.0.3</engine.version>
+        <authorize-lib.version>1.0.5</authorize-lib.version>
+        <transport-client.version>1.0.0</transport-client.version>
+        <common.version>1.0.0</common.version>
+        <trace-log.version>1.0.0</trace-log.version>
+        <eventuate-tram-spring-rocketmq-starter.version>1.0.0</eventuate-tram-spring-rocketmq-starter.version>
+        <eventuate-tram-spring-in-memory-starter.version>1.0.1</eventuate-tram-spring-in-memory-starter.version>
     </properties>
 
 
@@ -64,6 +115,32 @@
             </dependency>
 
             <dependency>
+                <groupId>help.lixin.eventuate</groupId>
+                <artifactId>eventuate-tram-spring-rocketmq-starter</artifactId>
+                <version>${eventuate-tram-spring-rocketmq-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>help.lixin.eventuate</groupId>
+                <artifactId>eventuate-tram-spring-in-memory-starter</artifactId>
+                <version>${eventuate-tram-spring-in-memory-starter.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.protobuf</groupId>
+                        <artifactId>protobuf-java</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- camunda 7 -->
+            <dependency>
                 <groupId>org.camunda.bpm</groupId>
                 <artifactId>camunda-bom</artifactId>
                 <version>${camunda7.version}</version>
@@ -71,26 +148,60 @@
                 <type>pom</type>
             </dependency>
 
+            <!-- flowable 6 -->
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-spring-boot-starter</artifactId>
+                <version>${flowable6.version}</version>
+            </dependency>
+
+            <!-- activiti -->
+            <dependency>
+                <groupId>org.activiti</groupId>
+                <artifactId>activiti-spring-boot-starter</artifactId>
+                <version>${activiti.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>javax.el</groupId>
+                        <artifactId>el-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- camunda 8 -->
+            <dependency>
+                <groupId>io.camunda</groupId>
+                <artifactId>zeebe-client-java</artifactId>
+                <version>${zeebe-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j-impl</artifactId>
+                <version>${log4j-slf4j-impl.version}</version>
+            </dependency>
+
+
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
 
+
             <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${spring-security-oauth2.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>${commons-collections.version}</version>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-jwt</artifactId>
+                <version>${spring-security-jwt.version}</version>
             </dependency>
 
             <!-- svn -->
@@ -117,21 +228,34 @@
                 <version>${jgit.version}</version>
             </dependency>
 
+            <!-- k8s -->
             <dependency>
                 <groupId>io.fabric8</groupId>
                 <artifactId>kubernetes-client</artifactId>
                 <version>${kubernetes-client.version}</version>
             </dependency>
 
+            <!-- jenkins -->
             <dependency>
                 <groupId>io.github.cdancy</groupId>
                 <artifactId>jenkins-rest</artifactId>
                 <version>${jenkins-rest.version}</version>
             </dependency>
-
+            <!-- ant -->
             <dependency>
-                <groupId>ant</groupId>
+                <groupId>org.apache.ant</groupId>
                 <artifactId>ant</artifactId>
+                <version>${ant.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.ant</groupId>
+                <artifactId>ant-jsch</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.jcraft</groupId>
+                        <artifactId>jsch</artifactId>
+                    </exclusion>
+                </exclusions>
                 <version>${ant.version}</version>
             </dependency>
 
@@ -206,6 +330,179 @@
             </dependency>
 
             <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${validation.version}</version>
+            </dependency>
+
+            <!-- mybatis pulus组件 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelp.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt-spring-boot-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot-starter-web.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${org.mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.javacrumbs.shedlock</groupId>
+                <artifactId>shedlock-spring</artifactId>
+                <version>${shedlock.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.javacrumbs.shedlock</groupId>
+                <artifactId>shedlock-provider-jdbc-template</artifactId>
+                <version>${shedlock.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons-collections.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jdom</groupId>
+                <artifactId>jdom2</artifactId>
+                <version>${jdom.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>${caffeine.version}</version>
+            </dependency>
+
+            <!--阿里镜像仓库-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>alibabacloud-cr20181201</artifactId>
+                <version>${aliyun.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- 依赖实体对象 -->
+                <groupId>com.netflix.eureka</groupId>
+                <artifactId>eureka-client</artifactId>
+                <version>${eureka.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-client</artifactId>
+                <version>${rocketmq.version}</version>
+            </dependency>
+
+            <!-- github api -->
+            <dependency>
+                <groupId>org.kohsuke</groupId>
+                <artifactId>github-api</artifactId>
+                <version>${github-api.version}</version>
+            </dependency>
+
+
+            <!-- action核心 -->
+            <dependency>
+                <groupId>help.lixin.core.pipeline.action</groupId>
+                <artifactId>action-core</artifactId>
+                <version>${action.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>help.lixin.core.pipeline.action</groupId>
+                <artifactId>action-model</artifactId>
+                <version>${action.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>help.lixin.core.pipeline.action</groupId>
+                <artifactId>action-api</artifactId>
+                <version>${action.version}</version>
+            </dependency>
+
+            <!-- engine层 -->
+            <dependency>
+                <groupId>help.lixin</groupId>
+                <artifactId>activiti-engine</artifactId>
+                <version>${engine.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>help.lixin</groupId>
+                <artifactId>camunda7-engine</artifactId>
+                <version>${engine.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>help.lixin</groupId>
+                <artifactId>camunda8-engine</artifactId>
+                <version>${engine.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>help.lixin</groupId>
+                <artifactId>flowable6-engine</artifactId>
+                <version>${engine.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>help.lixin.authorize</groupId>
+                <artifactId>authorize-lib</artifactId>
+                <version>${authorize-lib.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
@@ -216,8 +513,7 @@
 
     <modules>
         <module>common-parent</module>
-        <module>engine-parent</module>
-        <module>trace-log-parent</module>
+        <module>bridge-parent</module>
         <module>plugin-parent</module>
         <module>admin</module>
     </modules>

@@ -13,7 +13,10 @@
     <name>starlink-common-parent ${project.version}</name>
 
     <modules>
-        <module>model</module>
+        <module>common-model</module>
+        <module>common-web</module>
+        <module>common-service</module>
+        <module>common-action</module>
         <module>common</module>
     </modules>
 </project>
