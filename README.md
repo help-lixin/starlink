@@ -30,7 +30,7 @@ spring boot、mybatis plus、spring cloud gateway、spring security、shedlock�
 ### 6. Starlink部署图纸
 ![Starlink部署架构图](docs/desgin/starlink-deploy-architecture.jpg)
 
-### 7. Starlink一键部署与使用文档
+### 7. Starlink一键部署与使用文档 
 [starlink一键部署与使用文档](https://github.com/help-lixin/starlink-docker)
 
 ### 8. 联系我们
