@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.jenkins.mapper.JenkinsPipelineSetupAntMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.jenkins.domain.JenkinsPipelineSetupAnt">
+    
+    <!-- ID -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+
+    <!-- ant命令 -->
+    <result column="targets" jdbcType="VARCHAR" property="targets" />
+
+    <!-- ant命令 -->
+    <result column="ant_id" jdbcType="VARCHAR" property="antId" />
+
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+    
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    
+    <!-- 更新时间 -->
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <!-- Generate time: 2023-12-12 10:59:06 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  
+</mapper>

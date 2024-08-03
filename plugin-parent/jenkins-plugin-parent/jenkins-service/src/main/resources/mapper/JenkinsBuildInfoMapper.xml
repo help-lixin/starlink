@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.jenkins.mapper.JenkinsBuildInfoMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.jenkins.domain.JenkinsBuildInfo">
+    
+    <!-- ID -->
+      <result column="id" jdbcType="BIGINT" property="id"/>
+
+      <!-- 实例编码 -->
+      <result column="instance_code" jdbcType="VARCHAR" property="instanceCode"/>
+
+      <!-- 任务表id -->
+      <result column="job_id" jdbcType="BIGINT" property="jobId"/>
+
+      <!-- 日志id -->
+      <result column="jenkins_log_id" jdbcType="BIGINT" property="jenkinsLogId"/>
+
+      <!-- 任务名 -->
+      <result column="job_name" jdbcType="VARCHAR" property="jobName"/>
+
+      <!-- 构建状态(-1:失败 0:构建中 1:成功) -->
+      <result column="build_status" jdbcType="TINYINT" property="buildStatus"/>
+
+      <!-- 构建开始时间 -->
+      <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+
+      <!-- 构建结束时间 -->
+      <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+
+      <!-- 状态值 -->
+      <result column="status" jdbcType="TINYINT" property="status"/>
+
+      <!-- 创建人 -->
+      <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+
+      <!-- 更新人 -->
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+
+      <!-- 创建时间 -->
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+
+      <!-- 更新时间 -->
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+  <insert id="insertBuildInfo" keyProperty="id" useGeneratedKeys="true">
+    insert into jenkins_build_info (id, instance_code, job_id, 
+      jenkins_log_id, job_name, build_status, 
+      start_time, end_time, status, 
+      create_by, update_by, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{instanceCode,jdbcType=VARCHAR}, #{jobId,jdbcType=BIGINT}, 
+      #{jenkinsLogId,jdbcType=BIGINT}, #{jobName,jdbcType=VARCHAR}, #{buildStatus,jdbcType=TINYINT}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective">
+    insert into jenkins_build_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="instanceCode != null">
+        instance_code,
+      </if>
+      <if test="jobId != null">
+        job_id,
+      </if>
+      <if test="jenkinsLogId != null">
+        jenkins_log_id,
+      </if>
+      <if test="jobName != null">
+        job_name,
+      </if>
+      <if test="buildStatus != null">
+        build_status,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="instanceCode != null">
+        #{instanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobId != null">
+        #{jobId,jdbcType=BIGINT},
+      </if>
+      <if test="jenkinsLogId != null">
+        #{jenkinsLogId,jdbcType=BIGINT},
+      </if>
+      <if test="jobName != null">
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="buildStatus != null">
+        #{buildStatus,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+    <!-- Generate time: 2024-03-13 19:50:32 ### -->
+
+
+    <!-- Your codes goes here!!! -->
+    <select id="pageList" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        jenkins_build_info
+    WHERE
+        1=1
+    <if test="jobName != null and jobName != ''">
+    AND
+        job_name LIKE CONCAT("%", #{jobName}, "%")
+    </if>
+    <if test="instanceCode != null and instanceCode != ''">
+    AND
+        instance_code = #{instanceCode}
+    </if>
+    <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+        AND  date_format(start_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+    </if>
+    <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+        AND date_format(end_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+    </if>
+    ORDER BY create_time DESC
+  </select>
+  <select id="queryBuildInfo"
+          resultType="help.lixin.starlink.plugin.jenkins.domain.JenkinsBuildInfo">
+    SELECT
+        *
+    FROM
+        jenkins_build_info
+    WHERE
+        job_name = #{jobName}
+    AND
+        jenkins_log_id = #{logId}
+    AND
+        instance_code = #{instanceCode}
+  </select>
+</mapper>

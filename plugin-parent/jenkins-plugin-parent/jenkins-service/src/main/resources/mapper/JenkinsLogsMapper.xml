@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.jenkins.mapper.JenkinsLogsMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.jenkins.domain.JenkinsLogs">
+    
+    <!-- ID -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    
+    <!-- 构建表id -->
+    <result column="jenkins_build_id" jdbcType="BIGINT" property="jenkinsBuildId" />
+    
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+    
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    
+    <!-- 更新时间 -->
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="help.lixin.starlink.plugin.jenkins.domain.JenkinsLogs">
+    
+    <!-- 日志信息 -->
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <insert id="insert">
+    insert into jenkins_logs (id, jenkins_build_id, status, 
+      create_by, update_by, create_time, 
+      update_time, content)
+    values (#{id,jdbcType=BIGINT}, #{jenkinsBuildId,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective">
+    insert into jenkins_logs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="jenkinsBuildId != null">
+        jenkins_build_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="jenkinsBuildId != null">
+        #{jenkinsBuildId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- Generate time: 2024-03-14 11:31:21 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  <select id="queryByBuildId" resultType="STRING">
+    SELECT
+        content
+    FROM
+        jenkins_logs
+    WHERE
+        jenkins_build_id = #{buildId}
+  </select>
+
+</mapper>

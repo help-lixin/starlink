@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.k8s.mapper.KubernetesNameSpaceMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.k8s.domain.KubernetesNameSpace">
+    
+    <!-- ID -->
+      <result column="id" jdbcType="BIGINT" property="id"/>
+
+      <!-- 命名空间名字 -->
+      <result column="name" jdbcType="VARCHAR" property="name"/>
+
+      <!-- 实例编码 -->
+      <result column="instance_code" jdbcType="VARCHAR" property="instanceCode"/>
+
+      <!-- 描述 -->
+      <result column="remark" jdbcType="VARCHAR" property="remark"/>
+
+      <!-- 是否删除（删除为1） -->
+      <result column="is_del" jdbcType="TINYINT" property="isDel"/>
+
+      <!-- 状态值 -->
+      <result column="status" jdbcType="TINYINT" property="status"/>
+
+      <!-- 创建人 -->
+      <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+
+      <!-- 更新人 -->
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+
+      <!-- 创建时间 -->
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+
+      <!-- 更新时间 -->
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+  <insert id="insertSelective">
+    insert into kubernetes_name_space
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="instanceCode != null">
+        instance_code,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="instanceCode != null">
+        #{instanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+    <!-- Generate time: 2024-05-15 18:47:33 ### -->
+
+
+    <!-- Your codes goes here!!! -->
+    <select id="queryInNameSpace" resultType="help.lixin.starlink.plugin.k8s.domain.KubernetesNameSpace">
+    SELECT
+        *
+    FROM
+        kubernetes_name_space
+    WHERE
+        is_del = 0
+    AND
+        `name`
+    IN
+    <foreach collection="list" item="name" open="(" close=")" separator=",">
+      "${name}"
+    </foreach>
+  </select>
+
+  <select id="queryCheckPointDateTime" resultType="java.util.Date">
+    SELECT
+        MAX(create_time)
+    FROM
+        kubernetes_name_space
+    WHERE
+        is_del = 0
+  </select>
+  <select id="queryNameSpaceByInstanceCode" resultType="help.lixin.starlink.plugin.k8s.domain.KubernetesNameSpace">
+    SELECT
+        *
+    FROM
+        kubernetes_name_space
+    WHERE
+        instance_code = #{instanceCode}
+    AND
+        is_del = 0
+  </select>
+  <select id="queryNameSpaceOptionByInstanceCode"
+          resultType="help.lixin.starlink.plugin.k8s.dto.namespace.NameSpaceOptionDTO">
+    SELECT
+        id value,
+        name label
+    FROM
+        kubernetes_name_space
+    WHERE
+        instance_code = #{instanceCode}
+    AND
+        is_del = 0
+    AND
+        status = 1
+  </select>
+  <select id="queryNameSpaceByNameAndInstanceCode"
+          resultType="help.lixin.starlink.plugin.k8s.domain.KubernetesNameSpace">
+    SELECT
+        *
+    FROM
+        kubernetes_name_space
+    WHERE
+        instance_code = #{instanceCode}
+    AND
+        name = #{name}
+    AND
+        is_del = 0
+  </select>
+  <select id="queryPageList" resultType="help.lixin.starlink.plugin.k8s.domain.KubernetesNameSpace">
+    SELECT
+        *
+    FROM
+        kubernetes_name_space
+    WHERE
+        is_del = 0
+    <if test="instanceCode != null and instanceCode != ''">
+    AND
+        instance_code = #{instanceCode}
+    </if>
+    <if test="name != null and name != ''">
+    AND
+        name LIKE CONCAT("%",#{name},"%")
+    </if>
+    ORDER BY
+        create_time DESC
+  </select>
+
+</mapper>

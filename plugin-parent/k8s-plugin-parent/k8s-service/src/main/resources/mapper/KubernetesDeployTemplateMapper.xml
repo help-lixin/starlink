@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.k8s.mapper.KubernetesDeployTemplateMapper">
+    <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.k8s.domain.KubernetesDeployTemplate">
+        <!-- 部署ID -->
+        <result column="deployment_id" jdbcType="BIGINT" property="deployId"/>
+        <!-- 部署别名 -->
+        <result column="deploy_name" jdbcType="VARCHAR" property="deployName"/>
+        <!--yaml内容 -->
+        <result column="yaml_content" jdbcType="VARCHAR" property="yamlContent"/>
+        <!-- 备注 -->
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <!-- 是否删除（删除为1） -->
+        <result column="is_del" jdbcType="TINYINT" property="isDel"/>
+        <!-- 状态值 -->
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <!-- 创建人 -->
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <!-- 更新人 -->
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <!-- 创建时间 -->
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <!-- 更新时间 -->
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <select id="getByDeployId" resultMap="BaseResultMap">
+        SELECT *
+        FROM kubernetes_deploy_template
+        WHERE deployment_id = #{deployId}
+        AND is_del = 0
+        AND status = 1
+    </select>
+
+    <select id="querydeployTemplateOptions" resultType="help.lixin.starlink.plugin.k8s.dto.DeployTemplateOption">
+        SELECT
+            deployment_id value,
+            deploy_name label
+        FROM kubernetes_deploy_template
+        WHERE is_del = 0
+        AND status = 1
+    </select>
+
+    <select id="pageList" resultMap="BaseResultMap">
+        SELECT *
+        FROM kubernetes_deploy_template
+        WHERE is_del = 0
+        <if test="deployName != null and deployName != ''">
+            AND deploy_name LIKE CONCAT("%", #{deployName}, "%")
+        </if>
+        <if test="remark != null and remark != ''">
+            AND remark LIKE CONCAT("%", #{remark}, "%")
+        </if>
+        <if test="status != null ">
+            AND status = #{status}
+        </if>
+        <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+            AND date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+        </if>
+        <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+            AND date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+        </if>
+        ORDER BY create_time DESC
+    </select>
+
+    <update id="removeById">
+        UPDATE kubernetes_deploy_template
+        SET is_del = 1
+        WHERE deployment_id =#{id}
+    </update>
+
+    <select id="selectByDeployName" resultMap="BaseResultMap">
+        SELECT *
+        FROM kubernetes_deploy_template
+        WHERE deploy_name = #{deployName}
+        AND is_del = 0
+    </select>
+
+    <select id="checkDeployNameUnique" parameterType="string" resultMap="BaseResultMap">
+        SELECT *
+        FROM kubernetes_deploy_template
+        WHERE deploy_name=#{deployName} AND is_del = 0 LIMIT 1
+    </select>
+</mapper>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.jenkins.mapper.JenkinsPipelineSetupMavenMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.jenkins.domain.JenkinsPipelineSetupMaven">
+    
+    <!-- ID -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    
+    <!-- maven名称 -->
+    <result column="maven_id" jdbcType="VARCHAR" property="mavenId" />
+    
+    <!-- maven命令 -->
+    <result column="goals" jdbcType="VARCHAR" property="goals" />
+    
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+    
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    
+    <!-- 更新时间 -->
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <insert id="insertSelective">
+    insert into jenkins_pipeline_setup_maven
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="mavenId != null">
+        maven_id,
+      </if>
+      <if test="goals != null">
+        goals,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="mavenId != null">
+        #{mavenId,jdbcType=VARCHAR},
+      </if>
+      <if test="goals != null">
+        #{goals,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- Generate time: 2023-12-12 10:59:06 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  
+</mapper>

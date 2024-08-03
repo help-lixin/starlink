@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.rocketmq.mapper.RocketmqTopicMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.rocketmq.domain.RocketmqTopic">
+    
+    <!-- ID -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    
+    <!-- brokerId -->
+    <result column="broker_id" jdbcType="BIGINT" property="brokerId" />
+    
+    <!-- topic名称 -->
+    <result column="topic_name" jdbcType="VARCHAR" property="topicName" />
+    
+    <!-- 写队列数量 -->
+    <result column="write_queue_nums" jdbcType="INTEGER" property="writeQueueNums" />
+    
+    <!-- 读队列数量 -->
+    <result column="read_queue_nums" jdbcType="INTEGER" property="readQueueNums" />
+    
+    <!-- perm -->
+    <result column="perm" jdbcType="INTEGER" property="perm" />
+    
+    <!-- 是否排序 -->
+    <result column="order" jdbcType="TINYINT" property="order" />
+    
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+    
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    
+    <!-- 更新时间 -->
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, broker_id, topic_name, write_queue_nums, read_queue_nums, perm, order, status, 
+    create_by, update_by, created_time, updated_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rocketmq_topic
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from rocketmq_topic
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert">
+    insert into rocketmq_topic (id, broker_id, topic_name, 
+      write_queue_nums, read_queue_nums, perm, 
+      order, status, create_by, 
+      update_by, created_time, updated_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{brokerId,jdbcType=BIGINT}, #{topicName,jdbcType=VARCHAR}, 
+      #{writeQueueNums,jdbcType=INTEGER}, #{readQueueNums,jdbcType=INTEGER}, #{perm,jdbcType=INTEGER}, 
+      #{order,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{createBy,jdbcType=VARCHAR},
+      #{updateBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+    insert into rocketmq_topic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="brokerId != null">
+        broker_id,
+      </if>
+      <if test="topicName != null">
+        topic_name,
+      </if>
+      <if test="writeQueueNums != null">
+        write_queue_nums,
+      </if>
+      <if test="readQueueNums != null">
+        read_queue_nums,
+      </if>
+      <if test="perm != null">
+        perm,
+      </if>
+      <if test="order != null">
+        `order`,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="brokerId != null">
+        #{brokerId,jdbcType=BIGINT},
+      </if>
+      <if test="topicName != null">
+        #{topicName,jdbcType=VARCHAR},
+      </if>
+      <if test="writeQueueNums != null">
+        #{writeQueueNums,jdbcType=INTEGER},
+      </if>
+      <if test="readQueueNums != null">
+        #{readQueueNums,jdbcType=INTEGER},
+      </if>
+      <if test="perm != null">
+        #{perm,jdbcType=INTEGER},
+      </if>
+      <if test="order != null">
+        #{order,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective">
+    update rocketmq_topic
+    <set>
+      <if test="brokerId != null">
+        broker_id = #{brokerId,jdbcType=BIGINT},
+      </if>
+      <if test="topicName != null">
+        topic_name = #{topicName,jdbcType=VARCHAR},
+      </if>
+      <if test="writeQueueNums != null">
+        write_queue_nums = #{writeQueueNums,jdbcType=INTEGER},
+      </if>
+      <if test="readQueueNums != null">
+        read_queue_nums = #{readQueueNums,jdbcType=INTEGER},
+      </if>
+      <if test="perm != null">
+        perm = #{perm,jdbcType=INTEGER},
+      </if>
+      <if test="order != null">
+        order = #{order,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey">
+    update rocketmq_topic
+    set broker_id = #{brokerId,jdbcType=BIGINT},
+      topic_name = #{topicName,jdbcType=VARCHAR},
+      write_queue_nums = #{writeQueueNums,jdbcType=INTEGER},
+      read_queue_nums = #{readQueueNums,jdbcType=INTEGER},
+      perm = #{perm,jdbcType=INTEGER},
+      order = #{order,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!-- Generate time: 2023-09-11 17:18:10 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  <select id="queryTopicList" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        rocketmq_topic
+    WHERE
+        topic_name
+    IN
+    <foreach collection="list" item="name" open="(" close=")" separator=",">
+      ${name}
+    </foreach>
+  </select>
+
+  <delete id="truncateTable">
+    truncate table rocketmq_topic
+  </delete>
+</mapper>

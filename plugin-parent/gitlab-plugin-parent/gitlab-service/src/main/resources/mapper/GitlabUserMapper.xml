@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.gitlab.mapper.GitlabUserMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.gitlab.domain.GitlabUser">
+
+    <!-- user_id -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+
+    <!-- gitlabId -->
+    <result column="gitlab_user_id" jdbcType="BIGINT" property="gitlabUserId" />
+    <result column="sys_user_id" jdbcType="BIGINT" property="sysUserId" />
+
+    <!-- 用户名 -->
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+
+    <!-- 密码 -->
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="instance_code" jdbcType="VARCHAR" property="instanceCode" />
+
+    <!-- 是否删除（删除为1） -->
+    <result column="is_del" jdbcType="TINYINT" property="isDel" />
+
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+
+    <!-- 创建时间 -->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, gitlab_user_id, sys_user_id, user_name, nick_name, email, password, instance_code, status, create_by, update_by,
+    create_time, update_time
+  </sql>
+  <sql id="Show_Column_List">
+    id, gitlab_user_id, sys_user_id, user_name, nick_name, email, instance_code, status, create_by, update_by,
+    create_time, update_time
+  </sql>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+    insert into gitlab_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gitlabUserId != null">
+        gitlab_user_id,
+      </if>
+      <if test="sysUserId != null">
+        sys_user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="instanceCode != null">
+        instance_code,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gitlabUserId != null">
+        #{gitlabUserId,jdbcType=BIGINT},
+      </if>
+      <if test="sysUserId != null">
+        #{sysUserId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="instanceCode != null">
+        #{instanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective">
+    update gitlab_user
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gitlabUserId != null">
+        gitlab_user_id = #{gitlabUserId,jdbcType=BIGINT},
+      </if>
+      <if test="sysUserId != null">
+        sys_user_id = #{sysUserId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="instanceCode != null">
+        instance_code = #{instanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey">
+    update gitlab_user
+    set id = #{id,jdbcType=BIGINT},
+    gitlab_user_id = #{gitlabUserId,jdbcType=BIGINT},
+    sys_user_id = #{sysUserId,jdbcType=BIGINT},
+    user_name = #{userName,jdbcType=VARCHAR},
+    nick_name = #{nickName,jdbcType=VARCHAR},
+    email = #{email,jdbcType=VARCHAR},
+    password = #{password,jdbcType=VARCHAR},
+    instance_code = #{instanceCode,jdbcType=VARCHAR},
+    status = #{status,jdbcType=TINYINT},
+    create_by = #{createBy,jdbcType=VARCHAR},
+    update_by = #{updateBy,jdbcType=VARCHAR},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from gitlab_user
+    where
+        id = #{id,jdbcType=BIGINT}
+    AND
+        is_del = 0
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from gitlab_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- Your codes goes here!!! -->
+
+
+  <select id="selectUserList" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        gitlab_user
+    WHERE
+        is_del = 0
+    <if test="status != null">
+      AND
+      status = #{status}
+    </if>
+    <if test="userName != null and userName != ''">
+      AND
+      user_name LIKE CONCAT('%', #{userName} ,  '%')
+    </if>
+    <if test="email != null and email != ''">
+      AND
+      email = LIKE CONCAT('%', #{email} ,  '%')
+    </if>
+    <if test="instanceCode != null and instanceCode != ''">
+      AND
+      instance_code = #{instanceCode}
+    </if>
+    <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+      AND
+      date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+    </if>
+    <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+      AND
+      date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+    </if>
+    ORDER BY
+      create_time DESC
+  </select>
+  <select id="selectUser" resultMap="BaseResultMap">
+    SELECT
+        <include refid="Show_Column_List" />
+    FROM
+        gitlab_user
+    WHERE
+        user_name = #{userName}
+    AND
+        is_del = 0
+  </select>
+
+  <select id="selectUserByGroupIdOfGroupProject" resultMap="BaseResultMap">
+    SELECT
+        <include refid="Show_Column_List" />
+    FROM
+        gitlab_user u
+    JOIN
+    (
+        SELECT
+            user_id
+        FROM
+            gitlab_user_group
+        WHERE
+            1 = 1
+        <if test="groupId != null">
+          AND group_id = #{groupId}
+        </if>
+    ) ug
+    ON
+        u.id = ug.user_id
+    WHERE
+        1=1
+        <if test="userName != null and userName != ''">
+          AND user_name = #{userName}
+        </if>
+        <if test="status != null">
+          AND status = #{status}
+        </if>
+        <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+          AND date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+        </if>
+        <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+          AND date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+        </if>
+    GROUP BY
+        id
+    ORDER BY
+        create_time DESC
+  </select>
+  <select id="queryUserByGitlabUserIds" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        gitlab_user
+    WHERE
+        gitlab_user_id
+    IN
+    <foreach close=")" collection="list" item="id" open="(" separator=",">
+      ${id}
+    </foreach>
+  </select>
+  <select id="querySelectOption" resultType="help.lixin.starlink.plugin.gitlab.dto.user.UserSelectOptionDTO">
+    SELECT
+        id value,
+        user_name label
+    FROM
+        gitlab_user
+    WHERE
+        status = 0
+    AND
+        instance_code = #{instanceCode}
+  </select>
+  <select id="selectUserByProjectIdOfUserProject" resultType="help.lixin.starlink.plugin.gitlab.dto.user.UserProjectDTO">
+    SELECT
+        up.id,
+        u.user_name,
+        u.nick_name,
+        u.email,
+        u.instance_code,
+        up.status,
+        up.project_id,
+        up.expires_at,
+        up.project_name,
+        up.create_time
+    FROM
+        gitlab_user u
+    JOIN (
+        SELECT
+            gup.user_id,
+            gup.project_id,
+            gup.create_time,
+            gup.id,
+            gup.status,
+            gup.expires_at,
+            gp.project_name
+        FROM
+            gitlab_user_project gup
+        LEFT JOIN
+            gitlab_project gp
+        ON
+            gp.id = gup.project_id
+        WHERE
+            gup.is_del = 0
+        AND
+            gp.is_del = 0
+        <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+          AND date_format(gup.create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+        </if>
+        <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+          AND date_format(gup.create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+        </if>
+        <if test="projectId != null">
+          AND gup.project_id = #{projectId}
+        </if>
+        <if test="status != null">
+          AND gup.status = #{status}
+        </if>
+
+    ) up
+    ON
+        u.id = up.user_id
+
+      WHERE
+        u.is_del = 0
+        <if test="userName != null and userName != '' ">
+            AND
+                u.user_name LIKE CONCAT("%",#{userName},"%")
+        </if>
+        <if test="status != null">
+            AND
+                u.status = #{status}
+        </if>
+      ORDER BY
+        create_time DESC
+  </select>
+
+  <update id="removeById">
+        UPDATE
+            gitlab_user
+        SET
+            is_del = 1
+        WHERE
+            id = #{id}
+    </update>
+    <select id="queryUserBySysUserId" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            gitlab_user
+        WHERE
+            sys_user_id = #{sysUserId}
+    </select>
+    <select id="queryNotInIds" resultType="help.lixin.starlink.plugin.gitlab.dto.OptionListDTO">
+        SELECT
+            user_name label,
+            id value
+        FROM
+            gitlab_user
+        WHERE
+            is_del = 0
+        AND
+            status = 1
+        <if test="userName != null and userName != ''">
+            AND
+                user_name LIKE CONCAT("%",#{userName},"%")
+        </if>
+        <if test="userIds != null and userIds.size() > 0">
+            AND
+                id NOT IN
+            <foreach  open="(" close=")" collection="userIds" item="id" separator=",">
+                ${id}
+            </foreach>
+        </if>
+    </select>
+</mapper>

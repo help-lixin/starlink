@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.rocketmq.mapper.RocketmqTopicStateMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.rocketmq.domain.RocketmqTopicState">
+    
+    <!-- ID -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    
+    <!-- 队列;队列 -->
+    <result column="queue" jdbcType="VARCHAR" property="queue" />
+    
+    <!-- 最小位点;最小位点 -->
+    <result column="min_point" jdbcType="INTEGER" property="minPoint" />
+    
+    <!-- 最大位点;最大位点 -->
+    <result column="max_point" jdbcType="INTEGER" property="maxPoint" />
+    
+    <!-- topic_id;topic_id -->
+    <result column="topic_id" jdbcType="BIGINT" property="topicId" />
+    
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+    
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    
+    <!-- 更新时间 -->
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, queue, min_point, max_point, topic_id, status, create_by, update_by, created_time, 
+    updated_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rocketmq_topic_state
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from rocketmq_topic_state
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert">
+    insert into rocketmq_topic_state (id, queue, min_point, 
+      max_point, topic_id, status, 
+      create_by, update_by, created_time, 
+      updated_time)
+    values (#{id,jdbcType=BIGINT}, #{queue,jdbcType=VARCHAR}, #{minPoint,jdbcType=INTEGER}, 
+      #{maxPoint,jdbcType=INTEGER}, #{topicId,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective">
+    insert into rocketmq_topic_state
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="queue != null">
+        queue,
+      </if>
+      <if test="minPoint != null">
+        min_point,
+      </if>
+      <if test="maxPoint != null">
+        max_point,
+      </if>
+      <if test="topicId != null">
+        topic_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="queue != null">
+        #{queue,jdbcType=VARCHAR},
+      </if>
+      <if test="minPoint != null">
+        #{minPoint,jdbcType=INTEGER},
+      </if>
+      <if test="maxPoint != null">
+        #{maxPoint,jdbcType=INTEGER},
+      </if>
+      <if test="topicId != null">
+        #{topicId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective">
+    update rocketmq_topic_state
+    <set>
+      <if test="queue != null">
+        queue = #{queue,jdbcType=VARCHAR},
+      </if>
+      <if test="minPoint != null">
+        min_point = #{minPoint,jdbcType=INTEGER},
+      </if>
+      <if test="maxPoint != null">
+        max_point = #{maxPoint,jdbcType=INTEGER},
+      </if>
+      <if test="topicId != null">
+        topic_id = #{topicId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey">
+    update rocketmq_topic_state
+    set queue = #{queue,jdbcType=VARCHAR},
+      min_point = #{minPoint,jdbcType=INTEGER},
+      max_point = #{maxPoint,jdbcType=INTEGER},
+      topic_id = #{topicId,jdbcType=BIGINT},
+      status = #{status,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+    <!-- Generate time: 2023-09-11 17:18:10 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  <delete id="truncateTable">
+    truncate table rocketmq_topic_state
+  </delete>
+</mapper>

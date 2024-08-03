@@ -1,0 +1,94 @@
+{
+  "name": "Git代码克隆",
+  "group": "tools",
+  "icon": "/icons/plugin/icon/github-clone.png",
+  "enableInstanceSelect" : true,
+  "pluginCode": "github",
+  "_meta": {
+    "url": {
+      "type": "string",
+      "title": "项目地址",
+      "required": true,
+      "x-decorator": "FormItem",
+      "x-decorator-props": {
+        "tooltip": "请填写github项目地址"
+      },
+      "x-component": "Input",
+      "x-component-props": {
+        "placeholder": "http://192.168.1.10/root/spring-web-demo.git"
+      }
+    },
+    "branch": {
+      "type": "string",
+      "title": "项目分支",
+      "required": true,
+      "x-decorator": "FormItem",
+      "x-decorator-props": {
+        "tooltip": "请填写github项目分支"
+      },
+      "x-component": "Input",
+      "x-component-props": {
+        "placeholder": "main"
+      }
+    },
+    "credentialId": {
+      "type": "string",
+      "title": "凭证",
+      "required": true,
+      "x-decorator": "FormItem",
+      "x-decorator-props": {
+        "tooltip": "请选择凭证"
+      },
+      "x-component": "Select",
+      "x-reactions": {
+        "dependencies": ["instanceCode"]
+      },
+      "x-data": {
+        "onInitCallback": [
+          (ctx)=>{
+            const field = ctx.field;
+            const form = ctx.form;
+            const formValues = ctx.formValues;
+            const request = ctx.request;
+            const urlPrefix = ctx.urlPrefix;
+
+            if(formValues?.instanceCode) {
+                request({
+                  "url": urlPrefix  + "/credential/option/" + formValues?.instanceCode,
+                  method: 'GET'
+                }).then((res)=>{
+                  return res?.data
+                }).then((res)=>{
+                  if(res.code == 200) {
+                    field.dataSource = res?.data
+                  }
+              });
+            }
+          }
+        ],
+        "onChangeCallback": [
+          (ctx)=>{
+            const field = ctx.field;
+            const form = ctx.form;
+            const formValues = ctx.formValues;
+            const request = ctx.request;
+            const urlPrefix = ctx.urlPrefix;
+
+            if(formValues?.instanceCode) {
+                request({
+                  "url": urlPrefix  + "/credential/option/" + formValues?.instanceCode,
+                  method: 'GET'
+                }).then((res)=>{
+                  return res?.data
+                }).then((res)=>{
+                  if(res.code == 200){
+                    field.dataSource = res?.data
+                  }
+              });
+            }
+          }
+        ]
+      }
+    }
+  }
+}

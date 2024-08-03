@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.jsch.mapper.SshHostsMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.jsch.domain.SshHosts">
+    <!-- ssh标签Id -->
+      <result column="id" jdbcType="BIGINT" property="id"/>
+    <result column="ssh_lable_id" jdbcType="BIGINT" property="sshLableId"/>
+      <!-- ssh实例编码 -->
+      <result column="ssh_instance_code" jdbcType="VARCHAR" property="sshInstanceCode"/>
+  </resultMap>
+  <insert id="insertSelective" keyProperty="id">
+    insert into ssh_hosts
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sshLableId != null">
+        ssh_lable_id,
+      </if>
+      <if test="sshInstanceCode != null">
+        ssh_instance_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sshLableId != null">
+        #{sshLableId,jdbcType=BIGINT},
+      </if>
+      <if test="sshInstanceCode != null">
+        #{sshInstanceCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+    <!-- Generate time: 2024-02-23 16:02:39 ### -->
+
+
+    <!-- Your codes goes here!!! -->
+    <insert id="insertList" keyProperty="id">
+    insert into ssh_hosts (ssh_lable_id, ssh_instance_code)
+    values
+    <foreach collection="list" separator="," item="item">
+      (#{item.sshLableId}, #{item.sshInstanceCode})
+    </foreach>
+
+  </insert>
+  <select id="selectCheckById" resultType="java.lang.String">
+    SELECT
+        ssh_instance_code
+    FROM
+        ssh_hosts
+    WHERE
+        ssh_lable_id = #{labelId}
+  </select>
+
+  <select id="selectSshHostListByLabel" resultMap="BaseResultMap">
+    SELECT
+        sh.ssh_lable_id ,
+        sh.ssh_instance_code
+    FROM
+        ssh_hosts sh , ssh_label sl
+    WHERE
+        is_del = 0
+    AND
+        sh.ssh_lable_id = sl.id
+    AND
+        sl.`status` = 1
+    AND
+        sl.label_key IN
+    <foreach collection="lables" separator="," item="label" open="(" close=")">
+      #{label}
+    </foreach>
+  </select>
+</mapper>

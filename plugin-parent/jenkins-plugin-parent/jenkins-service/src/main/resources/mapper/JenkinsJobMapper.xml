@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.jenkins.mapper.JenkinsJobMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.jenkins.domain.JenkinsJob">
+    
+    <!-- ID -->
+      <result column="id" jdbcType="BIGINT" property="id"/>
+    <result column="instance_code" jdbcType="VARCHAR" property="instanceCode"/>
+
+      <!-- 任务名 -->
+      <result column="job_name" jdbcType="VARCHAR" property="jobName"/>
+
+      <!-- 备注 -->
+      <result column="remark" jdbcType="VARCHAR" property="remark"/>
+
+      <!-- 最后成功时间 -->
+      <result column="last_success" jdbcType="VARCHAR" property="lastSuccess"/>
+
+      <!-- 最后失败时间 -->
+      <result column="last_failure" jdbcType="VARCHAR" property="lastFailure"/>
+
+      <!-- 最后构建所需时间 -->
+      <result column="last_duration" jdbcType="VARCHAR" property="lastDuration"/>
+
+      <!-- 聚合状态（聚合百分比） -->
+      <result column="aggregated_status" jdbcType="VARCHAR" property="aggregatedStatus"/>
+
+      <!-- 仓库类型 -->
+      <result column="scm" jdbcType="VARCHAR" property="scm"/>
+
+      <!-- 工具类型 -->
+      <result column="tools" jdbcType="VARCHAR" property="tools"/>
+    <result column="jdk" jdbcType="VARCHAR" property="jdk"/>
+
+      <!-- 是否删除（删除为1） -->
+      <result column="is_del" jdbcType="TINYINT" property="isDel"/>
+
+      <!-- 状态值 -->
+      <result column="status" jdbcType="TINYINT" property="status"/>
+
+      <!-- 创建人 -->
+      <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+
+      <!-- 更新人 -->
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+
+      <!-- 创建时间 -->
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+
+      <!-- 更新时间 -->
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+             type="help.lixin.starlink.plugin.jenkins.domain.JenkinsJob">
+    
+    <!-- xml内容 -->
+      <result column="xml_content" jdbcType="LONGVARCHAR" property="xmlContent"/>
+  </resultMap>
+  <sql id="Blob_Column_List">
+    xml_content
+  </sql>
+  <insert id="insertJob" keyProperty="id" useGeneratedKeys="true">
+    insert into jenkins_job (id, instance_code, job_name, 
+      remark, last_success, last_failure, 
+      last_duration, aggregated_status,
+      scm, tools, jdk, status, 
+      create_by, update_by, xml_content
+      <trim prefix="," suffixOverrides=",">
+        <if test="createTime">
+          create_time,
+        </if>
+
+        <if test="updateTime">
+          update_time,
+        </if>
+      </trim>
+    )
+    values (#{id,jdbcType=BIGINT}, #{instanceCode,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{lastSuccess,jdbcType=VARCHAR}, #{lastFailure,jdbcType=VARCHAR}, 
+      #{lastDuration,jdbcType=VARCHAR}, #{aggregatedStatus,jdbcType=VARCHAR},
+      #{scm,jdbcType=VARCHAR}, #{tools,jdbcType=VARCHAR}, #{jdk,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{xmlContent,jdbcType=LONGVARCHAR}
+      <trim prefix="," suffixOverrides=",">
+        <if test="createTime">
+          #{createTime,jdbcType=TIMESTAMP},
+        </if>
+
+        <if test="updateTime">
+          #{updateTime,jdbcType=TIMESTAMP},
+        </if>
+      </trim>
+    )
+  </insert>
+  <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true">
+    insert into jenkins_job
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="instanceCode != null">
+        instance_code,
+      </if>
+      <if test="jobName != null">
+        job_name,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="lastSuccess != null">
+        last_success,
+      </if>
+      <if test="lastFailure != null">
+        last_failure,
+      </if>
+      <if test="lastDuration != null">
+        last_duration,
+      </if>
+      <if test="aggregatedStatus != null">
+        aggregated_status,
+      </if>
+      <if test="scm != null">
+        scm,
+      </if>
+      <if test="tools != null">
+        tools,
+      </if>
+      <if test="jdk != null">
+        jdk,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="xmlContent != null">
+        xml_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="instanceCode != null">
+        #{instanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobName != null">
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="lastSuccess != null">
+        #{lastSuccess,jdbcType=VARCHAR},
+      </if>
+      <if test="lastFailure != null">
+        #{lastFailure,jdbcType=VARCHAR},
+      </if>
+      <if test="lastDuration != null">
+        #{lastDuration,jdbcType=VARCHAR},
+      </if>
+      <if test="aggregatedStatus != null">
+        #{aggregatedStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="scm != null">
+        #{scm,jdbcType=VARCHAR},
+      </if>
+      <if test="tools != null">
+        #{tools,jdbcType=VARCHAR},
+      </if>
+      <if test="jdk != null">
+        #{jdk,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="xmlContent != null">
+        #{xmlContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective">
+    update jenkins_job
+    <set>
+      <if test="instanceCode != null">
+        instance_code = #{instanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="jobName != null">
+        job_name = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="lastSuccess != null">
+        last_success = #{lastSuccess,jdbcType=VARCHAR},
+      </if>
+      <if test="lastFailure != null">
+        last_failure = #{lastFailure,jdbcType=VARCHAR},
+      </if>
+      <if test="lastDuration != null">
+        last_duration = #{lastDuration,jdbcType=VARCHAR},
+      </if>
+      <if test="aggregatedStatus != null">
+        aggregated_status = #{aggregatedStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="xmlContent != null">
+        xml_content = #{xmlContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <!-- Generate time: 2023-12-12 10:59:06 ### -->
+
+
+    <!-- Your codes goes here!!! -->
+    <select id="pageList" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        jenkins_job
+    where
+        is_del = 0
+        <if test="jobName != null and jobName != ''">
+          AND
+                job_name LIKE CONCAT("%",#{jobName},"%")
+        </if>
+        <if test="instanceCode != null and instanceCode != ''">
+          AND
+                instance_code = #{instanceCode}
+        </if>
+        <if test="tools != null and tools != ''">
+          AND
+                tools = #{tools}
+        </if>
+        <if test="status != null ">
+          AND
+                status = #{status}
+        </if>
+        <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+            AND
+                date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+        </if>
+        <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+            AND
+                date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+        </if>
+    ORDER BY
+        create_time DESC
+  </select>
+
+  <select id="queryJob" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        jenkins_job
+    WHERE
+        is_del = 0
+    AND
+        instance_code = #{instanceCode}
+    AND
+        job_name = #{jobName}
+  </select>
+
+  <select id="queryByJobName" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        jenkins_job
+    WHERE
+        job_name = #{jobName}
+    AND
+        instance_code = #{instanceCode}
+    AND
+        is_del = 0
+  </select>
+
+
+  <select id="queryBuildingJob" resultType="help.lixin.starlink.plugin.jenkins.dto.job.JenkinsBuildingJobInfo">
+    SELECT
+        job.id jobId,
+        job.instance_code,
+        job.job_name,
+        build.id buildId,
+        build.jenkins_log_id jenkinsLogId
+    FROM
+        jenkins_job job
+        LEFT JOIN (
+            SELECT
+                job_id,
+                id,
+                build_status,
+                jenkins_log_id
+            FROM
+                jenkins_build_info
+            WHERE
+                build_status = 0
+        ) build
+    ON
+        job.id = build.job_id
+    WHERE
+        build.build_status = 0
+    AND
+        job.is_del = 0
+  </select>
+
+
+</mapper>

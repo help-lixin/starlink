@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.gitlab.mapper.GitlabProjectMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.gitlab.domain.GitlabProject">
+    
+    <!-- project_id -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    
+    <!-- gitlabId -->
+    <result column="gitlab_project_id" jdbcType="BIGINT" property="gitlabProjectId" />
+    
+    <!-- 实例code; -->
+    <result column="instance_code" jdbcType="VARCHAR" property="instanceCode" />
+    
+    <!-- 项目名 -->
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    
+    <!-- 是否用readme初始化仓库 -->
+    <result column="initiallize_with_readme" jdbcType="BIT" property="initiallizeWithReadme" />
+    
+    <!-- 权限 -->
+    <result column="visibility" jdbcType="VARCHAR" property="visibility" />
+    
+    <!-- 按用户划分空间 -->
+    <result column="namespace_by_user" jdbcType="BIGINT" property="namespaceByUser" />
+    
+    <!-- 按组划分空间 -->
+    <result column="namespace_by_group" jdbcType="BIGINT" property="namespaceByGroup" />
+    
+    <!-- 项目路径 -->
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    
+    <!-- 备注 -->
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    
+    <!-- ssh克隆地址 -->
+    <result column="ssh_url" jdbcType="VARCHAR" property="sshUrl" />
+    
+    <!-- http克隆地址 -->
+    <result column="web_url" jdbcType="VARCHAR" property="webUrl" />
+    
+    <!-- 是否删除（删除为1） -->
+    <result column="is_del" jdbcType="TINYINT" property="isDel" />
+
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+      id, gitlab_project_id, instance_code, project_name,
+      initiallize_with_readme, visibility, namespace_by_user,
+      namespace_by_group, path, remark,
+      ssh_url, web_url, status,
+      create_by, update_by, create_time,
+      update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from gitlab_project
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from gitlab_project
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective">
+    insert into gitlab_project
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gitlabProjectId != null">
+        gitlab_project_id,
+      </if>
+      <if test="instanceCode != null">
+        instance_code,
+      </if>
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="initiallizeWithReadme != null">
+        initiallize_with_readme,
+      </if>
+      <if test="visibility != null">
+        visibility,
+      </if>
+      <if test="namespaceByUser != null">
+        namespace_by_user,
+      </if>
+      <if test="namespaceByGroup != null">
+        namespace_by_group,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="sshUrl != null">
+        ssh_url,
+      </if>
+      <if test="webUrl != null">
+        web_url,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gitlabProjectId != null">
+        #{gitlabProjectId,jdbcType=BIGINT},
+      </if>
+      <if test="instanceCode != null">
+        #{instanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="initiallizeWithReadme != null">
+        #{initiallizeWithReadme,jdbcType=BIT},
+      </if>
+      <if test="visibility != null">
+        #{visibility,jdbcType=VARCHAR},
+      </if>
+      <if test="namespaceByUser != null">
+        #{namespaceByUser,jdbcType=BIGINT},
+      </if>
+      <if test="namespaceByGroup != null">
+        #{namespaceByGroup,jdbcType=BIGINT},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="sshUrl != null">
+        #{sshUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="webUrl != null">
+        #{webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective">
+    update gitlab_project
+    <set>
+      <if test="gitlabProjectId != null">
+        gitlab_project_id = #{gitlabProjectId,jdbcType=BIGINT},
+      </if>
+      <if test="instanceCode != null">
+        instance_code = #{instanceCode,jdbcType=VARCHAR},
+      </if>
+
+      <if test="initiallizeWithReadme != null">
+        initiallize_with_readme = #{initiallizeWithReadme,jdbcType=BIT},
+      </if>
+      <if test="visibility != null">
+        visibility = #{visibility,jdbcType=VARCHAR},
+      </if>
+      <if test="namespaceByUser != null">
+        namespace_by_user = #{namespaceByUser,jdbcType=BIGINT},
+      </if>
+      <if test="namespaceByGroup != null">
+        namespace_by_group = #{namespaceByGroup,jdbcType=BIGINT},
+      </if>
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+
+      <if test="projectName != null">
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="sshUrl != null">
+        ssh_url = #{sshUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="webUrl != null">
+        web_url = #{webUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey">
+    update gitlab_project
+    set gitlab_project_id = #{gitlabProjectId,jdbcType=BIGINT},
+      instance_code = #{instanceCode,jdbcType=VARCHAR},
+      initiallize_with_readme = #{initiallizeWithReadme,jdbcType=BIT},
+      visibility = #{visibility,jdbcType=VARCHAR},
+      namespace_by_user = #{namespaceByUser,jdbcType=BIGINT},
+      namespace_by_group = #{namespaceByGroup,jdbcType=BIGINT},
+      path = #{path,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      ssh_url = #{sshUrl,jdbcType=VARCHAR},
+      web_url = #{webUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+
+  <select id="queryProjectByProjectName" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        gitlab_project
+    WHERE
+        project_name = #{projectName}
+    AND
+        status = 1
+    AND
+        instance_code = #{instanceCode}
+    AND
+        is_del = 0
+  </select>
+
+  <select id="queryProjects" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        gitlab_project
+    WHERE
+        is_del = 0
+    AND
+        instance_code = #{instanceCode}
+    <if test="projectName != null and projectName != ''">
+      AND
+      project_name LIKE CONCAT("%", #{projectName},"%")
+    </if>
+    <if test="visibility != null and visibility != ''">
+      AND
+      visibility = #{visibility}
+    </if>
+    <if test="path != null and path != ''">
+      AND
+      path LIKE CONCAT("%", #{path},"%")
+    </if>
+    <if test="status != null">
+      AND
+      status = #{status}
+    </if>
+    <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+      AND
+      date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+    </if>
+    <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+      AND
+      date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+    </if>
+    ORDER BY
+        create_time DESC
+  </select>
+  <select id="queryProjectListByInstanceCode" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        gitlab_project
+    WHERE
+        status = 1
+    AND
+        instance_code = #{instanceCode}
+  </select>
+  <select id="queryProjectByGitlabProjectIds" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        gitlab_project
+    WHERE
+        gitlab_project_id
+    IN
+    <foreach close=")" collection="gitlabProjectIds" item="id" open="(" separator=",">
+      ${id}
+    </foreach>
+  </select>
+
+  <select id="queryGroupProjectByProjectIds" resultMap="BaseResultMap">
+    SELECT
+        gp.id,
+        gp.gitlab_project_id,
+        gp.instance_code,
+        gp.project_name,
+        ggp.status,
+        ggp.create_by,
+        ggp.update_by,
+        ggp.create_time,
+        ggp.update_time
+    FROM
+        gitlab_group_project ggp
+    LEFT JOIN
+        gitlab_project gp
+    ON
+        gp.id = ggp.project_id
+    WHERE
+        ggp.is_del = 0
+    <if test="gitlabProjectIds != null and gitlabProjectIds.size > 0">
+      AND
+          gp.gitlab_project_id
+      IN
+      <foreach close=")" collection="gitlabProjectIds" item="id" open="(" separator=",">
+        ${id}
+      </foreach>
+    </if>
+  </select>
+
+  <select id="queryUserProjectByProjectIds" resultMap="BaseResultMap">
+    SELECT
+        gup.id,
+        gp.gitlab_project_id,
+        gp.instance_code,
+        gp.project_name,
+        gup.status,
+        gup.create_by,
+        gup.update_by,
+        gup.create_time,
+        gup.update_time
+    FROM
+        gitlab_user_project gup
+    LEFT JOIN
+        (SELECT * FROM gitlab_project WHERE  is_del = 0) gp
+    ON
+        gp.id = gup.project_id
+    LEFT JOIN
+        (SELECT * FROM gitlab_user WHERE  is_del = 0) u
+    ON
+        u.id = gup.user_id
+    WHERE
+        gup.is_del = 0
+    <if test="null != gitlabProjectIds and gitlabProjectIds.size() &gt; 1">
+    AND
+      gp.gitlab_project_id IN
+      <foreach close=")" collection="gitlabProjectIds" item="id" open="(" separator=",">
+        ${id}
+      </foreach>
+    </if>
+  </select>
+  <select id="queryByGitlabProjectId" resultType="help.lixin.starlink.plugin.gitlab.domain.GitlabProject">
+      SELECT
+          *
+      FROM
+          gitlab_project
+      WHERE
+          id = #{projectId}
+      <if test="null != instanceCode">
+          AND  instance_code = #{instanceCode}
+      </if>
+    </select>
+
+  <update id="removeProject">
+    UPDATE
+        gitlab_project
+    SET
+        is_del = 1
+    WHERE
+        id = #{projectId}
+  </update>
+</mapper>

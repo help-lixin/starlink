@@ -1,0 +1,2059 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.rocketmq.mapper.RocketmqClusterConfigMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.rocketmq.domain.RocketmqClusterConfig">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="server_selector_threads" jdbcType="VARCHAR" property="serverSelectorThreads" />
+    <result column="broker_role" jdbcType="VARCHAR" property="brokerRole" />
+    <result column="server_socket_rcv_buf_size" jdbcType="VARCHAR" property="serverSocketRcvBufSize" />
+    <result column="os_page_cache_busy_time_out_mills" jdbcType="VARCHAR" property="osPageCacheBusyTimeOutMills" />
+    <result column="short_polling_time_mills" jdbcType="VARCHAR" property="shortPollingTimeMills" />
+    <result column="client_socket_rcv_buf_size" jdbcType="VARCHAR" property="clientSocketRcvBufSize" />
+    <result column="cluster_topic_enable" jdbcType="VARCHAR" property="clusterTopicEnable" />
+    <result column="broker_topic_enable" jdbcType="VARCHAR" property="brokerTopicEnable" />
+    <result column="auto_create_topic_enable" jdbcType="VARCHAR" property="autoCreateTopicEnable" />
+    <result column="max_error_rate_of_bloom_filter" jdbcType="VARCHAR" property="maxErrorRateOfBloomFilter" />
+    <result column="max_msgs_num_batch" jdbcType="VARCHAR" property="maxMsgsNumBatch" />
+    <result column="clean_resource_interval" jdbcType="VARCHAR" property="cleanResourceInterval" />
+    <result column="commercial_base_count" jdbcType="VARCHAR" property="commercialBaseCount" />
+    <result column="max_transfer_count_on_message_in_memory" jdbcType="VARCHAR" property="maxTransferCountOnMessageInMemory" />
+    <result column="broker_fast_failure_enable" jdbcType="VARCHAR" property="brokerFastFailureEnable" />
+    <result column="broker_cluster_name" jdbcType="VARCHAR" property="brokerClusterName" />
+    <result column="flush_disk_type" jdbcType="VARCHAR" property="flushDiskType" />
+    <result column="commercial_big_count" jdbcType="VARCHAR" property="commercialBigCount" />
+    <result column="maped_file_size_commit_log" jdbcType="VARCHAR" property="mapedFileSizeCommitLog" />
+    <result column="consumer_fallbehind_threshold" jdbcType="VARCHAR" property="consumerFallbehindThreshold" />
+    <result column="auto_create_subscription_group" jdbcType="VARCHAR" property="autoCreateSubscriptionGroup" />
+    <result column="transient_store_pool_enable" jdbcType="VARCHAR" property="transientStorePoolEnable" />
+    <result column="flush_consumer_offset_interval" jdbcType="VARCHAR" property="flushConsumerOffsetInterval" />
+    <result column="wait_time_mills_in_heartbeat_queue" jdbcType="VARCHAR" property="waitTimeMillsInHeartbeatQueue" />
+    <result column="disk_max_used_space_ratio" jdbcType="VARCHAR" property="diskMaxUsedSpaceRatio" />
+    <result column="clean_file_forcibly_enable" jdbcType="VARCHAR" property="cleanFileForciblyEnable" />
+    <result column="slave_read_enable" jdbcType="VARCHAR" property="slaveReadEnable" />
+    <result column="flush_commit_log_least_pages" jdbcType="VARCHAR" property="flushCommitLogLeastPages" />
+    <result column="msg_trace_topic_name" jdbcType="VARCHAR" property="msgTraceTopicName" />
+    <result column="expect_consumer_num_use_filter" jdbcType="VARCHAR" property="expectConsumerNumUseFilter" />
+    <result column="trace_topic_enable" jdbcType="VARCHAR" property="traceTopicEnable" />
+    <result column="use_epoll_native_selector" jdbcType="VARCHAR" property="useEpollNativeSelector" />
+    <result column="enable_property_filter" jdbcType="VARCHAR" property="enablePropertyFilter" />
+    <result column="message_delay_level" jdbcType="VARCHAR" property="messageDelayLevel" />
+    <result column="delete_commit_log_files_interval" jdbcType="VARCHAR" property="deleteCommitLogFilesInterval" />
+    <result column="broker_name" jdbcType="VARCHAR" property="brokerName" />
+    <result column="max_transfer_bytes_on_message_in_disk" jdbcType="VARCHAR" property="maxTransferBytesOnMessageInDisk" />
+    <result column="maped_file_size_consume_queue" jdbcType="VARCHAR" property="mapedFileSizeConsumeQueue" />
+    <result column="listen_port" jdbcType="VARCHAR" property="listenPort" />
+    <result column="flush_consume_queue_least_pages" jdbcType="VARCHAR" property="flushConsumeQueueLeastPages" />
+    <result column="pull_message_thread_pool_nums" jdbcType="VARCHAR" property="pullMessageThreadPoolNums" />
+    <result column="use_reentrant_lock_when_put_message" jdbcType="VARCHAR" property="useReentrantLockWhenPutMessage" />
+    <result column="flush_interval_consume_queue" jdbcType="VARCHAR" property="flushIntervalConsumeQueue" />
+    <result column="send_thread_pool_queue_capacity" jdbcType="VARCHAR" property="sendThreadPoolQueueCapacity" />
+    <result column="debug_lock_enable" jdbcType="VARCHAR" property="debugLockEnable" />
+    <result column="ha_housekeeping_interval" jdbcType="VARCHAR" property="haHousekeepingInterval" />
+    <result column="disk_fall_recorded" jdbcType="VARCHAR" property="diskFallRecorded" />
+    <result column="message_index_enable" jdbcType="VARCHAR" property="messageIndexEnable" />
+    <result column="client_async_semaphore_value" jdbcType="VARCHAR" property="clientAsyncSemaphoreValue" />
+    <result column="client_callback_executor_threads" jdbcType="VARCHAR" property="clientCallbackExecutorThreads" />
+    <result column="put_msg_index_hight_water" jdbcType="VARCHAR" property="putMsgIndexHightWater" />
+    <result column="send_message_thread_pool_nums" jdbcType="VARCHAR" property="sendMessageThreadPoolNums" />
+    <result column="client_manager_thread_pool_queue_capacity" jdbcType="VARCHAR" property="clientManagerThreadPoolQueueCapacity" />
+    <result column="server_socket_snd_buf_size" jdbcType="VARCHAR" property="serverSocketSndBufSize" />
+    <result column="max_delay_time" jdbcType="VARCHAR" property="maxDelayTime" />
+    <result column="client_socket_snd_buf_size" jdbcType="VARCHAR" property="clientSocketSndBufSize" />
+    <result column="namesrv_addr" jdbcType="VARCHAR" property="namesrvAddr" />
+    <result column="commercial_enable" jdbcType="VARCHAR" property="commercialEnable" />
+    <result column="max_hash_slot_num" jdbcType="VARCHAR" property="maxHashSlotNum" />
+    <result column="heartbeat_thread_pool_nums" jdbcType="VARCHAR" property="heartbeatThreadPoolNums" />
+    <result column="transaction_time_out" jdbcType="VARCHAR" property="transactionTimeOut" />
+    <result column="max_message_size" jdbcType="VARCHAR" property="maxMessageSize" />
+    <result column="admin_broker_thread_pool_nums" jdbcType="VARCHAR" property="adminBrokerThreadPoolNums" />
+    <result column="default_query_max_num" jdbcType="VARCHAR" property="defaultQueryMaxNum" />
+    <result column="force_register" jdbcType="VARCHAR" property="forceRegister" />
+    <result column="max_transfer_bytes_on_message_in_memory" jdbcType="VARCHAR" property="maxTransferBytesOnMessageInMemory" />
+    <result column="enable_consume_queue_ext" jdbcType="VARCHAR" property="enableConsumeQueueExt" />
+    <result column="long_polling_enable" jdbcType="VARCHAR" property="longPollingEnable" />
+    <result column="server_worker_threads" jdbcType="VARCHAR" property="serverWorkerThreads" />
+    <result column="message_index_safe" jdbcType="VARCHAR" property="messageIndexSafe" />
+    <result column="delete_consume_queue_files_interval" jdbcType="VARCHAR" property="deleteConsumeQueueFilesInterval" />
+    <result column="ha_slave_fallbehind_max" jdbcType="VARCHAR" property="haSlaveFallbehindMax" />
+    <result column="server_callback_executor_threads" jdbcType="VARCHAR" property="serverCallbackExecutorThreads" />
+    <result column="flush_commit_log_thorough_interval" jdbcType="VARCHAR" property="flushCommitLogThoroughInterval" />
+    <result column="commercial_timer_count" jdbcType="VARCHAR" property="commercialTimerCount" />
+    <result column="use_tls" jdbcType="VARCHAR" property="useTls" />
+    <result column="redelete_hanged_file_interval" jdbcType="VARCHAR" property="redeleteHangedFileInterval" />
+    <result column="flush_interval_commit_log" jdbcType="VARCHAR" property="flushIntervalCommitLog" />
+    <result column="rocketmq_home" jdbcType="VARCHAR" property="rocketmqHome" />
+    <result column="query_message_thread_pool_nums" jdbcType="VARCHAR" property="queryMessageThreadPoolNums" />
+    <result column="message_store_plugin" jdbcType="VARCHAR" property="messageStorePlugin" />
+    <result column="server_channel_max_idle_time_seconds" jdbcType="VARCHAR" property="serverChannelMaxIdleTimeSeconds" />
+    <result column="max_index_num" jdbcType="VARCHAR" property="maxIndexNum" />
+    <result column="filter_data_clean_time_span" jdbcType="VARCHAR" property="filterDataCleanTimeSpan" />
+    <result column="filter_server_nums" jdbcType="VARCHAR" property="filterServerNums" />
+    <result column="commit_commit_log_least_pages" jdbcType="VARCHAR" property="commitCommitLogLeastPages" />
+    <result column="wait_time_mills_in_pull_queue" jdbcType="VARCHAR" property="waitTimeMillsInPullQueue" />
+    <result column="ha_send_heartbeat_interval" jdbcType="VARCHAR" property="haSendHeartbeatInterval" />
+    <result column="client_channel_max_idle_time_seconds" jdbcType="VARCHAR" property="clientChannelMaxIdleTimeSeconds" />
+    <result column="filter_support_retry" jdbcType="VARCHAR" property="filterSupportRetry" />
+    <result column="flush_delay_offset_interval" jdbcType="VARCHAR" property="flushDelayOffsetInterval" />
+    <result column="duplication_enable" jdbcType="VARCHAR" property="duplicationEnable" />
+    <result column="offset_check_in_slave" jdbcType="VARCHAR" property="offsetCheckInSlave" />
+    <result column="client_close_socket_if_timeout" jdbcType="VARCHAR" property="clientCloseSocketIfTimeout" />
+    <result column="transient_store_pool_size" jdbcType="VARCHAR" property="transientStorePoolSize" />
+    <result column="wait_time_mills_in_send_queue" jdbcType="VARCHAR" property="waitTimeMillsInSendQueue" />
+    <result column="warm_maped_file_enable" jdbcType="VARCHAR" property="warmMapedFileEnable" />
+    <result column="end_transaction_thread_pool_nums" jdbcType="VARCHAR" property="endTransactionThreadPoolNums" />
+    <result column="flush_commit_log_timed" jdbcType="VARCHAR" property="flushCommitLogTimed" />
+    <result column="flush_least_pages_when_warm_maped_file" jdbcType="VARCHAR" property="flushLeastPagesWhenWarmMapedFile" />
+    <result column="client_worker_threads" jdbcType="VARCHAR" property="clientWorkerThreads" />
+    <result column="end_transaction_pool_queue_capacity" jdbcType="VARCHAR" property="endTransactionPoolQueueCapacity" />
+    <result column="register_name_server_period" jdbcType="VARCHAR" property="registerNameServerPeriod" />
+    <result column="register_broker_timeout_mills" jdbcType="VARCHAR" property="registerBrokerTimeoutMills" />
+    <result column="access_message_in_memory_max_ratio" jdbcType="VARCHAR" property="accessMessageInMemoryMaxRatio" />
+    <result column="high_speed_mode" jdbcType="VARCHAR" property="highSpeedMode" />
+    <result column="transaction_check_max" jdbcType="VARCHAR" property="transactionCheckMax" />
+    <result column="check_crc_on_recover" jdbcType="VARCHAR" property="checkCrcOnRecover" />
+    <result column="destroy_maped_file_interval_forcibly" jdbcType="VARCHAR" property="destroyMapedFileIntervalForcibly" />
+    <result column="broker_ip2" jdbcType="VARCHAR" property="brokerIp2" />
+    <result column="broker_ip1" jdbcType="VARCHAR" property="brokerIp1" />
+    <result column="commit_interval_commit_log" jdbcType="VARCHAR" property="commitIntervalCommitLog" />
+    <result column="client_oneway_semaphore_value" jdbcType="VARCHAR" property="clientOnewaySemaphoreValue" />
+    <result column="trace_on" jdbcType="VARCHAR" property="traceOn" />
+    <result column="client_manage_thread_pool_nums" jdbcType="VARCHAR" property="clientManageThreadPoolNums" />
+    <result column="channel_not_active_interval" jdbcType="VARCHAR" property="channelNotActiveInterval" />
+    <result column="cluster_name" jdbcType="VARCHAR" property="clusterName" />
+    <result column="mapped_file_size_consume_queue_ext" jdbcType="VARCHAR" property="mappedFileSizeConsumeQueueExt" />
+    <result column="consumer_manager_thread_pool_queue_capacity" jdbcType="VARCHAR" property="consumerManagerThreadPoolQueueCapacity" />
+    <result column="server_oneway_semaphore_value" jdbcType="VARCHAR" property="serverOnewaySemaphoreValue" />
+    <result column="ha_listen_port" jdbcType="VARCHAR" property="haListenPort" />
+    <result column="enable_calc_filter_bitmap" jdbcType="VARCHAR" property="enableCalcFilterBitmap" />
+    <result column="client_pooled_byte_buf_allocator_enable" jdbcType="VARCHAR" property="clientPooledByteBufAllocatorEnable" />
+    <result column="acl_enable" jdbcType="VARCHAR" property="aclEnable" />
+    <result column="store_path_root_dir" jdbcType="VARCHAR" property="storePathRootDir" />
+    <result column="sync_flush_timeout" jdbcType="VARCHAR" property="syncFlushTimeout" />
+    <result column="reject_transaction_message" jdbcType="VARCHAR" property="rejectTransactionMessage" />
+    <result column="commit_commit_log_thorough_interval" jdbcType="VARCHAR" property="commitCommitLogThoroughInterval" />
+    <result column="connect_timeout_millis" jdbcType="VARCHAR" property="connectTimeoutMillis" />
+    <result column="query_thread_pool_queue_capacity" jdbcType="VARCHAR" property="queryThreadPoolQueueCapacity" />
+    <result column="region_id" jdbcType="VARCHAR" property="regionId" />
+    <result column="consumer_manage_thread_pool_nums" jdbcType="VARCHAR" property="consumerManageThreadPoolNums" />
+    <result column="disable_consume_if_consumer_read_slowly" jdbcType="VARCHAR" property="disableConsumeIfConsumerReadSlowly" />
+    <result column="flush_consumer_offset_history_interval" jdbcType="VARCHAR" property="flushConsumerOffsetHistoryInterval" />
+    <result column="fetch_namesrv_addr_by_address_server" jdbcType="VARCHAR" property="fetchNamesrvAddrByAddressServer" />
+    <result column="ha_transfer_batch_size" jdbcType="VARCHAR" property="haTransferBatchSize" />
+    <result column="compressed_register" jdbcType="VARCHAR" property="compressedRegister" />
+    <result column="store_path_commit_log" jdbcType="VARCHAR" property="storePathCommitLog" />
+    <result column="commercial_trans_count" jdbcType="VARCHAR" property="commercialTransCount" />
+    <result column="transaction_check_interval" jdbcType="VARCHAR" property="transactionCheckInterval" />
+    <result column="start_accept_send_request_time_stamp" jdbcType="VARCHAR" property="startAcceptSendRequestTimeStamp" />
+    <result column="server_pooled_byte_buf_allocator_enable" jdbcType="VARCHAR" property="serverPooledByteBufAllocatorEnable" />
+    <result column="server_async_semaphore_value" jdbcType="VARCHAR" property="serverAsyncSemaphoreValue" />
+    <result column="heartbeat_thread_pool_queue_capacity" jdbcType="VARCHAR" property="heartbeatThreadPoolQueueCapacity" />
+    <result column="wait_time_mills_in_transaction_queue" jdbcType="VARCHAR" property="waitTimeMillsInTransactionQueue" />
+    <result column="delete_when" jdbcType="VARCHAR" property="deleteWhen" />
+    <result column="bit_map_length_consume_queue_ext" jdbcType="VARCHAR" property="bitMapLengthConsumeQueueExt" />
+    <result column="fast_fail_if_no_buffer_in_store_pool" jdbcType="VARCHAR" property="fastFailIfNoBufferInStorePool" />
+    <result column="default_topic_queue_nums" jdbcType="VARCHAR" property="defaultTopicQueueNums" />
+    <result column="notify_consumer_ids_changed_enable" jdbcType="VARCHAR" property="notifyConsumerIdsChangedEnable" />
+    <result column="flush_consume_queue_thorough_interval" jdbcType="VARCHAR" property="flushConsumeQueueThoroughInterval" />
+    <result column="file_reserved_time" jdbcType="VARCHAR" property="fileReservedTime" />
+    <result column="broker_permission" jdbcType="VARCHAR" property="brokerPermission" />
+    <result column="transfer_msg_by_heap" jdbcType="VARCHAR" property="transferMsgByHeap" />
+    <result column="pull_thread_pool_queue_capacity" jdbcType="VARCHAR" property="pullThreadPoolQueueCapacity" />
+    <result column="broker_id" jdbcType="VARCHAR" property="brokerId" />
+    <result column="max_transfer_count_on_message_in_disk" jdbcType="VARCHAR" property="maxTransferCountOnMessageInDisk" />
+    
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+    
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    
+    <!-- 更新时间 -->
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, server_selector_threads, broker_role, server_socket_rcv_buf_size, os_page_cache_busy_time_out_mills, 
+    short_polling_time_mills, client_socket_rcv_buf_size, cluster_topic_enable, broker_topic_enable, 
+    auto_create_topic_enable, max_error_rate_of_bloom_filter, max_msgs_num_batch, clean_resource_interval, 
+    commercial_base_count, max_transfer_count_on_message_in_memory, broker_fast_failure_enable, 
+    broker_cluster_name, flush_disk_type, commercial_big_count, maped_file_size_commit_log, 
+    consumer_fallbehind_threshold, auto_create_subscription_group, transient_store_pool_enable, 
+    flush_consumer_offset_interval, wait_time_mills_in_heartbeat_queue, disk_max_used_space_ratio, 
+    clean_file_forcibly_enable, slave_read_enable, flush_commit_log_least_pages, msg_trace_topic_name, 
+    expect_consumer_num_use_filter, trace_topic_enable, use_epoll_native_selector, enable_property_filter, 
+    message_delay_level, delete_commit_log_files_interval, broker_name, max_transfer_bytes_on_message_in_disk, 
+    maped_file_size_consume_queue, listen_port, flush_consume_queue_least_pages, pull_message_thread_pool_nums, 
+    use_reentrant_lock_when_put_message, flush_interval_consume_queue, send_thread_pool_queue_capacity, 
+    debug_lock_enable, ha_housekeeping_interval, disk_fall_recorded, message_index_enable, 
+    client_async_semaphore_value, client_callback_executor_threads, put_msg_index_hight_water, 
+    send_message_thread_pool_nums, client_manager_thread_pool_queue_capacity, server_socket_snd_buf_size, 
+    max_delay_time, client_socket_snd_buf_size, namesrv_addr, commercial_enable, max_hash_slot_num, 
+    heartbeat_thread_pool_nums, transaction_time_out, max_message_size, admin_broker_thread_pool_nums, 
+    default_query_max_num, force_register, max_transfer_bytes_on_message_in_memory, enable_consume_queue_ext, 
+    long_polling_enable, server_worker_threads, message_index_safe, delete_consume_queue_files_interval, 
+    ha_slave_fallbehind_max, server_callback_executor_threads, flush_commit_log_thorough_interval, 
+    commercial_timer_count, use_tls, redelete_hanged_file_interval, flush_interval_commit_log, 
+    rocketmq_home, query_message_thread_pool_nums, message_store_plugin, server_channel_max_idle_time_seconds, 
+    max_index_num, filter_data_clean_time_span, filter_server_nums, commit_commit_log_least_pages, 
+    wait_time_mills_in_pull_queue, ha_send_heartbeat_interval, client_channel_max_idle_time_seconds, 
+    filter_support_retry, flush_delay_offset_interval, duplication_enable, offset_check_in_slave, 
+    client_close_socket_if_timeout, transient_store_pool_size, wait_time_mills_in_send_queue, 
+    warm_maped_file_enable, end_transaction_thread_pool_nums, flush_commit_log_timed, 
+    flush_least_pages_when_warm_maped_file, client_worker_threads, end_transaction_pool_queue_capacity, 
+    register_name_server_period, register_broker_timeout_mills, access_message_in_memory_max_ratio, 
+    high_speed_mode, transaction_check_max, check_crc_on_recover, destroy_maped_file_interval_forcibly, 
+    broker_ip2, broker_ip1, commit_interval_commit_log, client_oneway_semaphore_value, 
+    trace_on, client_manage_thread_pool_nums, channel_not_active_interval, cluster_name, 
+    mapped_file_size_consume_queue_ext, consumer_manager_thread_pool_queue_capacity, 
+    server_oneway_semaphore_value, ha_listen_port, enable_calc_filter_bitmap, client_pooled_byte_buf_allocator_enable, 
+    acl_enable, store_path_root_dir, sync_flush_timeout, reject_transaction_message, 
+    commit_commit_log_thorough_interval, connect_timeout_millis, query_thread_pool_queue_capacity, 
+    region_id, consumer_manage_thread_pool_nums, disable_consume_if_consumer_read_slowly, 
+    flush_consumer_offset_history_interval, fetch_namesrv_addr_by_address_server, ha_transfer_batch_size, 
+    compressed_register, store_path_commit_log, commercial_trans_count, transaction_check_interval, 
+    start_accept_send_request_time_stamp, server_pooled_byte_buf_allocator_enable, server_async_semaphore_value, 
+    heartbeat_thread_pool_queue_capacity, wait_time_mills_in_transaction_queue, delete_when, 
+    bit_map_length_consume_queue_ext, fast_fail_if_no_buffer_in_store_pool, default_topic_queue_nums, 
+    notify_consumer_ids_changed_enable, flush_consume_queue_thorough_interval, file_reserved_time, 
+    broker_permission, transfer_msg_by_heap, pull_thread_pool_queue_capacity, broker_id, 
+    max_transfer_count_on_message_in_disk, status, create_by, update_by, created_time, 
+    updated_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rocketmq_cluster_config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from rocketmq_cluster_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert">
+    insert into rocketmq_cluster_config (id, server_selector_threads, broker_role, 
+      server_socket_rcv_buf_size, os_page_cache_busy_time_out_mills, 
+      short_polling_time_mills, client_socket_rcv_buf_size, 
+      cluster_topic_enable, broker_topic_enable, 
+      auto_create_topic_enable, max_error_rate_of_bloom_filter, 
+      max_msgs_num_batch, clean_resource_interval, 
+      commercial_base_count, max_transfer_count_on_message_in_memory, 
+      broker_fast_failure_enable, broker_cluster_name, 
+      flush_disk_type, commercial_big_count, maped_file_size_commit_log, 
+      consumer_fallbehind_threshold, auto_create_subscription_group, 
+      transient_store_pool_enable, flush_consumer_offset_interval, 
+      wait_time_mills_in_heartbeat_queue, disk_max_used_space_ratio, 
+      clean_file_forcibly_enable, slave_read_enable, 
+      flush_commit_log_least_pages, msg_trace_topic_name, 
+      expect_consumer_num_use_filter, trace_topic_enable, 
+      use_epoll_native_selector, enable_property_filter, 
+      message_delay_level, delete_commit_log_files_interval, 
+      broker_name, max_transfer_bytes_on_message_in_disk, 
+      maped_file_size_consume_queue, listen_port, 
+      flush_consume_queue_least_pages, pull_message_thread_pool_nums, 
+      use_reentrant_lock_when_put_message, flush_interval_consume_queue, 
+      send_thread_pool_queue_capacity, debug_lock_enable, 
+      ha_housekeeping_interval, disk_fall_recorded, 
+      message_index_enable, client_async_semaphore_value, 
+      client_callback_executor_threads, put_msg_index_hight_water, 
+      send_message_thread_pool_nums, client_manager_thread_pool_queue_capacity, 
+      server_socket_snd_buf_size, max_delay_time, client_socket_snd_buf_size, 
+      namesrv_addr, commercial_enable, max_hash_slot_num, 
+      heartbeat_thread_pool_nums, transaction_time_out, 
+      max_message_size, admin_broker_thread_pool_nums, 
+      default_query_max_num, force_register, max_transfer_bytes_on_message_in_memory, 
+      enable_consume_queue_ext, long_polling_enable, 
+      server_worker_threads, message_index_safe, 
+      delete_consume_queue_files_interval, ha_slave_fallbehind_max, 
+      server_callback_executor_threads, flush_commit_log_thorough_interval, 
+      commercial_timer_count, use_tls, redelete_hanged_file_interval, 
+      flush_interval_commit_log, rocketmq_home, query_message_thread_pool_nums, 
+      message_store_plugin, server_channel_max_idle_time_seconds, 
+      max_index_num, filter_data_clean_time_span, filter_server_nums, 
+      commit_commit_log_least_pages, wait_time_mills_in_pull_queue, 
+      ha_send_heartbeat_interval, client_channel_max_idle_time_seconds, 
+      filter_support_retry, flush_delay_offset_interval, 
+      duplication_enable, offset_check_in_slave, 
+      client_close_socket_if_timeout, transient_store_pool_size, 
+      wait_time_mills_in_send_queue, warm_maped_file_enable, 
+      end_transaction_thread_pool_nums, flush_commit_log_timed, 
+      flush_least_pages_when_warm_maped_file, client_worker_threads, 
+      end_transaction_pool_queue_capacity, register_name_server_period, 
+      register_broker_timeout_mills, access_message_in_memory_max_ratio, 
+      high_speed_mode, transaction_check_max, check_crc_on_recover, 
+      destroy_maped_file_interval_forcibly, broker_ip2, 
+      broker_ip1, commit_interval_commit_log, client_oneway_semaphore_value, 
+      trace_on, client_manage_thread_pool_nums, channel_not_active_interval, 
+      cluster_name, mapped_file_size_consume_queue_ext, 
+      consumer_manager_thread_pool_queue_capacity, server_oneway_semaphore_value, 
+      ha_listen_port, enable_calc_filter_bitmap, client_pooled_byte_buf_allocator_enable, 
+      acl_enable, store_path_root_dir, sync_flush_timeout, 
+      reject_transaction_message, commit_commit_log_thorough_interval, 
+      connect_timeout_millis, query_thread_pool_queue_capacity, 
+      region_id, consumer_manage_thread_pool_nums, 
+      disable_consume_if_consumer_read_slowly, flush_consumer_offset_history_interval, 
+      fetch_namesrv_addr_by_address_server, ha_transfer_batch_size, 
+      compressed_register, store_path_commit_log, 
+      commercial_trans_count, transaction_check_interval, 
+      start_accept_send_request_time_stamp, server_pooled_byte_buf_allocator_enable, 
+      server_async_semaphore_value, heartbeat_thread_pool_queue_capacity, 
+      wait_time_mills_in_transaction_queue, delete_when, 
+      bit_map_length_consume_queue_ext, fast_fail_if_no_buffer_in_store_pool, 
+      default_topic_queue_nums, notify_consumer_ids_changed_enable, 
+      flush_consume_queue_thorough_interval, file_reserved_time, 
+      broker_permission, transfer_msg_by_heap, pull_thread_pool_queue_capacity, 
+      broker_id, max_transfer_count_on_message_in_disk, 
+      status, create_by, update_by, 
+      created_time, updated_time)
+    values (#{id,jdbcType=BIGINT}, #{serverSelectorThreads,jdbcType=VARCHAR}, #{brokerRole,jdbcType=VARCHAR}, 
+      #{serverSocketRcvBufSize,jdbcType=VARCHAR}, #{osPageCacheBusyTimeOutMills,jdbcType=VARCHAR}, 
+      #{shortPollingTimeMills,jdbcType=VARCHAR}, #{clientSocketRcvBufSize,jdbcType=VARCHAR}, 
+      #{clusterTopicEnable,jdbcType=VARCHAR}, #{brokerTopicEnable,jdbcType=VARCHAR}, 
+      #{autoCreateTopicEnable,jdbcType=VARCHAR}, #{maxErrorRateOfBloomFilter,jdbcType=VARCHAR}, 
+      #{maxMsgsNumBatch,jdbcType=VARCHAR}, #{cleanResourceInterval,jdbcType=VARCHAR}, 
+      #{commercialBaseCount,jdbcType=VARCHAR}, #{maxTransferCountOnMessageInMemory,jdbcType=VARCHAR}, 
+      #{brokerFastFailureEnable,jdbcType=VARCHAR}, #{brokerClusterName,jdbcType=VARCHAR}, 
+      #{flushDiskType,jdbcType=VARCHAR}, #{commercialBigCount,jdbcType=VARCHAR}, #{mapedFileSizeCommitLog,jdbcType=VARCHAR}, 
+      #{consumerFallbehindThreshold,jdbcType=VARCHAR}, #{autoCreateSubscriptionGroup,jdbcType=VARCHAR}, 
+      #{transientStorePoolEnable,jdbcType=VARCHAR}, #{flushConsumerOffsetInterval,jdbcType=VARCHAR}, 
+      #{waitTimeMillsInHeartbeatQueue,jdbcType=VARCHAR}, #{diskMaxUsedSpaceRatio,jdbcType=VARCHAR}, 
+      #{cleanFileForciblyEnable,jdbcType=VARCHAR}, #{slaveReadEnable,jdbcType=VARCHAR}, 
+      #{flushCommitLogLeastPages,jdbcType=VARCHAR}, #{msgTraceTopicName,jdbcType=VARCHAR}, 
+      #{expectConsumerNumUseFilter,jdbcType=VARCHAR}, #{traceTopicEnable,jdbcType=VARCHAR}, 
+      #{useEpollNativeSelector,jdbcType=VARCHAR}, #{enablePropertyFilter,jdbcType=VARCHAR}, 
+      #{messageDelayLevel,jdbcType=VARCHAR}, #{deleteCommitLogFilesInterval,jdbcType=VARCHAR}, 
+      #{brokerName,jdbcType=VARCHAR}, #{maxTransferBytesOnMessageInDisk,jdbcType=VARCHAR}, 
+      #{mapedFileSizeConsumeQueue,jdbcType=VARCHAR}, #{listenPort,jdbcType=VARCHAR}, 
+      #{flushConsumeQueueLeastPages,jdbcType=VARCHAR}, #{pullMessageThreadPoolNums,jdbcType=VARCHAR}, 
+      #{useReentrantLockWhenPutMessage,jdbcType=VARCHAR}, #{flushIntervalConsumeQueue,jdbcType=VARCHAR}, 
+      #{sendThreadPoolQueueCapacity,jdbcType=VARCHAR}, #{debugLockEnable,jdbcType=VARCHAR}, 
+      #{haHousekeepingInterval,jdbcType=VARCHAR}, #{diskFallRecorded,jdbcType=VARCHAR}, 
+      #{messageIndexEnable,jdbcType=VARCHAR}, #{clientAsyncSemaphoreValue,jdbcType=VARCHAR}, 
+      #{clientCallbackExecutorThreads,jdbcType=VARCHAR}, #{putMsgIndexHightWater,jdbcType=VARCHAR}, 
+      #{sendMessageThreadPoolNums,jdbcType=VARCHAR}, #{clientManagerThreadPoolQueueCapacity,jdbcType=VARCHAR}, 
+      #{serverSocketSndBufSize,jdbcType=VARCHAR}, #{maxDelayTime,jdbcType=VARCHAR}, #{clientSocketSndBufSize,jdbcType=VARCHAR}, 
+      #{namesrvAddr,jdbcType=VARCHAR}, #{commercialEnable,jdbcType=VARCHAR}, #{maxHashSlotNum,jdbcType=VARCHAR}, 
+      #{heartbeatThreadPoolNums,jdbcType=VARCHAR}, #{transactionTimeOut,jdbcType=VARCHAR}, 
+      #{maxMessageSize,jdbcType=VARCHAR}, #{adminBrokerThreadPoolNums,jdbcType=VARCHAR}, 
+      #{defaultQueryMaxNum,jdbcType=VARCHAR}, #{forceRegister,jdbcType=VARCHAR}, #{maxTransferBytesOnMessageInMemory,jdbcType=VARCHAR}, 
+      #{enableConsumeQueueExt,jdbcType=VARCHAR}, #{longPollingEnable,jdbcType=VARCHAR}, 
+      #{serverWorkerThreads,jdbcType=VARCHAR}, #{messageIndexSafe,jdbcType=VARCHAR}, 
+      #{deleteConsumeQueueFilesInterval,jdbcType=VARCHAR}, #{haSlaveFallbehindMax,jdbcType=VARCHAR}, 
+      #{serverCallbackExecutorThreads,jdbcType=VARCHAR}, #{flushCommitLogThoroughInterval,jdbcType=VARCHAR}, 
+      #{commercialTimerCount,jdbcType=VARCHAR}, #{useTls,jdbcType=VARCHAR}, #{redeleteHangedFileInterval,jdbcType=VARCHAR}, 
+      #{flushIntervalCommitLog,jdbcType=VARCHAR}, #{rocketmqHome,jdbcType=VARCHAR}, #{queryMessageThreadPoolNums,jdbcType=VARCHAR}, 
+      #{messageStorePlugin,jdbcType=VARCHAR}, #{serverChannelMaxIdleTimeSeconds,jdbcType=VARCHAR}, 
+      #{maxIndexNum,jdbcType=VARCHAR}, #{filterDataCleanTimeSpan,jdbcType=VARCHAR}, #{filterServerNums,jdbcType=VARCHAR}, 
+      #{commitCommitLogLeastPages,jdbcType=VARCHAR}, #{waitTimeMillsInPullQueue,jdbcType=VARCHAR}, 
+      #{haSendHeartbeatInterval,jdbcType=VARCHAR}, #{clientChannelMaxIdleTimeSeconds,jdbcType=VARCHAR}, 
+      #{filterSupportRetry,jdbcType=VARCHAR}, #{flushDelayOffsetInterval,jdbcType=VARCHAR}, 
+      #{duplicationEnable,jdbcType=VARCHAR}, #{offsetCheckInSlave,jdbcType=VARCHAR}, 
+      #{clientCloseSocketIfTimeout,jdbcType=VARCHAR}, #{transientStorePoolSize,jdbcType=VARCHAR}, 
+      #{waitTimeMillsInSendQueue,jdbcType=VARCHAR}, #{warmMapedFileEnable,jdbcType=VARCHAR}, 
+      #{endTransactionThreadPoolNums,jdbcType=VARCHAR}, #{flushCommitLogTimed,jdbcType=VARCHAR}, 
+      #{flushLeastPagesWhenWarmMapedFile,jdbcType=VARCHAR}, #{clientWorkerThreads,jdbcType=VARCHAR}, 
+      #{endTransactionPoolQueueCapacity,jdbcType=VARCHAR}, #{registerNameServerPeriod,jdbcType=VARCHAR}, 
+      #{registerBrokerTimeoutMills,jdbcType=VARCHAR}, #{accessMessageInMemoryMaxRatio,jdbcType=VARCHAR}, 
+      #{highSpeedMode,jdbcType=VARCHAR}, #{transactionCheckMax,jdbcType=VARCHAR}, #{checkCrcOnRecover,jdbcType=VARCHAR}, 
+      #{destroyMapedFileIntervalForcibly,jdbcType=VARCHAR}, #{brokerIp2,jdbcType=VARCHAR}, 
+      #{brokerIp1,jdbcType=VARCHAR}, #{commitIntervalCommitLog,jdbcType=VARCHAR}, #{clientOnewaySemaphoreValue,jdbcType=VARCHAR}, 
+      #{traceOn,jdbcType=VARCHAR}, #{clientManageThreadPoolNums,jdbcType=VARCHAR}, #{channelNotActiveInterval,jdbcType=VARCHAR}, 
+      #{clusterName,jdbcType=VARCHAR}, #{mappedFileSizeConsumeQueueExt,jdbcType=VARCHAR}, 
+      #{consumerManagerThreadPoolQueueCapacity,jdbcType=VARCHAR}, #{serverOnewaySemaphoreValue,jdbcType=VARCHAR}, 
+      #{haListenPort,jdbcType=VARCHAR}, #{enableCalcFilterBitmap,jdbcType=VARCHAR}, #{clientPooledByteBufAllocatorEnable,jdbcType=VARCHAR}, 
+      #{aclEnable,jdbcType=VARCHAR}, #{storePathRootDir,jdbcType=VARCHAR}, #{syncFlushTimeout,jdbcType=VARCHAR}, 
+      #{rejectTransactionMessage,jdbcType=VARCHAR}, #{commitCommitLogThoroughInterval,jdbcType=VARCHAR}, 
+      #{connectTimeoutMillis,jdbcType=VARCHAR}, #{queryThreadPoolQueueCapacity,jdbcType=VARCHAR}, 
+      #{regionId,jdbcType=VARCHAR}, #{consumerManageThreadPoolNums,jdbcType=VARCHAR}, 
+      #{disableConsumeIfConsumerReadSlowly,jdbcType=VARCHAR}, #{flushConsumerOffsetHistoryInterval,jdbcType=VARCHAR}, 
+      #{fetchNamesrvAddrByAddressServer,jdbcType=VARCHAR}, #{haTransferBatchSize,jdbcType=VARCHAR}, 
+      #{compressedRegister,jdbcType=VARCHAR}, #{storePathCommitLog,jdbcType=VARCHAR}, 
+      #{commercialTransCount,jdbcType=VARCHAR}, #{transactionCheckInterval,jdbcType=VARCHAR}, 
+      #{startAcceptSendRequestTimeStamp,jdbcType=VARCHAR}, #{serverPooledByteBufAllocatorEnable,jdbcType=VARCHAR}, 
+      #{serverAsyncSemaphoreValue,jdbcType=VARCHAR}, #{heartbeatThreadPoolQueueCapacity,jdbcType=VARCHAR}, 
+      #{waitTimeMillsInTransactionQueue,jdbcType=VARCHAR}, #{deleteWhen,jdbcType=VARCHAR}, 
+      #{bitMapLengthConsumeQueueExt,jdbcType=VARCHAR}, #{fastFailIfNoBufferInStorePool,jdbcType=VARCHAR}, 
+      #{defaultTopicQueueNums,jdbcType=VARCHAR}, #{notifyConsumerIdsChangedEnable,jdbcType=VARCHAR}, 
+      #{flushConsumeQueueThoroughInterval,jdbcType=VARCHAR}, #{fileReservedTime,jdbcType=VARCHAR}, 
+      #{brokerPermission,jdbcType=VARCHAR}, #{transferMsgByHeap,jdbcType=VARCHAR}, #{pullThreadPoolQueueCapacity,jdbcType=VARCHAR}, 
+      #{brokerId,jdbcType=VARCHAR}, #{maxTransferCountOnMessageInDisk,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective">
+    insert into rocketmq_cluster_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="serverSelectorThreads != null">
+        server_selector_threads,
+      </if>
+      <if test="brokerRole != null">
+        broker_role,
+      </if>
+      <if test="serverSocketRcvBufSize != null">
+        server_socket_rcv_buf_size,
+      </if>
+      <if test="osPageCacheBusyTimeOutMills != null">
+        os_page_cache_busy_time_out_mills,
+      </if>
+      <if test="shortPollingTimeMills != null">
+        short_polling_time_mills,
+      </if>
+      <if test="clientSocketRcvBufSize != null">
+        client_socket_rcv_buf_size,
+      </if>
+      <if test="clusterTopicEnable != null">
+        cluster_topic_enable,
+      </if>
+      <if test="brokerTopicEnable != null">
+        broker_topic_enable,
+      </if>
+      <if test="autoCreateTopicEnable != null">
+        auto_create_topic_enable,
+      </if>
+      <if test="maxErrorRateOfBloomFilter != null">
+        max_error_rate_of_bloom_filter,
+      </if>
+      <if test="maxMsgsNumBatch != null">
+        max_msgs_num_batch,
+      </if>
+      <if test="cleanResourceInterval != null">
+        clean_resource_interval,
+      </if>
+      <if test="commercialBaseCount != null">
+        commercial_base_count,
+      </if>
+      <if test="maxTransferCountOnMessageInMemory != null">
+        max_transfer_count_on_message_in_memory,
+      </if>
+      <if test="brokerFastFailureEnable != null">
+        broker_fast_failure_enable,
+      </if>
+      <if test="brokerClusterName != null">
+        broker_cluster_name,
+      </if>
+      <if test="flushDiskType != null">
+        flush_disk_type,
+      </if>
+      <if test="commercialBigCount != null">
+        commercial_big_count,
+      </if>
+      <if test="mapedFileSizeCommitLog != null">
+        maped_file_size_commit_log,
+      </if>
+      <if test="consumerFallbehindThreshold != null">
+        consumer_fallbehind_threshold,
+      </if>
+      <if test="autoCreateSubscriptionGroup != null">
+        auto_create_subscription_group,
+      </if>
+      <if test="transientStorePoolEnable != null">
+        transient_store_pool_enable,
+      </if>
+      <if test="flushConsumerOffsetInterval != null">
+        flush_consumer_offset_interval,
+      </if>
+      <if test="waitTimeMillsInHeartbeatQueue != null">
+        wait_time_mills_in_heartbeat_queue,
+      </if>
+      <if test="diskMaxUsedSpaceRatio != null">
+        disk_max_used_space_ratio,
+      </if>
+      <if test="cleanFileForciblyEnable != null">
+        clean_file_forcibly_enable,
+      </if>
+      <if test="slaveReadEnable != null">
+        slave_read_enable,
+      </if>
+      <if test="flushCommitLogLeastPages != null">
+        flush_commit_log_least_pages,
+      </if>
+      <if test="msgTraceTopicName != null">
+        msg_trace_topic_name,
+      </if>
+      <if test="expectConsumerNumUseFilter != null">
+        expect_consumer_num_use_filter,
+      </if>
+      <if test="traceTopicEnable != null">
+        trace_topic_enable,
+      </if>
+      <if test="useEpollNativeSelector != null">
+        use_epoll_native_selector,
+      </if>
+      <if test="enablePropertyFilter != null">
+        enable_property_filter,
+      </if>
+      <if test="messageDelayLevel != null">
+        message_delay_level,
+      </if>
+      <if test="deleteCommitLogFilesInterval != null">
+        delete_commit_log_files_interval,
+      </if>
+      <if test="brokerName != null">
+        broker_name,
+      </if>
+      <if test="maxTransferBytesOnMessageInDisk != null">
+        max_transfer_bytes_on_message_in_disk,
+      </if>
+      <if test="mapedFileSizeConsumeQueue != null">
+        maped_file_size_consume_queue,
+      </if>
+      <if test="listenPort != null">
+        listen_port,
+      </if>
+      <if test="flushConsumeQueueLeastPages != null">
+        flush_consume_queue_least_pages,
+      </if>
+      <if test="pullMessageThreadPoolNums != null">
+        pull_message_thread_pool_nums,
+      </if>
+      <if test="useReentrantLockWhenPutMessage != null">
+        use_reentrant_lock_when_put_message,
+      </if>
+      <if test="flushIntervalConsumeQueue != null">
+        flush_interval_consume_queue,
+      </if>
+      <if test="sendThreadPoolQueueCapacity != null">
+        send_thread_pool_queue_capacity,
+      </if>
+      <if test="debugLockEnable != null">
+        debug_lock_enable,
+      </if>
+      <if test="haHousekeepingInterval != null">
+        ha_housekeeping_interval,
+      </if>
+      <if test="diskFallRecorded != null">
+        disk_fall_recorded,
+      </if>
+      <if test="messageIndexEnable != null">
+        message_index_enable,
+      </if>
+      <if test="clientAsyncSemaphoreValue != null">
+        client_async_semaphore_value,
+      </if>
+      <if test="clientCallbackExecutorThreads != null">
+        client_callback_executor_threads,
+      </if>
+      <if test="putMsgIndexHightWater != null">
+        put_msg_index_hight_water,
+      </if>
+      <if test="sendMessageThreadPoolNums != null">
+        send_message_thread_pool_nums,
+      </if>
+      <if test="clientManagerThreadPoolQueueCapacity != null">
+        client_manager_thread_pool_queue_capacity,
+      </if>
+      <if test="serverSocketSndBufSize != null">
+        server_socket_snd_buf_size,
+      </if>
+      <if test="maxDelayTime != null">
+        max_delay_time,
+      </if>
+      <if test="clientSocketSndBufSize != null">
+        client_socket_snd_buf_size,
+      </if>
+      <if test="namesrvAddr != null">
+        namesrv_addr,
+      </if>
+      <if test="commercialEnable != null">
+        commercial_enable,
+      </if>
+      <if test="maxHashSlotNum != null">
+        max_hash_slot_num,
+      </if>
+      <if test="heartbeatThreadPoolNums != null">
+        heartbeat_thread_pool_nums,
+      </if>
+      <if test="transactionTimeOut != null">
+        transaction_time_out,
+      </if>
+      <if test="maxMessageSize != null">
+        max_message_size,
+      </if>
+      <if test="adminBrokerThreadPoolNums != null">
+        admin_broker_thread_pool_nums,
+      </if>
+      <if test="defaultQueryMaxNum != null">
+        default_query_max_num,
+      </if>
+      <if test="forceRegister != null">
+        force_register,
+      </if>
+      <if test="maxTransferBytesOnMessageInMemory != null">
+        max_transfer_bytes_on_message_in_memory,
+      </if>
+      <if test="enableConsumeQueueExt != null">
+        enable_consume_queue_ext,
+      </if>
+      <if test="longPollingEnable != null">
+        long_polling_enable,
+      </if>
+      <if test="serverWorkerThreads != null">
+        server_worker_threads,
+      </if>
+      <if test="messageIndexSafe != null">
+        message_index_safe,
+      </if>
+      <if test="deleteConsumeQueueFilesInterval != null">
+        delete_consume_queue_files_interval,
+      </if>
+      <if test="haSlaveFallbehindMax != null">
+        ha_slave_fallbehind_max,
+      </if>
+      <if test="serverCallbackExecutorThreads != null">
+        server_callback_executor_threads,
+      </if>
+      <if test="flushCommitLogThoroughInterval != null">
+        flush_commit_log_thorough_interval,
+      </if>
+      <if test="commercialTimerCount != null">
+        commercial_timer_count,
+      </if>
+      <if test="useTls != null">
+        use_tls,
+      </if>
+      <if test="redeleteHangedFileInterval != null">
+        redelete_hanged_file_interval,
+      </if>
+      <if test="flushIntervalCommitLog != null">
+        flush_interval_commit_log,
+      </if>
+      <if test="rocketmqHome != null">
+        rocketmq_home,
+      </if>
+      <if test="queryMessageThreadPoolNums != null">
+        query_message_thread_pool_nums,
+      </if>
+      <if test="messageStorePlugin != null">
+        message_store_plugin,
+      </if>
+      <if test="serverChannelMaxIdleTimeSeconds != null">
+        server_channel_max_idle_time_seconds,
+      </if>
+      <if test="maxIndexNum != null">
+        max_index_num,
+      </if>
+      <if test="filterDataCleanTimeSpan != null">
+        filter_data_clean_time_span,
+      </if>
+      <if test="filterServerNums != null">
+        filter_server_nums,
+      </if>
+      <if test="commitCommitLogLeastPages != null">
+        commit_commit_log_least_pages,
+      </if>
+      <if test="waitTimeMillsInPullQueue != null">
+        wait_time_mills_in_pull_queue,
+      </if>
+      <if test="haSendHeartbeatInterval != null">
+        ha_send_heartbeat_interval,
+      </if>
+      <if test="clientChannelMaxIdleTimeSeconds != null">
+        client_channel_max_idle_time_seconds,
+      </if>
+      <if test="filterSupportRetry != null">
+        filter_support_retry,
+      </if>
+      <if test="flushDelayOffsetInterval != null">
+        flush_delay_offset_interval,
+      </if>
+      <if test="duplicationEnable != null">
+        duplication_enable,
+      </if>
+      <if test="offsetCheckInSlave != null">
+        offset_check_in_slave,
+      </if>
+      <if test="clientCloseSocketIfTimeout != null">
+        client_close_socket_if_timeout,
+      </if>
+      <if test="transientStorePoolSize != null">
+        transient_store_pool_size,
+      </if>
+      <if test="waitTimeMillsInSendQueue != null">
+        wait_time_mills_in_send_queue,
+      </if>
+      <if test="warmMapedFileEnable != null">
+        warm_maped_file_enable,
+      </if>
+      <if test="endTransactionThreadPoolNums != null">
+        end_transaction_thread_pool_nums,
+      </if>
+      <if test="flushCommitLogTimed != null">
+        flush_commit_log_timed,
+      </if>
+      <if test="flushLeastPagesWhenWarmMapedFile != null">
+        flush_least_pages_when_warm_maped_file,
+      </if>
+      <if test="clientWorkerThreads != null">
+        client_worker_threads,
+      </if>
+      <if test="endTransactionPoolQueueCapacity != null">
+        end_transaction_pool_queue_capacity,
+      </if>
+      <if test="registerNameServerPeriod != null">
+        register_name_server_period,
+      </if>
+      <if test="registerBrokerTimeoutMills != null">
+        register_broker_timeout_mills,
+      </if>
+      <if test="accessMessageInMemoryMaxRatio != null">
+        access_message_in_memory_max_ratio,
+      </if>
+      <if test="highSpeedMode != null">
+        high_speed_mode,
+      </if>
+      <if test="transactionCheckMax != null">
+        transaction_check_max,
+      </if>
+      <if test="checkCrcOnRecover != null">
+        check_crc_on_recover,
+      </if>
+      <if test="destroyMapedFileIntervalForcibly != null">
+        destroy_maped_file_interval_forcibly,
+      </if>
+      <if test="brokerIp2 != null">
+        broker_ip2,
+      </if>
+      <if test="brokerIp1 != null">
+        broker_ip1,
+      </if>
+      <if test="commitIntervalCommitLog != null">
+        commit_interval_commit_log,
+      </if>
+      <if test="clientOnewaySemaphoreValue != null">
+        client_oneway_semaphore_value,
+      </if>
+      <if test="traceOn != null">
+        trace_on,
+      </if>
+      <if test="clientManageThreadPoolNums != null">
+        client_manage_thread_pool_nums,
+      </if>
+      <if test="channelNotActiveInterval != null">
+        channel_not_active_interval,
+      </if>
+      <if test="clusterName != null">
+        cluster_name,
+      </if>
+      <if test="mappedFileSizeConsumeQueueExt != null">
+        mapped_file_size_consume_queue_ext,
+      </if>
+      <if test="consumerManagerThreadPoolQueueCapacity != null">
+        consumer_manager_thread_pool_queue_capacity,
+      </if>
+      <if test="serverOnewaySemaphoreValue != null">
+        server_oneway_semaphore_value,
+      </if>
+      <if test="haListenPort != null">
+        ha_listen_port,
+      </if>
+      <if test="enableCalcFilterBitmap != null">
+        enable_calc_filter_bitmap,
+      </if>
+      <if test="clientPooledByteBufAllocatorEnable != null">
+        client_pooled_byte_buf_allocator_enable,
+      </if>
+      <if test="aclEnable != null">
+        acl_enable,
+      </if>
+      <if test="storePathRootDir != null">
+        store_path_root_dir,
+      </if>
+      <if test="syncFlushTimeout != null">
+        sync_flush_timeout,
+      </if>
+      <if test="rejectTransactionMessage != null">
+        reject_transaction_message,
+      </if>
+      <if test="commitCommitLogThoroughInterval != null">
+        commit_commit_log_thorough_interval,
+      </if>
+      <if test="connectTimeoutMillis != null">
+        connect_timeout_millis,
+      </if>
+      <if test="queryThreadPoolQueueCapacity != null">
+        query_thread_pool_queue_capacity,
+      </if>
+      <if test="regionId != null">
+        region_id,
+      </if>
+      <if test="consumerManageThreadPoolNums != null">
+        consumer_manage_thread_pool_nums,
+      </if>
+      <if test="disableConsumeIfConsumerReadSlowly != null">
+        disable_consume_if_consumer_read_slowly,
+      </if>
+      <if test="flushConsumerOffsetHistoryInterval != null">
+        flush_consumer_offset_history_interval,
+      </if>
+      <if test="fetchNamesrvAddrByAddressServer != null">
+        fetch_namesrv_addr_by_address_server,
+      </if>
+      <if test="haTransferBatchSize != null">
+        ha_transfer_batch_size,
+      </if>
+      <if test="compressedRegister != null">
+        compressed_register,
+      </if>
+      <if test="storePathCommitLog != null">
+        store_path_commit_log,
+      </if>
+      <if test="commercialTransCount != null">
+        commercial_trans_count,
+      </if>
+      <if test="transactionCheckInterval != null">
+        transaction_check_interval,
+      </if>
+      <if test="startAcceptSendRequestTimeStamp != null">
+        start_accept_send_request_time_stamp,
+      </if>
+      <if test="serverPooledByteBufAllocatorEnable != null">
+        server_pooled_byte_buf_allocator_enable,
+      </if>
+      <if test="serverAsyncSemaphoreValue != null">
+        server_async_semaphore_value,
+      </if>
+      <if test="heartbeatThreadPoolQueueCapacity != null">
+        heartbeat_thread_pool_queue_capacity,
+      </if>
+      <if test="waitTimeMillsInTransactionQueue != null">
+        wait_time_mills_in_transaction_queue,
+      </if>
+      <if test="deleteWhen != null">
+        delete_when,
+      </if>
+      <if test="bitMapLengthConsumeQueueExt != null">
+        bit_map_length_consume_queue_ext,
+      </if>
+      <if test="fastFailIfNoBufferInStorePool != null">
+        fast_fail_if_no_buffer_in_store_pool,
+      </if>
+      <if test="defaultTopicQueueNums != null">
+        default_topic_queue_nums,
+      </if>
+      <if test="notifyConsumerIdsChangedEnable != null">
+        notify_consumer_ids_changed_enable,
+      </if>
+      <if test="flushConsumeQueueThoroughInterval != null">
+        flush_consume_queue_thorough_interval,
+      </if>
+      <if test="fileReservedTime != null">
+        file_reserved_time,
+      </if>
+      <if test="brokerPermission != null">
+        broker_permission,
+      </if>
+      <if test="transferMsgByHeap != null">
+        transfer_msg_by_heap,
+      </if>
+      <if test="pullThreadPoolQueueCapacity != null">
+        pull_thread_pool_queue_capacity,
+      </if>
+      <if test="brokerId != null">
+        broker_id,
+      </if>
+      <if test="maxTransferCountOnMessageInDisk != null">
+        max_transfer_count_on_message_in_disk,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="serverSelectorThreads != null">
+        #{serverSelectorThreads,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerRole != null">
+        #{brokerRole,jdbcType=VARCHAR},
+      </if>
+      <if test="serverSocketRcvBufSize != null">
+        #{serverSocketRcvBufSize,jdbcType=VARCHAR},
+      </if>
+      <if test="osPageCacheBusyTimeOutMills != null">
+        #{osPageCacheBusyTimeOutMills,jdbcType=VARCHAR},
+      </if>
+      <if test="shortPollingTimeMills != null">
+        #{shortPollingTimeMills,jdbcType=VARCHAR},
+      </if>
+      <if test="clientSocketRcvBufSize != null">
+        #{clientSocketRcvBufSize,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterTopicEnable != null">
+        #{clusterTopicEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerTopicEnable != null">
+        #{brokerTopicEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="autoCreateTopicEnable != null">
+        #{autoCreateTopicEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="maxErrorRateOfBloomFilter != null">
+        #{maxErrorRateOfBloomFilter,jdbcType=VARCHAR},
+      </if>
+      <if test="maxMsgsNumBatch != null">
+        #{maxMsgsNumBatch,jdbcType=VARCHAR},
+      </if>
+      <if test="cleanResourceInterval != null">
+        #{cleanResourceInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialBaseCount != null">
+        #{commercialBaseCount,jdbcType=VARCHAR},
+      </if>
+      <if test="maxTransferCountOnMessageInMemory != null">
+        #{maxTransferCountOnMessageInMemory,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerFastFailureEnable != null">
+        #{brokerFastFailureEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerClusterName != null">
+        #{brokerClusterName,jdbcType=VARCHAR},
+      </if>
+      <if test="flushDiskType != null">
+        #{flushDiskType,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialBigCount != null">
+        #{commercialBigCount,jdbcType=VARCHAR},
+      </if>
+      <if test="mapedFileSizeCommitLog != null">
+        #{mapedFileSizeCommitLog,jdbcType=VARCHAR},
+      </if>
+      <if test="consumerFallbehindThreshold != null">
+        #{consumerFallbehindThreshold,jdbcType=VARCHAR},
+      </if>
+      <if test="autoCreateSubscriptionGroup != null">
+        #{autoCreateSubscriptionGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="transientStorePoolEnable != null">
+        #{transientStorePoolEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="flushConsumerOffsetInterval != null">
+        #{flushConsumerOffsetInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="waitTimeMillsInHeartbeatQueue != null">
+        #{waitTimeMillsInHeartbeatQueue,jdbcType=VARCHAR},
+      </if>
+      <if test="diskMaxUsedSpaceRatio != null">
+        #{diskMaxUsedSpaceRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="cleanFileForciblyEnable != null">
+        #{cleanFileForciblyEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="slaveReadEnable != null">
+        #{slaveReadEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="flushCommitLogLeastPages != null">
+        #{flushCommitLogLeastPages,jdbcType=VARCHAR},
+      </if>
+      <if test="msgTraceTopicName != null">
+        #{msgTraceTopicName,jdbcType=VARCHAR},
+      </if>
+      <if test="expectConsumerNumUseFilter != null">
+        #{expectConsumerNumUseFilter,jdbcType=VARCHAR},
+      </if>
+      <if test="traceTopicEnable != null">
+        #{traceTopicEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="useEpollNativeSelector != null">
+        #{useEpollNativeSelector,jdbcType=VARCHAR},
+      </if>
+      <if test="enablePropertyFilter != null">
+        #{enablePropertyFilter,jdbcType=VARCHAR},
+      </if>
+      <if test="messageDelayLevel != null">
+        #{messageDelayLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteCommitLogFilesInterval != null">
+        #{deleteCommitLogFilesInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerName != null">
+        #{brokerName,jdbcType=VARCHAR},
+      </if>
+      <if test="maxTransferBytesOnMessageInDisk != null">
+        #{maxTransferBytesOnMessageInDisk,jdbcType=VARCHAR},
+      </if>
+      <if test="mapedFileSizeConsumeQueue != null">
+        #{mapedFileSizeConsumeQueue,jdbcType=VARCHAR},
+      </if>
+      <if test="listenPort != null">
+        #{listenPort,jdbcType=VARCHAR},
+      </if>
+      <if test="flushConsumeQueueLeastPages != null">
+        #{flushConsumeQueueLeastPages,jdbcType=VARCHAR},
+      </if>
+      <if test="pullMessageThreadPoolNums != null">
+        #{pullMessageThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="useReentrantLockWhenPutMessage != null">
+        #{useReentrantLockWhenPutMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="flushIntervalConsumeQueue != null">
+        #{flushIntervalConsumeQueue,jdbcType=VARCHAR},
+      </if>
+      <if test="sendThreadPoolQueueCapacity != null">
+        #{sendThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="debugLockEnable != null">
+        #{debugLockEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="haHousekeepingInterval != null">
+        #{haHousekeepingInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="diskFallRecorded != null">
+        #{diskFallRecorded,jdbcType=VARCHAR},
+      </if>
+      <if test="messageIndexEnable != null">
+        #{messageIndexEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="clientAsyncSemaphoreValue != null">
+        #{clientAsyncSemaphoreValue,jdbcType=VARCHAR},
+      </if>
+      <if test="clientCallbackExecutorThreads != null">
+        #{clientCallbackExecutorThreads,jdbcType=VARCHAR},
+      </if>
+      <if test="putMsgIndexHightWater != null">
+        #{putMsgIndexHightWater,jdbcType=VARCHAR},
+      </if>
+      <if test="sendMessageThreadPoolNums != null">
+        #{sendMessageThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="clientManagerThreadPoolQueueCapacity != null">
+        #{clientManagerThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="serverSocketSndBufSize != null">
+        #{serverSocketSndBufSize,jdbcType=VARCHAR},
+      </if>
+      <if test="maxDelayTime != null">
+        #{maxDelayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="clientSocketSndBufSize != null">
+        #{clientSocketSndBufSize,jdbcType=VARCHAR},
+      </if>
+      <if test="namesrvAddr != null">
+        #{namesrvAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialEnable != null">
+        #{commercialEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="maxHashSlotNum != null">
+        #{maxHashSlotNum,jdbcType=VARCHAR},
+      </if>
+      <if test="heartbeatThreadPoolNums != null">
+        #{heartbeatThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionTimeOut != null">
+        #{transactionTimeOut,jdbcType=VARCHAR},
+      </if>
+      <if test="maxMessageSize != null">
+        #{maxMessageSize,jdbcType=VARCHAR},
+      </if>
+      <if test="adminBrokerThreadPoolNums != null">
+        #{adminBrokerThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultQueryMaxNum != null">
+        #{defaultQueryMaxNum,jdbcType=VARCHAR},
+      </if>
+      <if test="forceRegister != null">
+        #{forceRegister,jdbcType=VARCHAR},
+      </if>
+      <if test="maxTransferBytesOnMessageInMemory != null">
+        #{maxTransferBytesOnMessageInMemory,jdbcType=VARCHAR},
+      </if>
+      <if test="enableConsumeQueueExt != null">
+        #{enableConsumeQueueExt,jdbcType=VARCHAR},
+      </if>
+      <if test="longPollingEnable != null">
+        #{longPollingEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="serverWorkerThreads != null">
+        #{serverWorkerThreads,jdbcType=VARCHAR},
+      </if>
+      <if test="messageIndexSafe != null">
+        #{messageIndexSafe,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteConsumeQueueFilesInterval != null">
+        #{deleteConsumeQueueFilesInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="haSlaveFallbehindMax != null">
+        #{haSlaveFallbehindMax,jdbcType=VARCHAR},
+      </if>
+      <if test="serverCallbackExecutorThreads != null">
+        #{serverCallbackExecutorThreads,jdbcType=VARCHAR},
+      </if>
+      <if test="flushCommitLogThoroughInterval != null">
+        #{flushCommitLogThoroughInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialTimerCount != null">
+        #{commercialTimerCount,jdbcType=VARCHAR},
+      </if>
+      <if test="useTls != null">
+        #{useTls,jdbcType=VARCHAR},
+      </if>
+      <if test="redeleteHangedFileInterval != null">
+        #{redeleteHangedFileInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="flushIntervalCommitLog != null">
+        #{flushIntervalCommitLog,jdbcType=VARCHAR},
+      </if>
+      <if test="rocketmqHome != null">
+        #{rocketmqHome,jdbcType=VARCHAR},
+      </if>
+      <if test="queryMessageThreadPoolNums != null">
+        #{queryMessageThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="messageStorePlugin != null">
+        #{messageStorePlugin,jdbcType=VARCHAR},
+      </if>
+      <if test="serverChannelMaxIdleTimeSeconds != null">
+        #{serverChannelMaxIdleTimeSeconds,jdbcType=VARCHAR},
+      </if>
+      <if test="maxIndexNum != null">
+        #{maxIndexNum,jdbcType=VARCHAR},
+      </if>
+      <if test="filterDataCleanTimeSpan != null">
+        #{filterDataCleanTimeSpan,jdbcType=VARCHAR},
+      </if>
+      <if test="filterServerNums != null">
+        #{filterServerNums,jdbcType=VARCHAR},
+      </if>
+      <if test="commitCommitLogLeastPages != null">
+        #{commitCommitLogLeastPages,jdbcType=VARCHAR},
+      </if>
+      <if test="waitTimeMillsInPullQueue != null">
+        #{waitTimeMillsInPullQueue,jdbcType=VARCHAR},
+      </if>
+      <if test="haSendHeartbeatInterval != null">
+        #{haSendHeartbeatInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="clientChannelMaxIdleTimeSeconds != null">
+        #{clientChannelMaxIdleTimeSeconds,jdbcType=VARCHAR},
+      </if>
+      <if test="filterSupportRetry != null">
+        #{filterSupportRetry,jdbcType=VARCHAR},
+      </if>
+      <if test="flushDelayOffsetInterval != null">
+        #{flushDelayOffsetInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="duplicationEnable != null">
+        #{duplicationEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="offsetCheckInSlave != null">
+        #{offsetCheckInSlave,jdbcType=VARCHAR},
+      </if>
+      <if test="clientCloseSocketIfTimeout != null">
+        #{clientCloseSocketIfTimeout,jdbcType=VARCHAR},
+      </if>
+      <if test="transientStorePoolSize != null">
+        #{transientStorePoolSize,jdbcType=VARCHAR},
+      </if>
+      <if test="waitTimeMillsInSendQueue != null">
+        #{waitTimeMillsInSendQueue,jdbcType=VARCHAR},
+      </if>
+      <if test="warmMapedFileEnable != null">
+        #{warmMapedFileEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="endTransactionThreadPoolNums != null">
+        #{endTransactionThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="flushCommitLogTimed != null">
+        #{flushCommitLogTimed,jdbcType=VARCHAR},
+      </if>
+      <if test="flushLeastPagesWhenWarmMapedFile != null">
+        #{flushLeastPagesWhenWarmMapedFile,jdbcType=VARCHAR},
+      </if>
+      <if test="clientWorkerThreads != null">
+        #{clientWorkerThreads,jdbcType=VARCHAR},
+      </if>
+      <if test="endTransactionPoolQueueCapacity != null">
+        #{endTransactionPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="registerNameServerPeriod != null">
+        #{registerNameServerPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="registerBrokerTimeoutMills != null">
+        #{registerBrokerTimeoutMills,jdbcType=VARCHAR},
+      </if>
+      <if test="accessMessageInMemoryMaxRatio != null">
+        #{accessMessageInMemoryMaxRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="highSpeedMode != null">
+        #{highSpeedMode,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionCheckMax != null">
+        #{transactionCheckMax,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCrcOnRecover != null">
+        #{checkCrcOnRecover,jdbcType=VARCHAR},
+      </if>
+      <if test="destroyMapedFileIntervalForcibly != null">
+        #{destroyMapedFileIntervalForcibly,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerIp2 != null">
+        #{brokerIp2,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerIp1 != null">
+        #{brokerIp1,jdbcType=VARCHAR},
+      </if>
+      <if test="commitIntervalCommitLog != null">
+        #{commitIntervalCommitLog,jdbcType=VARCHAR},
+      </if>
+      <if test="clientOnewaySemaphoreValue != null">
+        #{clientOnewaySemaphoreValue,jdbcType=VARCHAR},
+      </if>
+      <if test="traceOn != null">
+        #{traceOn,jdbcType=VARCHAR},
+      </if>
+      <if test="clientManageThreadPoolNums != null">
+        #{clientManageThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNotActiveInterval != null">
+        #{channelNotActiveInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterName != null">
+        #{clusterName,jdbcType=VARCHAR},
+      </if>
+      <if test="mappedFileSizeConsumeQueueExt != null">
+        #{mappedFileSizeConsumeQueueExt,jdbcType=VARCHAR},
+      </if>
+      <if test="consumerManagerThreadPoolQueueCapacity != null">
+        #{consumerManagerThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="serverOnewaySemaphoreValue != null">
+        #{serverOnewaySemaphoreValue,jdbcType=VARCHAR},
+      </if>
+      <if test="haListenPort != null">
+        #{haListenPort,jdbcType=VARCHAR},
+      </if>
+      <if test="enableCalcFilterBitmap != null">
+        #{enableCalcFilterBitmap,jdbcType=VARCHAR},
+      </if>
+      <if test="clientPooledByteBufAllocatorEnable != null">
+        #{clientPooledByteBufAllocatorEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="aclEnable != null">
+        #{aclEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="storePathRootDir != null">
+        #{storePathRootDir,jdbcType=VARCHAR},
+      </if>
+      <if test="syncFlushTimeout != null">
+        #{syncFlushTimeout,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectTransactionMessage != null">
+        #{rejectTransactionMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="commitCommitLogThoroughInterval != null">
+        #{commitCommitLogThoroughInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="connectTimeoutMillis != null">
+        #{connectTimeoutMillis,jdbcType=VARCHAR},
+      </if>
+      <if test="queryThreadPoolQueueCapacity != null">
+        #{queryThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+        #{regionId,jdbcType=VARCHAR},
+      </if>
+      <if test="consumerManageThreadPoolNums != null">
+        #{consumerManageThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="disableConsumeIfConsumerReadSlowly != null">
+        #{disableConsumeIfConsumerReadSlowly,jdbcType=VARCHAR},
+      </if>
+      <if test="flushConsumerOffsetHistoryInterval != null">
+        #{flushConsumerOffsetHistoryInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="fetchNamesrvAddrByAddressServer != null">
+        #{fetchNamesrvAddrByAddressServer,jdbcType=VARCHAR},
+      </if>
+      <if test="haTransferBatchSize != null">
+        #{haTransferBatchSize,jdbcType=VARCHAR},
+      </if>
+      <if test="compressedRegister != null">
+        #{compressedRegister,jdbcType=VARCHAR},
+      </if>
+      <if test="storePathCommitLog != null">
+        #{storePathCommitLog,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialTransCount != null">
+        #{commercialTransCount,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionCheckInterval != null">
+        #{transactionCheckInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="startAcceptSendRequestTimeStamp != null">
+        #{startAcceptSendRequestTimeStamp,jdbcType=VARCHAR},
+      </if>
+      <if test="serverPooledByteBufAllocatorEnable != null">
+        #{serverPooledByteBufAllocatorEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="serverAsyncSemaphoreValue != null">
+        #{serverAsyncSemaphoreValue,jdbcType=VARCHAR},
+      </if>
+      <if test="heartbeatThreadPoolQueueCapacity != null">
+        #{heartbeatThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="waitTimeMillsInTransactionQueue != null">
+        #{waitTimeMillsInTransactionQueue,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteWhen != null">
+        #{deleteWhen,jdbcType=VARCHAR},
+      </if>
+      <if test="bitMapLengthConsumeQueueExt != null">
+        #{bitMapLengthConsumeQueueExt,jdbcType=VARCHAR},
+      </if>
+      <if test="fastFailIfNoBufferInStorePool != null">
+        #{fastFailIfNoBufferInStorePool,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultTopicQueueNums != null">
+        #{defaultTopicQueueNums,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyConsumerIdsChangedEnable != null">
+        #{notifyConsumerIdsChangedEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="flushConsumeQueueThoroughInterval != null">
+        #{flushConsumeQueueThoroughInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="fileReservedTime != null">
+        #{fileReservedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerPermission != null">
+        #{brokerPermission,jdbcType=VARCHAR},
+      </if>
+      <if test="transferMsgByHeap != null">
+        #{transferMsgByHeap,jdbcType=VARCHAR},
+      </if>
+      <if test="pullThreadPoolQueueCapacity != null">
+        #{pullThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerId != null">
+        #{brokerId,jdbcType=VARCHAR},
+      </if>
+      <if test="maxTransferCountOnMessageInDisk != null">
+        #{maxTransferCountOnMessageInDisk,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective">
+    update rocketmq_cluster_config
+    <set>
+      <if test="serverSelectorThreads != null">
+        server_selector_threads = #{serverSelectorThreads,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerRole != null">
+        broker_role = #{brokerRole,jdbcType=VARCHAR},
+      </if>
+      <if test="serverSocketRcvBufSize != null">
+        server_socket_rcv_buf_size = #{serverSocketRcvBufSize,jdbcType=VARCHAR},
+      </if>
+      <if test="osPageCacheBusyTimeOutMills != null">
+        os_page_cache_busy_time_out_mills = #{osPageCacheBusyTimeOutMills,jdbcType=VARCHAR},
+      </if>
+      <if test="shortPollingTimeMills != null">
+        short_polling_time_mills = #{shortPollingTimeMills,jdbcType=VARCHAR},
+      </if>
+      <if test="clientSocketRcvBufSize != null">
+        client_socket_rcv_buf_size = #{clientSocketRcvBufSize,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterTopicEnable != null">
+        cluster_topic_enable = #{clusterTopicEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerTopicEnable != null">
+        broker_topic_enable = #{brokerTopicEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="autoCreateTopicEnable != null">
+        auto_create_topic_enable = #{autoCreateTopicEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="maxErrorRateOfBloomFilter != null">
+        max_error_rate_of_bloom_filter = #{maxErrorRateOfBloomFilter,jdbcType=VARCHAR},
+      </if>
+      <if test="maxMsgsNumBatch != null">
+        max_msgs_num_batch = #{maxMsgsNumBatch,jdbcType=VARCHAR},
+      </if>
+      <if test="cleanResourceInterval != null">
+        clean_resource_interval = #{cleanResourceInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialBaseCount != null">
+        commercial_base_count = #{commercialBaseCount,jdbcType=VARCHAR},
+      </if>
+      <if test="maxTransferCountOnMessageInMemory != null">
+        max_transfer_count_on_message_in_memory = #{maxTransferCountOnMessageInMemory,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerFastFailureEnable != null">
+        broker_fast_failure_enable = #{brokerFastFailureEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerClusterName != null">
+        broker_cluster_name = #{brokerClusterName,jdbcType=VARCHAR},
+      </if>
+      <if test="flushDiskType != null">
+        flush_disk_type = #{flushDiskType,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialBigCount != null">
+        commercial_big_count = #{commercialBigCount,jdbcType=VARCHAR},
+      </if>
+      <if test="mapedFileSizeCommitLog != null">
+        maped_file_size_commit_log = #{mapedFileSizeCommitLog,jdbcType=VARCHAR},
+      </if>
+      <if test="consumerFallbehindThreshold != null">
+        consumer_fallbehind_threshold = #{consumerFallbehindThreshold,jdbcType=VARCHAR},
+      </if>
+      <if test="autoCreateSubscriptionGroup != null">
+        auto_create_subscription_group = #{autoCreateSubscriptionGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="transientStorePoolEnable != null">
+        transient_store_pool_enable = #{transientStorePoolEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="flushConsumerOffsetInterval != null">
+        flush_consumer_offset_interval = #{flushConsumerOffsetInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="waitTimeMillsInHeartbeatQueue != null">
+        wait_time_mills_in_heartbeat_queue = #{waitTimeMillsInHeartbeatQueue,jdbcType=VARCHAR},
+      </if>
+      <if test="diskMaxUsedSpaceRatio != null">
+        disk_max_used_space_ratio = #{diskMaxUsedSpaceRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="cleanFileForciblyEnable != null">
+        clean_file_forcibly_enable = #{cleanFileForciblyEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="slaveReadEnable != null">
+        slave_read_enable = #{slaveReadEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="flushCommitLogLeastPages != null">
+        flush_commit_log_least_pages = #{flushCommitLogLeastPages,jdbcType=VARCHAR},
+      </if>
+      <if test="msgTraceTopicName != null">
+        msg_trace_topic_name = #{msgTraceTopicName,jdbcType=VARCHAR},
+      </if>
+      <if test="expectConsumerNumUseFilter != null">
+        expect_consumer_num_use_filter = #{expectConsumerNumUseFilter,jdbcType=VARCHAR},
+      </if>
+      <if test="traceTopicEnable != null">
+        trace_topic_enable = #{traceTopicEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="useEpollNativeSelector != null">
+        use_epoll_native_selector = #{useEpollNativeSelector,jdbcType=VARCHAR},
+      </if>
+      <if test="enablePropertyFilter != null">
+        enable_property_filter = #{enablePropertyFilter,jdbcType=VARCHAR},
+      </if>
+      <if test="messageDelayLevel != null">
+        message_delay_level = #{messageDelayLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteCommitLogFilesInterval != null">
+        delete_commit_log_files_interval = #{deleteCommitLogFilesInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerName != null">
+        broker_name = #{brokerName,jdbcType=VARCHAR},
+      </if>
+      <if test="maxTransferBytesOnMessageInDisk != null">
+        max_transfer_bytes_on_message_in_disk = #{maxTransferBytesOnMessageInDisk,jdbcType=VARCHAR},
+      </if>
+      <if test="mapedFileSizeConsumeQueue != null">
+        maped_file_size_consume_queue = #{mapedFileSizeConsumeQueue,jdbcType=VARCHAR},
+      </if>
+      <if test="listenPort != null">
+        listen_port = #{listenPort,jdbcType=VARCHAR},
+      </if>
+      <if test="flushConsumeQueueLeastPages != null">
+        flush_consume_queue_least_pages = #{flushConsumeQueueLeastPages,jdbcType=VARCHAR},
+      </if>
+      <if test="pullMessageThreadPoolNums != null">
+        pull_message_thread_pool_nums = #{pullMessageThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="useReentrantLockWhenPutMessage != null">
+        use_reentrant_lock_when_put_message = #{useReentrantLockWhenPutMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="flushIntervalConsumeQueue != null">
+        flush_interval_consume_queue = #{flushIntervalConsumeQueue,jdbcType=VARCHAR},
+      </if>
+      <if test="sendThreadPoolQueueCapacity != null">
+        send_thread_pool_queue_capacity = #{sendThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="debugLockEnable != null">
+        debug_lock_enable = #{debugLockEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="haHousekeepingInterval != null">
+        ha_housekeeping_interval = #{haHousekeepingInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="diskFallRecorded != null">
+        disk_fall_recorded = #{diskFallRecorded,jdbcType=VARCHAR},
+      </if>
+      <if test="messageIndexEnable != null">
+        message_index_enable = #{messageIndexEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="clientAsyncSemaphoreValue != null">
+        client_async_semaphore_value = #{clientAsyncSemaphoreValue,jdbcType=VARCHAR},
+      </if>
+      <if test="clientCallbackExecutorThreads != null">
+        client_callback_executor_threads = #{clientCallbackExecutorThreads,jdbcType=VARCHAR},
+      </if>
+      <if test="putMsgIndexHightWater != null">
+        put_msg_index_hight_water = #{putMsgIndexHightWater,jdbcType=VARCHAR},
+      </if>
+      <if test="sendMessageThreadPoolNums != null">
+        send_message_thread_pool_nums = #{sendMessageThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="clientManagerThreadPoolQueueCapacity != null">
+        client_manager_thread_pool_queue_capacity = #{clientManagerThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="serverSocketSndBufSize != null">
+        server_socket_snd_buf_size = #{serverSocketSndBufSize,jdbcType=VARCHAR},
+      </if>
+      <if test="maxDelayTime != null">
+        max_delay_time = #{maxDelayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="clientSocketSndBufSize != null">
+        client_socket_snd_buf_size = #{clientSocketSndBufSize,jdbcType=VARCHAR},
+      </if>
+      <if test="namesrvAddr != null">
+        namesrv_addr = #{namesrvAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialEnable != null">
+        commercial_enable = #{commercialEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="maxHashSlotNum != null">
+        max_hash_slot_num = #{maxHashSlotNum,jdbcType=VARCHAR},
+      </if>
+      <if test="heartbeatThreadPoolNums != null">
+        heartbeat_thread_pool_nums = #{heartbeatThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionTimeOut != null">
+        transaction_time_out = #{transactionTimeOut,jdbcType=VARCHAR},
+      </if>
+      <if test="maxMessageSize != null">
+        max_message_size = #{maxMessageSize,jdbcType=VARCHAR},
+      </if>
+      <if test="adminBrokerThreadPoolNums != null">
+        admin_broker_thread_pool_nums = #{adminBrokerThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultQueryMaxNum != null">
+        default_query_max_num = #{defaultQueryMaxNum,jdbcType=VARCHAR},
+      </if>
+      <if test="forceRegister != null">
+        force_register = #{forceRegister,jdbcType=VARCHAR},
+      </if>
+      <if test="maxTransferBytesOnMessageInMemory != null">
+        max_transfer_bytes_on_message_in_memory = #{maxTransferBytesOnMessageInMemory,jdbcType=VARCHAR},
+      </if>
+      <if test="enableConsumeQueueExt != null">
+        enable_consume_queue_ext = #{enableConsumeQueueExt,jdbcType=VARCHAR},
+      </if>
+      <if test="longPollingEnable != null">
+        long_polling_enable = #{longPollingEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="serverWorkerThreads != null">
+        server_worker_threads = #{serverWorkerThreads,jdbcType=VARCHAR},
+      </if>
+      <if test="messageIndexSafe != null">
+        message_index_safe = #{messageIndexSafe,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteConsumeQueueFilesInterval != null">
+        delete_consume_queue_files_interval = #{deleteConsumeQueueFilesInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="haSlaveFallbehindMax != null">
+        ha_slave_fallbehind_max = #{haSlaveFallbehindMax,jdbcType=VARCHAR},
+      </if>
+      <if test="serverCallbackExecutorThreads != null">
+        server_callback_executor_threads = #{serverCallbackExecutorThreads,jdbcType=VARCHAR},
+      </if>
+      <if test="flushCommitLogThoroughInterval != null">
+        flush_commit_log_thorough_interval = #{flushCommitLogThoroughInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialTimerCount != null">
+        commercial_timer_count = #{commercialTimerCount,jdbcType=VARCHAR},
+      </if>
+      <if test="useTls != null">
+        use_tls = #{useTls,jdbcType=VARCHAR},
+      </if>
+      <if test="redeleteHangedFileInterval != null">
+        redelete_hanged_file_interval = #{redeleteHangedFileInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="flushIntervalCommitLog != null">
+        flush_interval_commit_log = #{flushIntervalCommitLog,jdbcType=VARCHAR},
+      </if>
+      <if test="rocketmqHome != null">
+        rocketmq_home = #{rocketmqHome,jdbcType=VARCHAR},
+      </if>
+      <if test="queryMessageThreadPoolNums != null">
+        query_message_thread_pool_nums = #{queryMessageThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="messageStorePlugin != null">
+        message_store_plugin = #{messageStorePlugin,jdbcType=VARCHAR},
+      </if>
+      <if test="serverChannelMaxIdleTimeSeconds != null">
+        server_channel_max_idle_time_seconds = #{serverChannelMaxIdleTimeSeconds,jdbcType=VARCHAR},
+      </if>
+      <if test="maxIndexNum != null">
+        max_index_num = #{maxIndexNum,jdbcType=VARCHAR},
+      </if>
+      <if test="filterDataCleanTimeSpan != null">
+        filter_data_clean_time_span = #{filterDataCleanTimeSpan,jdbcType=VARCHAR},
+      </if>
+      <if test="filterServerNums != null">
+        filter_server_nums = #{filterServerNums,jdbcType=VARCHAR},
+      </if>
+      <if test="commitCommitLogLeastPages != null">
+        commit_commit_log_least_pages = #{commitCommitLogLeastPages,jdbcType=VARCHAR},
+      </if>
+      <if test="waitTimeMillsInPullQueue != null">
+        wait_time_mills_in_pull_queue = #{waitTimeMillsInPullQueue,jdbcType=VARCHAR},
+      </if>
+      <if test="haSendHeartbeatInterval != null">
+        ha_send_heartbeat_interval = #{haSendHeartbeatInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="clientChannelMaxIdleTimeSeconds != null">
+        client_channel_max_idle_time_seconds = #{clientChannelMaxIdleTimeSeconds,jdbcType=VARCHAR},
+      </if>
+      <if test="filterSupportRetry != null">
+        filter_support_retry = #{filterSupportRetry,jdbcType=VARCHAR},
+      </if>
+      <if test="flushDelayOffsetInterval != null">
+        flush_delay_offset_interval = #{flushDelayOffsetInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="duplicationEnable != null">
+        duplication_enable = #{duplicationEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="offsetCheckInSlave != null">
+        offset_check_in_slave = #{offsetCheckInSlave,jdbcType=VARCHAR},
+      </if>
+      <if test="clientCloseSocketIfTimeout != null">
+        client_close_socket_if_timeout = #{clientCloseSocketIfTimeout,jdbcType=VARCHAR},
+      </if>
+      <if test="transientStorePoolSize != null">
+        transient_store_pool_size = #{transientStorePoolSize,jdbcType=VARCHAR},
+      </if>
+      <if test="waitTimeMillsInSendQueue != null">
+        wait_time_mills_in_send_queue = #{waitTimeMillsInSendQueue,jdbcType=VARCHAR},
+      </if>
+      <if test="warmMapedFileEnable != null">
+        warm_maped_file_enable = #{warmMapedFileEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="endTransactionThreadPoolNums != null">
+        end_transaction_thread_pool_nums = #{endTransactionThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="flushCommitLogTimed != null">
+        flush_commit_log_timed = #{flushCommitLogTimed,jdbcType=VARCHAR},
+      </if>
+      <if test="flushLeastPagesWhenWarmMapedFile != null">
+        flush_least_pages_when_warm_maped_file = #{flushLeastPagesWhenWarmMapedFile,jdbcType=VARCHAR},
+      </if>
+      <if test="clientWorkerThreads != null">
+        client_worker_threads = #{clientWorkerThreads,jdbcType=VARCHAR},
+      </if>
+      <if test="endTransactionPoolQueueCapacity != null">
+        end_transaction_pool_queue_capacity = #{endTransactionPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="registerNameServerPeriod != null">
+        register_name_server_period = #{registerNameServerPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="registerBrokerTimeoutMills != null">
+        register_broker_timeout_mills = #{registerBrokerTimeoutMills,jdbcType=VARCHAR},
+      </if>
+      <if test="accessMessageInMemoryMaxRatio != null">
+        access_message_in_memory_max_ratio = #{accessMessageInMemoryMaxRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="highSpeedMode != null">
+        high_speed_mode = #{highSpeedMode,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionCheckMax != null">
+        transaction_check_max = #{transactionCheckMax,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCrcOnRecover != null">
+        check_crc_on_recover = #{checkCrcOnRecover,jdbcType=VARCHAR},
+      </if>
+      <if test="destroyMapedFileIntervalForcibly != null">
+        destroy_maped_file_interval_forcibly = #{destroyMapedFileIntervalForcibly,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerIp2 != null">
+        broker_ip2 = #{brokerIp2,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerIp1 != null">
+        broker_ip1 = #{brokerIp1,jdbcType=VARCHAR},
+      </if>
+      <if test="commitIntervalCommitLog != null">
+        commit_interval_commit_log = #{commitIntervalCommitLog,jdbcType=VARCHAR},
+      </if>
+      <if test="clientOnewaySemaphoreValue != null">
+        client_oneway_semaphore_value = #{clientOnewaySemaphoreValue,jdbcType=VARCHAR},
+      </if>
+      <if test="traceOn != null">
+        trace_on = #{traceOn,jdbcType=VARCHAR},
+      </if>
+      <if test="clientManageThreadPoolNums != null">
+        client_manage_thread_pool_nums = #{clientManageThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNotActiveInterval != null">
+        channel_not_active_interval = #{channelNotActiveInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterName != null">
+        cluster_name = #{clusterName,jdbcType=VARCHAR},
+      </if>
+      <if test="mappedFileSizeConsumeQueueExt != null">
+        mapped_file_size_consume_queue_ext = #{mappedFileSizeConsumeQueueExt,jdbcType=VARCHAR},
+      </if>
+      <if test="consumerManagerThreadPoolQueueCapacity != null">
+        consumer_manager_thread_pool_queue_capacity = #{consumerManagerThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="serverOnewaySemaphoreValue != null">
+        server_oneway_semaphore_value = #{serverOnewaySemaphoreValue,jdbcType=VARCHAR},
+      </if>
+      <if test="haListenPort != null">
+        ha_listen_port = #{haListenPort,jdbcType=VARCHAR},
+      </if>
+      <if test="enableCalcFilterBitmap != null">
+        enable_calc_filter_bitmap = #{enableCalcFilterBitmap,jdbcType=VARCHAR},
+      </if>
+      <if test="clientPooledByteBufAllocatorEnable != null">
+        client_pooled_byte_buf_allocator_enable = #{clientPooledByteBufAllocatorEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="aclEnable != null">
+        acl_enable = #{aclEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="storePathRootDir != null">
+        store_path_root_dir = #{storePathRootDir,jdbcType=VARCHAR},
+      </if>
+      <if test="syncFlushTimeout != null">
+        sync_flush_timeout = #{syncFlushTimeout,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectTransactionMessage != null">
+        reject_transaction_message = #{rejectTransactionMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="commitCommitLogThoroughInterval != null">
+        commit_commit_log_thorough_interval = #{commitCommitLogThoroughInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="connectTimeoutMillis != null">
+        connect_timeout_millis = #{connectTimeoutMillis,jdbcType=VARCHAR},
+      </if>
+      <if test="queryThreadPoolQueueCapacity != null">
+        query_thread_pool_queue_capacity = #{queryThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null">
+        region_id = #{regionId,jdbcType=VARCHAR},
+      </if>
+      <if test="consumerManageThreadPoolNums != null">
+        consumer_manage_thread_pool_nums = #{consumerManageThreadPoolNums,jdbcType=VARCHAR},
+      </if>
+      <if test="disableConsumeIfConsumerReadSlowly != null">
+        disable_consume_if_consumer_read_slowly = #{disableConsumeIfConsumerReadSlowly,jdbcType=VARCHAR},
+      </if>
+      <if test="flushConsumerOffsetHistoryInterval != null">
+        flush_consumer_offset_history_interval = #{flushConsumerOffsetHistoryInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="fetchNamesrvAddrByAddressServer != null">
+        fetch_namesrv_addr_by_address_server = #{fetchNamesrvAddrByAddressServer,jdbcType=VARCHAR},
+      </if>
+      <if test="haTransferBatchSize != null">
+        ha_transfer_batch_size = #{haTransferBatchSize,jdbcType=VARCHAR},
+      </if>
+      <if test="compressedRegister != null">
+        compressed_register = #{compressedRegister,jdbcType=VARCHAR},
+      </if>
+      <if test="storePathCommitLog != null">
+        store_path_commit_log = #{storePathCommitLog,jdbcType=VARCHAR},
+      </if>
+      <if test="commercialTransCount != null">
+        commercial_trans_count = #{commercialTransCount,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionCheckInterval != null">
+        transaction_check_interval = #{transactionCheckInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="startAcceptSendRequestTimeStamp != null">
+        start_accept_send_request_time_stamp = #{startAcceptSendRequestTimeStamp,jdbcType=VARCHAR},
+      </if>
+      <if test="serverPooledByteBufAllocatorEnable != null">
+        server_pooled_byte_buf_allocator_enable = #{serverPooledByteBufAllocatorEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="serverAsyncSemaphoreValue != null">
+        server_async_semaphore_value = #{serverAsyncSemaphoreValue,jdbcType=VARCHAR},
+      </if>
+      <if test="heartbeatThreadPoolQueueCapacity != null">
+        heartbeat_thread_pool_queue_capacity = #{heartbeatThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="waitTimeMillsInTransactionQueue != null">
+        wait_time_mills_in_transaction_queue = #{waitTimeMillsInTransactionQueue,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteWhen != null">
+        delete_when = #{deleteWhen,jdbcType=VARCHAR},
+      </if>
+      <if test="bitMapLengthConsumeQueueExt != null">
+        bit_map_length_consume_queue_ext = #{bitMapLengthConsumeQueueExt,jdbcType=VARCHAR},
+      </if>
+      <if test="fastFailIfNoBufferInStorePool != null">
+        fast_fail_if_no_buffer_in_store_pool = #{fastFailIfNoBufferInStorePool,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultTopicQueueNums != null">
+        default_topic_queue_nums = #{defaultTopicQueueNums,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyConsumerIdsChangedEnable != null">
+        notify_consumer_ids_changed_enable = #{notifyConsumerIdsChangedEnable,jdbcType=VARCHAR},
+      </if>
+      <if test="flushConsumeQueueThoroughInterval != null">
+        flush_consume_queue_thorough_interval = #{flushConsumeQueueThoroughInterval,jdbcType=VARCHAR},
+      </if>
+      <if test="fileReservedTime != null">
+        file_reserved_time = #{fileReservedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerPermission != null">
+        broker_permission = #{brokerPermission,jdbcType=VARCHAR},
+      </if>
+      <if test="transferMsgByHeap != null">
+        transfer_msg_by_heap = #{transferMsgByHeap,jdbcType=VARCHAR},
+      </if>
+      <if test="pullThreadPoolQueueCapacity != null">
+        pull_thread_pool_queue_capacity = #{pullThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerId != null">
+        broker_id = #{brokerId,jdbcType=VARCHAR},
+      </if>
+      <if test="maxTransferCountOnMessageInDisk != null">
+        max_transfer_count_on_message_in_disk = #{maxTransferCountOnMessageInDisk,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey">
+    update rocketmq_cluster_config
+    set server_selector_threads = #{serverSelectorThreads,jdbcType=VARCHAR},
+      broker_role = #{brokerRole,jdbcType=VARCHAR},
+      server_socket_rcv_buf_size = #{serverSocketRcvBufSize,jdbcType=VARCHAR},
+      os_page_cache_busy_time_out_mills = #{osPageCacheBusyTimeOutMills,jdbcType=VARCHAR},
+      short_polling_time_mills = #{shortPollingTimeMills,jdbcType=VARCHAR},
+      client_socket_rcv_buf_size = #{clientSocketRcvBufSize,jdbcType=VARCHAR},
+      cluster_topic_enable = #{clusterTopicEnable,jdbcType=VARCHAR},
+      broker_topic_enable = #{brokerTopicEnable,jdbcType=VARCHAR},
+      auto_create_topic_enable = #{autoCreateTopicEnable,jdbcType=VARCHAR},
+      max_error_rate_of_bloom_filter = #{maxErrorRateOfBloomFilter,jdbcType=VARCHAR},
+      max_msgs_num_batch = #{maxMsgsNumBatch,jdbcType=VARCHAR},
+      clean_resource_interval = #{cleanResourceInterval,jdbcType=VARCHAR},
+      commercial_base_count = #{commercialBaseCount,jdbcType=VARCHAR},
+      max_transfer_count_on_message_in_memory = #{maxTransferCountOnMessageInMemory,jdbcType=VARCHAR},
+      broker_fast_failure_enable = #{brokerFastFailureEnable,jdbcType=VARCHAR},
+      broker_cluster_name = #{brokerClusterName,jdbcType=VARCHAR},
+      flush_disk_type = #{flushDiskType,jdbcType=VARCHAR},
+      commercial_big_count = #{commercialBigCount,jdbcType=VARCHAR},
+      maped_file_size_commit_log = #{mapedFileSizeCommitLog,jdbcType=VARCHAR},
+      consumer_fallbehind_threshold = #{consumerFallbehindThreshold,jdbcType=VARCHAR},
+      auto_create_subscription_group = #{autoCreateSubscriptionGroup,jdbcType=VARCHAR},
+      transient_store_pool_enable = #{transientStorePoolEnable,jdbcType=VARCHAR},
+      flush_consumer_offset_interval = #{flushConsumerOffsetInterval,jdbcType=VARCHAR},
+      wait_time_mills_in_heartbeat_queue = #{waitTimeMillsInHeartbeatQueue,jdbcType=VARCHAR},
+      disk_max_used_space_ratio = #{diskMaxUsedSpaceRatio,jdbcType=VARCHAR},
+      clean_file_forcibly_enable = #{cleanFileForciblyEnable,jdbcType=VARCHAR},
+      slave_read_enable = #{slaveReadEnable,jdbcType=VARCHAR},
+      flush_commit_log_least_pages = #{flushCommitLogLeastPages,jdbcType=VARCHAR},
+      msg_trace_topic_name = #{msgTraceTopicName,jdbcType=VARCHAR},
+      expect_consumer_num_use_filter = #{expectConsumerNumUseFilter,jdbcType=VARCHAR},
+      trace_topic_enable = #{traceTopicEnable,jdbcType=VARCHAR},
+      use_epoll_native_selector = #{useEpollNativeSelector,jdbcType=VARCHAR},
+      enable_property_filter = #{enablePropertyFilter,jdbcType=VARCHAR},
+      message_delay_level = #{messageDelayLevel,jdbcType=VARCHAR},
+      delete_commit_log_files_interval = #{deleteCommitLogFilesInterval,jdbcType=VARCHAR},
+      broker_name = #{brokerName,jdbcType=VARCHAR},
+      max_transfer_bytes_on_message_in_disk = #{maxTransferBytesOnMessageInDisk,jdbcType=VARCHAR},
+      maped_file_size_consume_queue = #{mapedFileSizeConsumeQueue,jdbcType=VARCHAR},
+      listen_port = #{listenPort,jdbcType=VARCHAR},
+      flush_consume_queue_least_pages = #{flushConsumeQueueLeastPages,jdbcType=VARCHAR},
+      pull_message_thread_pool_nums = #{pullMessageThreadPoolNums,jdbcType=VARCHAR},
+      use_reentrant_lock_when_put_message = #{useReentrantLockWhenPutMessage,jdbcType=VARCHAR},
+      flush_interval_consume_queue = #{flushIntervalConsumeQueue,jdbcType=VARCHAR},
+      send_thread_pool_queue_capacity = #{sendThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      debug_lock_enable = #{debugLockEnable,jdbcType=VARCHAR},
+      ha_housekeeping_interval = #{haHousekeepingInterval,jdbcType=VARCHAR},
+      disk_fall_recorded = #{diskFallRecorded,jdbcType=VARCHAR},
+      message_index_enable = #{messageIndexEnable,jdbcType=VARCHAR},
+      client_async_semaphore_value = #{clientAsyncSemaphoreValue,jdbcType=VARCHAR},
+      client_callback_executor_threads = #{clientCallbackExecutorThreads,jdbcType=VARCHAR},
+      put_msg_index_hight_water = #{putMsgIndexHightWater,jdbcType=VARCHAR},
+      send_message_thread_pool_nums = #{sendMessageThreadPoolNums,jdbcType=VARCHAR},
+      client_manager_thread_pool_queue_capacity = #{clientManagerThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      server_socket_snd_buf_size = #{serverSocketSndBufSize,jdbcType=VARCHAR},
+      max_delay_time = #{maxDelayTime,jdbcType=VARCHAR},
+      client_socket_snd_buf_size = #{clientSocketSndBufSize,jdbcType=VARCHAR},
+      namesrv_addr = #{namesrvAddr,jdbcType=VARCHAR},
+      commercial_enable = #{commercialEnable,jdbcType=VARCHAR},
+      max_hash_slot_num = #{maxHashSlotNum,jdbcType=VARCHAR},
+      heartbeat_thread_pool_nums = #{heartbeatThreadPoolNums,jdbcType=VARCHAR},
+      transaction_time_out = #{transactionTimeOut,jdbcType=VARCHAR},
+      max_message_size = #{maxMessageSize,jdbcType=VARCHAR},
+      admin_broker_thread_pool_nums = #{adminBrokerThreadPoolNums,jdbcType=VARCHAR},
+      default_query_max_num = #{defaultQueryMaxNum,jdbcType=VARCHAR},
+      force_register = #{forceRegister,jdbcType=VARCHAR},
+      max_transfer_bytes_on_message_in_memory = #{maxTransferBytesOnMessageInMemory,jdbcType=VARCHAR},
+      enable_consume_queue_ext = #{enableConsumeQueueExt,jdbcType=VARCHAR},
+      long_polling_enable = #{longPollingEnable,jdbcType=VARCHAR},
+      server_worker_threads = #{serverWorkerThreads,jdbcType=VARCHAR},
+      message_index_safe = #{messageIndexSafe,jdbcType=VARCHAR},
+      delete_consume_queue_files_interval = #{deleteConsumeQueueFilesInterval,jdbcType=VARCHAR},
+      ha_slave_fallbehind_max = #{haSlaveFallbehindMax,jdbcType=VARCHAR},
+      server_callback_executor_threads = #{serverCallbackExecutorThreads,jdbcType=VARCHAR},
+      flush_commit_log_thorough_interval = #{flushCommitLogThoroughInterval,jdbcType=VARCHAR},
+      commercial_timer_count = #{commercialTimerCount,jdbcType=VARCHAR},
+      use_tls = #{useTls,jdbcType=VARCHAR},
+      redelete_hanged_file_interval = #{redeleteHangedFileInterval,jdbcType=VARCHAR},
+      flush_interval_commit_log = #{flushIntervalCommitLog,jdbcType=VARCHAR},
+      rocketmq_home = #{rocketmqHome,jdbcType=VARCHAR},
+      query_message_thread_pool_nums = #{queryMessageThreadPoolNums,jdbcType=VARCHAR},
+      message_store_plugin = #{messageStorePlugin,jdbcType=VARCHAR},
+      server_channel_max_idle_time_seconds = #{serverChannelMaxIdleTimeSeconds,jdbcType=VARCHAR},
+      max_index_num = #{maxIndexNum,jdbcType=VARCHAR},
+      filter_data_clean_time_span = #{filterDataCleanTimeSpan,jdbcType=VARCHAR},
+      filter_server_nums = #{filterServerNums,jdbcType=VARCHAR},
+      commit_commit_log_least_pages = #{commitCommitLogLeastPages,jdbcType=VARCHAR},
+      wait_time_mills_in_pull_queue = #{waitTimeMillsInPullQueue,jdbcType=VARCHAR},
+      ha_send_heartbeat_interval = #{haSendHeartbeatInterval,jdbcType=VARCHAR},
+      client_channel_max_idle_time_seconds = #{clientChannelMaxIdleTimeSeconds,jdbcType=VARCHAR},
+      filter_support_retry = #{filterSupportRetry,jdbcType=VARCHAR},
+      flush_delay_offset_interval = #{flushDelayOffsetInterval,jdbcType=VARCHAR},
+      duplication_enable = #{duplicationEnable,jdbcType=VARCHAR},
+      offset_check_in_slave = #{offsetCheckInSlave,jdbcType=VARCHAR},
+      client_close_socket_if_timeout = #{clientCloseSocketIfTimeout,jdbcType=VARCHAR},
+      transient_store_pool_size = #{transientStorePoolSize,jdbcType=VARCHAR},
+      wait_time_mills_in_send_queue = #{waitTimeMillsInSendQueue,jdbcType=VARCHAR},
+      warm_maped_file_enable = #{warmMapedFileEnable,jdbcType=VARCHAR},
+      end_transaction_thread_pool_nums = #{endTransactionThreadPoolNums,jdbcType=VARCHAR},
+      flush_commit_log_timed = #{flushCommitLogTimed,jdbcType=VARCHAR},
+      flush_least_pages_when_warm_maped_file = #{flushLeastPagesWhenWarmMapedFile,jdbcType=VARCHAR},
+      client_worker_threads = #{clientWorkerThreads,jdbcType=VARCHAR},
+      end_transaction_pool_queue_capacity = #{endTransactionPoolQueueCapacity,jdbcType=VARCHAR},
+      register_name_server_period = #{registerNameServerPeriod,jdbcType=VARCHAR},
+      register_broker_timeout_mills = #{registerBrokerTimeoutMills,jdbcType=VARCHAR},
+      access_message_in_memory_max_ratio = #{accessMessageInMemoryMaxRatio,jdbcType=VARCHAR},
+      high_speed_mode = #{highSpeedMode,jdbcType=VARCHAR},
+      transaction_check_max = #{transactionCheckMax,jdbcType=VARCHAR},
+      check_crc_on_recover = #{checkCrcOnRecover,jdbcType=VARCHAR},
+      destroy_maped_file_interval_forcibly = #{destroyMapedFileIntervalForcibly,jdbcType=VARCHAR},
+      broker_ip2 = #{brokerIp2,jdbcType=VARCHAR},
+      broker_ip1 = #{brokerIp1,jdbcType=VARCHAR},
+      commit_interval_commit_log = #{commitIntervalCommitLog,jdbcType=VARCHAR},
+      client_oneway_semaphore_value = #{clientOnewaySemaphoreValue,jdbcType=VARCHAR},
+      trace_on = #{traceOn,jdbcType=VARCHAR},
+      client_manage_thread_pool_nums = #{clientManageThreadPoolNums,jdbcType=VARCHAR},
+      channel_not_active_interval = #{channelNotActiveInterval,jdbcType=VARCHAR},
+      cluster_name = #{clusterName,jdbcType=VARCHAR},
+      mapped_file_size_consume_queue_ext = #{mappedFileSizeConsumeQueueExt,jdbcType=VARCHAR},
+      consumer_manager_thread_pool_queue_capacity = #{consumerManagerThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      server_oneway_semaphore_value = #{serverOnewaySemaphoreValue,jdbcType=VARCHAR},
+      ha_listen_port = #{haListenPort,jdbcType=VARCHAR},
+      enable_calc_filter_bitmap = #{enableCalcFilterBitmap,jdbcType=VARCHAR},
+      client_pooled_byte_buf_allocator_enable = #{clientPooledByteBufAllocatorEnable,jdbcType=VARCHAR},
+      acl_enable = #{aclEnable,jdbcType=VARCHAR},
+      store_path_root_dir = #{storePathRootDir,jdbcType=VARCHAR},
+      sync_flush_timeout = #{syncFlushTimeout,jdbcType=VARCHAR},
+      reject_transaction_message = #{rejectTransactionMessage,jdbcType=VARCHAR},
+      commit_commit_log_thorough_interval = #{commitCommitLogThoroughInterval,jdbcType=VARCHAR},
+      connect_timeout_millis = #{connectTimeoutMillis,jdbcType=VARCHAR},
+      query_thread_pool_queue_capacity = #{queryThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      region_id = #{regionId,jdbcType=VARCHAR},
+      consumer_manage_thread_pool_nums = #{consumerManageThreadPoolNums,jdbcType=VARCHAR},
+      disable_consume_if_consumer_read_slowly = #{disableConsumeIfConsumerReadSlowly,jdbcType=VARCHAR},
+      flush_consumer_offset_history_interval = #{flushConsumerOffsetHistoryInterval,jdbcType=VARCHAR},
+      fetch_namesrv_addr_by_address_server = #{fetchNamesrvAddrByAddressServer,jdbcType=VARCHAR},
+      ha_transfer_batch_size = #{haTransferBatchSize,jdbcType=VARCHAR},
+      compressed_register = #{compressedRegister,jdbcType=VARCHAR},
+      store_path_commit_log = #{storePathCommitLog,jdbcType=VARCHAR},
+      commercial_trans_count = #{commercialTransCount,jdbcType=VARCHAR},
+      transaction_check_interval = #{transactionCheckInterval,jdbcType=VARCHAR},
+      start_accept_send_request_time_stamp = #{startAcceptSendRequestTimeStamp,jdbcType=VARCHAR},
+      server_pooled_byte_buf_allocator_enable = #{serverPooledByteBufAllocatorEnable,jdbcType=VARCHAR},
+      server_async_semaphore_value = #{serverAsyncSemaphoreValue,jdbcType=VARCHAR},
+      heartbeat_thread_pool_queue_capacity = #{heartbeatThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      wait_time_mills_in_transaction_queue = #{waitTimeMillsInTransactionQueue,jdbcType=VARCHAR},
+      delete_when = #{deleteWhen,jdbcType=VARCHAR},
+      bit_map_length_consume_queue_ext = #{bitMapLengthConsumeQueueExt,jdbcType=VARCHAR},
+      fast_fail_if_no_buffer_in_store_pool = #{fastFailIfNoBufferInStorePool,jdbcType=VARCHAR},
+      default_topic_queue_nums = #{defaultTopicQueueNums,jdbcType=VARCHAR},
+      notify_consumer_ids_changed_enable = #{notifyConsumerIdsChangedEnable,jdbcType=VARCHAR},
+      flush_consume_queue_thorough_interval = #{flushConsumeQueueThoroughInterval,jdbcType=VARCHAR},
+      file_reserved_time = #{fileReservedTime,jdbcType=VARCHAR},
+      broker_permission = #{brokerPermission,jdbcType=VARCHAR},
+      transfer_msg_by_heap = #{transferMsgByHeap,jdbcType=VARCHAR},
+      pull_thread_pool_queue_capacity = #{pullThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      broker_id = #{brokerId,jdbcType=VARCHAR},
+      max_transfer_count_on_message_in_disk = #{maxTransferCountOnMessageInDisk,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!-- Generate time: 2023-09-11 17:18:10 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  <select id="selectByBrokerNameAndClusterName" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        rocketmq_cluster_config
+    WHERE
+        broker_name = #{brokerName}
+    AND
+        cluster_name = #{clusterName}
+  </select>
+  <select id="selectByAddr" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        rocketmq_cluster_config
+    WHERE
+        broker_ip1 = #{brokerAddr}
+    AND
+        listenPort = #{listenPort}
+  </select>
+
+  <delete id="truncateTable">
+    truncate table rocketmq_cluster_config
+  </delete>
+</mapper>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.ansible.mapper.AnsibleHostManageMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.ansible.domain.AnsibleHostManage">
+    
+    <!-- ID -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    
+    <!-- 主机名称 -->
+    <result column="server_name" jdbcType="VARCHAR" property="serverName" />
+    <result column="ssh_instance_code" jdbcType="VARCHAR" property="sshInstanceCode" />
+    
+    <!-- ansibleInventory目录 -->
+    <result column="ansible_inventory_dir" jdbcType="VARCHAR" property="ansibleInventoryDir" />
+    
+    <!-- 状态值 -->
+    <result column="is_del" jdbcType="TINYINT" property="isDel" />
+
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    
+    <!-- 更新时间 -->
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="help.lixin.starlink.plugin.ansible.domain.AnsibleHostManage">
+    
+    <!-- ansible的know_host文本 -->
+    <result column="know_host" jdbcType="LONGVARCHAR" property="knowHost" />
+  </resultMap>
+  <sql id="Blob_Column_List">
+    know_host
+  </sql>
+  <insert id="insertSelective">
+    insert into ansible_host_manage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="serverName != null">
+        server_name,
+      </if>
+      <if test="sshInstanceCode != null">
+        ssh_instance_code,
+      </if>
+      <if test="ansibleInventoryDir != null">
+        ansible_inventory_dir,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="knowHost != null">
+        know_host,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="serverName != null">
+        #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="sshInstanceCode != null">
+        #{sshInstanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ansibleInventoryDir != null">
+        #{ansibleInventoryDir,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="knowHost != null">
+        #{knowHost,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- Generate time: 2024-01-24 15:12:02 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  <select id="pageList" resultType="help.lixin.starlink.plugin.ansible.domain.AnsibleHostManage">
+    SELECT
+        *
+    FROM
+        ansible_host_manage
+    WHERE
+        is_del = 0
+    <if test="serverName != null and serverName != ''">
+      AND
+        server_name LIKE CONCAT("%", #{serverName}, "%")
+    </if>
+    <if test="sshInstanceCode != null and sshInstanceCode != ''">
+      AND
+        ssh_instance_code = #{sshInstanceCode}
+    </if>
+    <if test="status != null ">
+      AND
+        status = #{status}
+    </if>
+    <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+      AND
+        date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+    </if>
+    <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+      AND
+        date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+    </if>
+    ORDER BY
+        create_time DESC
+  </select>
+  <select id="selectByServerName" resultType="help.lixin.starlink.plugin.ansible.domain.AnsibleHostManage">
+    SELECT
+        *
+    FROM
+        ansible_host_manage
+    WHERE
+        server_name = #{serverName}
+    AND
+        ssh_instance_code = #{sshInstanceCode}
+    AND
+        is_del = 0
+  </select>
+  <select id="selectAll" resultType="help.lixin.starlink.plugin.ansible.domain.AnsibleHostManage">
+    SELECT
+        *
+    FROM
+        ansible_host_manage
+    WHERE
+        status = 1
+    AND
+        is_del = 0
+  </select>
+  <select id="selectAllInstanceCode" resultType="STRING">
+    SELECT
+        ssh_instance_code
+    FROM
+        ansible_host_manage
+    WHERE
+        status = 1
+    AND
+        is_del = 0
+  </select>
+  <select id="selectByInstanceCode" resultType="help.lixin.starlink.plugin.ansible.domain.AnsibleHostManage">
+    SELECT
+        *
+    FROM
+        ansible_host_manage
+    WHERE
+        ssh_instance_code = #{sshInstanceCode}
+    AND
+        is_del = 0
+  </select>
+  <update id="removeById">
+    UPDATE
+        ansible_host_manage
+    SET
+        is_del = 1
+    WHERE
+        id = #{id}
+  </update>
+</mapper>

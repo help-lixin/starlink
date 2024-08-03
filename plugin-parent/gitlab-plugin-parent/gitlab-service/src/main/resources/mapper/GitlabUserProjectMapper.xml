@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.gitlab.mapper.GitlabUserProjectMapper">
+    <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.gitlab.domain.GitlabUserProject">
+
+        <!-- user_project_id -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+
+        <!-- user_id -->
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+
+        <!-- project_id -->
+        <result column="project_id" jdbcType="BIGINT" property="projectId"/>
+
+        <result column="access_level" jdbcType="INTEGER" property="accessLevel"/>
+
+        <result column="instance_code" jdbcType="VARCHAR" property="instanceCode"/>
+
+        <result column="expires_at" jdbcType="TIMESTAMP" property="expiresAt"/>
+
+        <!-- 是否删除（删除为1） -->
+        <result column="is_del" jdbcType="INTEGER" property="isDel"/>
+
+        <!-- 状态值 -->
+        <result column="status" jdbcType="INTEGER" property="status"/>
+
+        <!-- 创建人 -->
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+
+        <!-- 更新人 -->
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+
+        <!-- 创建时间 -->
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+
+        <!-- 更新时间 -->
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, project_id, access_level, instance_code, expires_at, status, create_by, update_by, create_time, update_time
+  </sql>
+
+    <!-- Generate time: 2023-05-14 12:21:38 ### -->
+
+
+    <!-- Your codes goes here!!! -->
+
+    <select id="selectByUserIdAndProjectId" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            gitlab_user_project
+        WHERE
+            user_id = #{userId}
+        AND
+            project_id = #{projectId}
+        AND
+            status = 1
+        AND
+            is_del = 0
+    </select>
+
+    <select id="queryProjectByProjectId" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            gitlab_user_project
+        WHERE
+            project_id = #{projectId}
+        AND
+            is_del = 0
+    </select>
+
+    <select id="queryUserIdByProjectId" resultType="LONG">
+        SELECT
+            user_id
+        FROM
+            gitlab_user_project
+        WHERE
+            project_id = #{projectId}
+        AND
+            is_del = 0
+    </select>
+
+    <update id="removeById">
+        UPDATE
+            gitlab_user_project
+        SET
+            is_del = 1
+        WHERE
+            id =#{id}
+    </update>
+</mapper>

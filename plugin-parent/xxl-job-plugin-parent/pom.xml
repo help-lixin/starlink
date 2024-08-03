@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>help.lixin</groupId>
+        <artifactId>starlink-plugins-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>starlink-xxl-job-plugin-parent</artifactId>
+    <packaging>pom</packaging>
+    <name>starlink-xxl-job-plugin-parent ${project.version}</name>
+
+    <modules>
+        <module>xxl-job-model</module>
+        <module>xxl-job-api</module>
+        <module>xxl-job-service</module>
+        <module>xxl-job-web</module>
+    </modules>
+</project>

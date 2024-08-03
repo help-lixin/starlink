@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.gitlab.mapper.GitlabGroupMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.gitlab.domain.GitlabGroup">
+    
+    <!-- ID -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    
+    <!-- gitlab_group_id -->
+    <result column="gitlab_group_id" jdbcType="BIGINT" property="gitlabGroupId" />
+    
+    <!-- 组名 -->
+    <result column="gitlab_group_name" jdbcType="VARCHAR" property="gitlabGroupName" />
+    
+    <!-- 路径名（基本与组名一致） -->
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    
+    <!-- 权限 -->
+    <result column="visibility" jdbcType="VARCHAR" property="visibility" />
+    
+    <!-- 实例code; -->
+    <result column="instance_code" jdbcType="VARCHAR" property="instanceCode" />
+    
+    <!-- 备注 -->
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    
+    <!-- 是否删除（删除为1） -->
+    <result column="is_del" jdbcType="TINYINT" property="isDel" />
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, gitlab_group_id, gitlab_group_name, path, visibility, instance_code,
+    remark, status, create_by, update_by, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from gitlab_group
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from gitlab_group
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+    insert into gitlab_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gitlabGroupId != null">
+        gitlab_group_id,
+      </if>
+      <if test="gitlabGroupName != null">
+        gitlab_group_name,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+      <if test="visibility != null">
+        visibility,
+      </if>
+      <if test="instanceCode != null">
+        instance_code,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gitlabGroupId != null">
+        #{gitlabGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="gitlabGroupName != null">
+        #{gitlabGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="visibility != null">
+        #{visibility,jdbcType=VARCHAR},
+      </if>
+      <if test="instanceCode != null">
+        #{instanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective">
+    update gitlab_group
+    <set>
+      <if test="gitlabGroupId != null">
+        gitlab_group_id = #{gitlabGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="gitlabGroupName != null">
+        gitlab_group_name = #{gitlabGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="visibility != null">
+        visibility = #{visibility,jdbcType=VARCHAR},
+      </if>
+      <if test="instanceCode != null">
+        instance_code = #{instanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey">
+    update gitlab_group
+    set gitlab_group_id = #{gitlabGroupId,jdbcType=BIGINT},
+      gitlab_group_name = #{gitlabGroupName,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      visibility = #{visibility,jdbcType=VARCHAR},
+      instance_code = #{instanceCode,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!-- Generate time: 2023-11-03 16:51:03 ### -->
+
+
+
+
+  <!-- Your codes goes here!!! -->
+  <select id="queryGroupByGroupName" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        gitlab_group
+    WHERE
+        gitlab_group_name = #{groupName}
+    AND
+        instance_code = #{instanceCode}
+    AND
+        status = 1
+  </select>
+  <select id="selectByGitlabGroupId" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        gitlab_group
+    WHERE
+        gitlab_group_id = #{gitlabGroupId}
+  </select>
+  <select id="queryGitlabGroupListByTenantId" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        gitlab_group g
+    LEFT JOIN
+        (
+            SELECT
+                group_id
+            FROM
+                gitlab_user_group ug
+            JOIN
+                (
+                    SELECT
+                        id
+                    FROM
+                        gitlab_user
+                    WHERE
+                        status = 1
+                ) u
+            ON
+                u.id = ug.user_id
+            AND
+                status = 1
+            GROUP BY
+                group_id
+        ) gug
+    ON
+        g.id = gug.group_id
+    WHERE
+        is_del = 0
+        <if test="groupName != null and groupName != ''">
+            AND
+                gitlab_group_name LIKE CONCAT("%",#{groupName},"%")
+        </if>
+        <if test="groupId != null ">
+            AND
+                gitlab_group_id = #{groupId}
+        </if>
+        <if test="path != null and path != ''">
+            AND
+                path = #{path}
+        </if>
+        <if test="visibility != null and visibility != ''">
+            AND
+                visibility = #{visibility}
+        </if>
+        <if test="instanceCode != null and instanceCode != ''">
+            AND
+                instance_code = #{instanceCode}
+        </if>
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+        <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+            AND date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+        </if>
+        <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+            AND date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+        </if>
+    ORDER BY
+        create_time DESC
+  </select>
+    <select id="queryGroupByGitlabGroupIds" resultMap="BaseResultMap">
+      SELECT
+            *
+      FROM
+            gitlab_group
+      WHERE
+            gitlab_group_id
+      IN
+          <foreach close=")" collection="list" item="id" open="(" separator=",">
+            ${id}
+          </foreach>
+    </select>
+  <select id="selectGroupByProjectIdOfGroupProject" resultMap="BaseResultMap">
+    SELECT
+        gp.id,
+		g.gitlab_group_id,
+		g.gitlab_group_name,
+        g.visibility,
+        g.path,
+		g.instance_code,
+		g.remark,
+        gp.status,
+        gp.create_by,
+        gp.update_by,
+        gp.create_time,
+        gp.update_time
+    FROM
+        gitlab_group_project gp
+    LEFT JOIN
+    (
+        SELECT
+              *
+        FROM
+              gitlab_group
+        WHERE
+            is_del = 0
+        AND
+            instance_code = #{instanceCode}
+        <if test="projectId != null">
+            AND
+                project_id = #{projectId}
+        </if>
+    ) g
+    ON
+        g.id = gp.group_id
+    WHERE
+        gp.is_del = 0
+    AND
+		gp.project_id = #{projectId}
+    <if test="status != null">
+      AND
+      status = #{status}
+    </if>
+    <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+      AND
+      date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+    </if>
+    <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+      AND
+      date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+    </if>
+    ORDER BY
+        create_time DESC
+  </select>
+
+    <select id="querySelectGitlabIdOptions" resultType="help.lixin.starlink.plugin.gitlab.dto.group.GroupSelectGitlabIdOptionsDTO">
+        SELECT
+            gitlab_group_name,
+            gitlab_group_id
+        FROM
+            gitlab_group
+        WHERE
+            instance_code = #{instanceCode}
+        AND
+            status = 1
+    </select>
+    <select id="querySelectIdOptions" resultType="help.lixin.starlink.plugin.gitlab.dto.group.GroupSelectIdOptionsDTO">
+        SELECT
+            gitlab_group_name,
+            id
+        FROM
+            gitlab_group
+        WHERE
+            instance_code = #{instanceCode}
+        AND
+            status = 1
+    </select>
+    <update id="removeGroup">
+        UPDATE
+            gitlab_group
+        SET
+            is_del = 1
+        WHERE
+            id = #{id}
+    </update>
+</mapper>

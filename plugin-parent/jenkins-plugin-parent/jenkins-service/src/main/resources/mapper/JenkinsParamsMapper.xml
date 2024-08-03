@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.jenkins.mapper.JenkinsParamsMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.jenkins.domain.JenkinsParams">
+
+    <!-- ID -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    
+    <!-- 任务表id -->
+    <result column="job_id" jdbcType="BIGINT" property="jobId" />
+    
+    <!-- 参数名 -->
+    <result column="param_name" jdbcType="VARCHAR" property="paramName" />
+    
+    <!-- 参数值 -->
+    <result column="param_value" jdbcType="VARCHAR" property="paramValue" />
+
+    <!-- 默认值 -->
+    <result column="default_value" jdbcType="VARCHAR" property="defaultValue" />
+
+    <!-- 参数类型 -->
+    <result column="param_type" jdbcType="VARCHAR" property="paramType" />
+
+    <!-- 参数描述 -->
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+    
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    
+    <!-- 更新时间 -->
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <!-- Generate time: 2023-12-12 10:59:06 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  <select id="queryByJobId" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        jenkins_params
+    WHERE
+      job_id = #{jobId}
+  </select>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>help.lixin</groupId>
+        <artifactId>starlink-plugins-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>starlink-k8s-plugin-parent</artifactId>
+    <packaging>pom</packaging>
+    <name>starlink-k8s-plugin-parent ${project.version}</name>
+
+    <modules>
+        <module>k8s-model</module>
+        <module>k8s-api</module>
+        <module>k8s-service</module>
+        <module>k8s-action</module>
+        <module>k8s-job</module>
+        <module>k8s-web</module>
+    </modules>
+</project>

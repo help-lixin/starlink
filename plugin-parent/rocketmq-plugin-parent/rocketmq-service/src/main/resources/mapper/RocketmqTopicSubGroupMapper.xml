@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.rocketmq.mapper.RocketmqTopicSubGroupMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.rocketmq.domain.RocketmqTopicSubGroup">
+    
+    <!-- ID -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="topic_id" jdbcType="BIGINT" property="topicId" />
+    
+    <!-- 订阅组名称 -->
+    <result column="sub_group_name" jdbcType="VARCHAR" property="subGroupName" />
+    
+    <!-- 延迟 -->
+    <result column="diff_total" jdbcType="INTEGER" property="diffTotal" />
+    
+    <!-- 最后消费时间 -->
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+    
+    <!-- broker名称 -->
+    <result column="broker_name" jdbcType="VARCHAR" property="brokerName" />
+    
+    <!-- 队列id -->
+    <result column="queue_id" jdbcType="BIGINT" property="queueId" />
+    
+    <!-- 消费者终端 -->
+    <result column="client_info" jdbcType="VARCHAR" property="clientInfo" />
+    
+    <!-- broker位点 -->
+    <result column="broker_offset" jdbcType="INTEGER" property="brokerOffset" />
+    
+    <!-- 消费者位点 -->
+    <result column="consumer_offset" jdbcType="INTEGER" property="consumerOffset" />
+    
+    <!-- 消费时间 -->
+    <result column="consumer_last_time" jdbcType="TIMESTAMP" property="consumerLastTime" />
+    
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+    
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    
+    <!-- 更新时间 -->
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, topic_id, sub_group_name, diff_total, last_time, broker_name, queue_id, client_info, 
+    broker_offset, consumer_offset, consumer_last_time, status, create_by, update_by, 
+    created_time, updated_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rocketmq_topic_sub_group
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from rocketmq_topic_sub_group
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert">
+    insert into rocketmq_topic_sub_group (id, topic_id, sub_group_name, 
+      diff_total, last_time, broker_name, 
+      queue_id, client_info, broker_offset, 
+      consumer_offset, consumer_last_time, status, 
+      create_by, update_by, created_time, 
+      updated_time)
+    values (#{id,jdbcType=BIGINT}, #{topicId,jdbcType=BIGINT}, #{subGroupName,jdbcType=VARCHAR}, 
+      #{diffTotal,jdbcType=INTEGER}, #{lastTime,jdbcType=TIMESTAMP}, #{brokerName,jdbcType=VARCHAR}, 
+      #{queueId,jdbcType=BIGINT}, #{clientInfo,jdbcType=VARCHAR}, #{brokerOffset,jdbcType=INTEGER}, 
+      #{consumerOffset,jdbcType=INTEGER}, #{consumerLastTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective">
+    insert into rocketmq_topic_sub_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="topicId != null">
+        topic_id,
+      </if>
+      <if test="subGroupName != null">
+        sub_group_name,
+      </if>
+      <if test="diffTotal != null">
+        diff_total,
+      </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
+      <if test="brokerName != null">
+        broker_name,
+      </if>
+      <if test="queueId != null">
+        queue_id,
+      </if>
+      <if test="clientInfo != null">
+        client_info,
+      </if>
+      <if test="brokerOffset != null">
+        broker_offset,
+      </if>
+      <if test="consumerOffset != null">
+        consumer_offset,
+      </if>
+      <if test="consumerLastTime != null">
+        consumer_last_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="topicId != null">
+        #{topicId,jdbcType=BIGINT},
+      </if>
+      <if test="subGroupName != null">
+        #{subGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="diffTotal != null">
+        #{diffTotal,jdbcType=INTEGER},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="brokerName != null">
+        #{brokerName,jdbcType=VARCHAR},
+      </if>
+      <if test="queueId != null">
+        #{queueId,jdbcType=BIGINT},
+      </if>
+      <if test="clientInfo != null">
+        #{clientInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerOffset != null">
+        #{brokerOffset,jdbcType=INTEGER},
+      </if>
+      <if test="consumerOffset != null">
+        #{consumerOffset,jdbcType=INTEGER},
+      </if>
+      <if test="consumerLastTime != null">
+        #{consumerLastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective">
+    update rocketmq_topic_sub_group
+    <set>
+      <if test="topicId != null">
+        topic_id = #{topicId,jdbcType=BIGINT},
+      </if>
+      <if test="subGroupName != null">
+        sub_group_name = #{subGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="diffTotal != null">
+        diff_total = #{diffTotal,jdbcType=INTEGER},
+      </if>
+      <if test="lastTime != null">
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="brokerName != null">
+        broker_name = #{brokerName,jdbcType=VARCHAR},
+      </if>
+      <if test="queueId != null">
+        queue_id = #{queueId,jdbcType=BIGINT},
+      </if>
+      <if test="clientInfo != null">
+        client_info = #{clientInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerOffset != null">
+        broker_offset = #{brokerOffset,jdbcType=INTEGER},
+      </if>
+      <if test="consumerOffset != null">
+        consumer_offset = #{consumerOffset,jdbcType=INTEGER},
+      </if>
+      <if test="consumerLastTime != null">
+        consumer_last_time = #{consumerLastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey">
+    update rocketmq_topic_sub_group
+    set topic_id = #{topicId,jdbcType=BIGINT},
+      sub_group_name = #{subGroupName,jdbcType=VARCHAR},
+      diff_total = #{diffTotal,jdbcType=INTEGER},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      broker_name = #{brokerName,jdbcType=VARCHAR},
+      queue_id = #{queueId,jdbcType=BIGINT},
+      client_info = #{clientInfo,jdbcType=VARCHAR},
+      broker_offset = #{brokerOffset,jdbcType=INTEGER},
+      consumer_offset = #{consumerOffset,jdbcType=INTEGER},
+      consumer_last_time = #{consumerLastTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+    <!-- Generate time: 2023-09-11 17:18:10 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  <delete id="truncateTable">
+    truncate table rocketmq_topic_sub_group
+  </delete>
+</mapper>

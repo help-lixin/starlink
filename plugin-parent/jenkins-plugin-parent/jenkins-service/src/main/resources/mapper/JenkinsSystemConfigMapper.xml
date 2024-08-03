@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.jenkins.mapper.JenkinsSystemConfigMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.jenkins.domain.JenkinsSystemConfig">
+    
+    <!-- ID -->
+      <result column="id" jdbcType="BIGINT" property="id"/>
+
+      <!-- 插件名称 -->
+      <result column="name" jdbcType="VARCHAR" property="name"/>
+
+      <!-- 插件路径 -->
+      <result column="value" jdbcType="VARCHAR" property="value"/>
+
+      <!-- 插件类型 -->
+      <result column="plugin_type" jdbcType="VARCHAR" property="pluginType"/>
+    <result column="instance_code" jdbcType="VARCHAR" property="instanceCode"/>
+
+      <!-- 状态值 -->
+      <result column="status" jdbcType="TINYINT" property="status"/>
+
+      <!-- 状态值 -->
+      <result column="is_del" jdbcType="TINYINT" property="isDel"/>
+
+      <!-- 创建人 -->
+      <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+
+      <!-- 更新人 -->
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+
+      <!-- 创建时间 -->
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+
+      <!-- 更新时间 -->
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+  <insert id="insertSelective">
+    insert into jenkins_system_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="pluginType != null">
+        plugin_type,
+      </if>
+      <if test="instanceCode != null">
+        instance_code,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="pluginType != null">
+        #{pluginType,jdbcType=VARCHAR},
+      </if>
+      <if test="instanceCode != null">
+        #{instanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+    <!-- Generate time: 2023-12-12 10:59:06 ### -->
+
+
+    <!-- Your codes goes here!!! -->
+    <select id="queryList" resultType="help.lixin.starlink.plugin.jenkins.domain.JenkinsSystemConfig">
+    SELECT
+        *
+    FROM
+        jenkins_system_config
+    WHERE
+        is_del = 0
+    AND
+        instance_code = #{instanceCode}
+    <if test="pluginType != null and pluginType != ''">
+      AND
+        plugin_type = #{pluginType}
+    </if>
+    <if test="name != null and name != ''">
+      AND
+        name LIKE CONCAT("%",#{name},"%")
+    </if>
+    <if test="status != null ">
+      AND
+        status = #{status}
+    </if>
+    <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+        AND
+        date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+    </if>
+    <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+        AND
+        date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+    </if>
+    ORDER BY
+        create_time DESC
+  </select>
+  <select id="queryPluginTypeByInstanceCode" resultType="java.lang.String">
+    SELECT
+        plugin_type
+    FROM
+        jenkins_system_config
+    WHERE
+        is_del = 0
+    AND
+        instance_code = #{instanceCode}
+    GROUP BY plugin_type
+  </select>
+  <select id="queryInstanceCodes" resultType="java.lang.String">
+    SELECT
+        instance_code
+    FROM
+        jenkins_system_config
+    WHERE
+        is_del = 0
+    GROUP BY
+        instance_code
+  </select>
+
+</mapper>

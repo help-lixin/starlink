@@ -1,0 +1,157 @@
+server:
+  port: 7002
+
+
+# 数据库连接配置
+spring:
+  application:
+    name: starlink-service
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+  datasource:
+    url: jdbc:mysql://192.168.8.13:3306/starlink?useUnicode=true&characterEncoding=utf8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&useSSL=true&allowMultiQueries=true&autoReconnect=true&nullCatalogMeansCurrent=true
+    #    url: jdbc:mysql://127.0.0.1:3306/starlink?useUnicode=true&characterEncoding=utf8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&useSSL=true&allowMultiQueries=true&autoReconnect=true&nullCatalogMeansCurrent=true
+    username: root
+    #    password: 123456
+    password: Li@88888888
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  liquibase:
+    databaseChangeLogTable: databasechangelog
+    databaseChangeLogLockTable: databasechangeloglock
+    contexts: pro,dev
+    changeLog: classpath*:/db/changelog/changelog-root.xml
+
+
+  # spring.activiti配置
+  # activiti默认的锁住时间为5分钟,暂时好像没有看到像其它工作流那样可配置
+  activiti:
+    # 是否开启异步任务
+    async-executor-activate: true
+    # 保留的历史记录的级别
+    history-level: full
+    # 创建schema
+    database-schema-update: true
+    db-history-used: true
+
+# MyBatis配置
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: help.lixin.**.domain
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+
+jasypt:
+  encryptor:
+    password: Li@88888888
+
+oauth:
+  #  authorizedEndpointUrl: http://passport.lixin.help/oauth/token
+  #  publicKeyEndpointUrl: http://passport.lixin.help/oauth/publicKey
+  clientId: client1
+  clientSecret: 123456
+  publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvNivsLjXLNAjAqzaDZNnGCaN+4FFJKFyA+5iOVFQwTZxG8502//UaY0Smj1zIXBEdntJz5Ci37Ka+V0yaptV8Yvj+TxSoFb8eLCVhk1jyYL5vuRa9ZSNQgtpnhk4NXfsHrhGJjNM3bq5gAPhklVI+P8nzX6uhzdUM79jp5V1C/8wVwVYi7BFvESG4LcmJc4fifcxWQ7HDjOD39e5wTk1MTJ+sMT9rA/cdNcpunxWT3MzGbddnazgPQCTZvQuI68fUYm9T9ga0e3DiPX8DNQgS82WmkzP+r2QDbjU0HNC9Z9JCGkklk4vSVWhTD5c1JfDR9POZrVwp6CHAhv/84kWgQIDAQAB
+
+  access:
+    decision:
+      enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info,env
+
+#定时任务时间配置
+scheduling:
+  cron:
+    gitlab:
+      group: 0 */10 * * * ?  #组任务
+      user: 0 */10 * * * ?  #用户任务
+      project: 0 */10 * * * ?  #项目任务
+    harbor:
+      project: 0 */10 * * * ?  #项目任务
+    jenkins:
+      job: 0 */10 * * * ?  #jenkins任务列表同步任务
+      initPlugin: 0 */1 * * * ?  #jenkins插件同步任务
+      fetchBuildResult: 0 */1 * * * ?  #jenkins获取构建结果
+      retryInstallPlugin: 0 */1 * * * ?  #jenkins获取并更新重试结果
+    rocketmq:
+      cluster: 0 */10 * * * ? #rocketmq-集群任务
+      topic: 0 */10 * * * ? #rocketmq-topic任务
+    nexus:
+      blobStores: 0 */1 * * * ? #nexus-blobStores任务
+      repository: 0 */1 * * * ? #nexus-repository任务
+    ansible:
+      updateKnownHostsJob: 0 0 */1 * * ? #更新ansibleKnownHosts任务
+    k8s:
+      namespace: 0 */1 * * * ? #同步命名空间
+      node: 0 */1 * * * ? #同步节点信息
+      deployment: 0 */1 * * * ? #同步deployment信息
+      pod: 0 */1 * * * ? #同步pod信息
+      service: 0 */1 * * * ? #同步service信息
+
+
+# 定义插件列表下载地址
+plugin:
+  property:
+    source:
+      #      enable: false
+      endpoint:
+        url: http://192.168.8.15:7001/system/plugin/instance/{pluginCode}/{instanceCode}
+
+# camunda config
+camunda:
+  bpm:
+    job-execution:
+      # 定时任务锁定的最大时间,默认为5分钟
+      # 小时  分钟  秒
+      # 60 * 60 * 1000
+      lock-time-in-millis: 3600000
+    auto-deployment-enabled: false
+    admin-user:
+      id: admin
+      password: admin
+
+
+# flowable config
+flowable:
+  dmn:
+    enabled: false
+  cmmn:
+    enabled: false
+  database-schema-update: true
+  enable-history-cleaning: true
+
+# camunda8 配置
+zeebe:
+  address: 192.168.8.19:26500
+
+# eventuatelocal
+eventuatelocal:
+  rocket:
+    mq:
+      nameserver:
+        address: 192.168.8.31:9876
+
+
+# 底层推送服务配置
+transport:
+  client:
+    endpoint: ws://starlink.lixin.help/message/websocket
+    token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3R5cGUiOiIwMCIsInVzZXJfaWQiOjEsInVzZXJfbmFtZSI6ImFkbWluIiwic2NvcGUiOlsiYWxsIl0sIm5pY2tfbmFtZSI6IuiLpeS-nTEiLCJhdmF0YXIiOiIiLCJleHAiOjE3NTQ1NjQ4MzQsImRlcHRfaWQiOjEwMywiYXV0aG9yaXRpZXMiOlsiYWRtaW4iXSwianRpIjoiY0xUREZJbU1TYURDOTktc21xZ0x4RU9vLVlJIiwiY2xpZW50X2lkIjoiY2xpZW50MSIsImVtYWlsIjoiYWRtaW5AMTYzLmNvbSJ9.cM4YmRYlfPqdNci_vmFvWaFElGIQtG2XWKDO7irzPyzGaxXRMJVcXxk3A0TZoBhRn8jbMwjPj0lebHSHWyjqk1B_4n43L5jipUQNPbtTakNuO35kEdMstj_FV9Qa21nbBEYnALUGr4QHRJdQvm1qHbArP0oAj67tqKLxsTd0E-1DZ9Vj89I8-jpy0uqbT8tV8gMiGU17qI_JkNW6RwzqxrUy_zF6pT7FhyANErbTE6AOmsBdSQgNvxSA3LvoOSPMD9WWNs68aEMVazbGWwLeg4rswD4TpcTNmEFRf0Y9UF6PSlJWdWJq-wv5cgZII3k3F28Yh1TDfQxu0D2X9Kv2Pw
+    subscribe:
+      destination: /queue/admin/message
+
+
+logging:
+  config: classpath:logback-spring.xml
+  path: ${user.dir}/logs
+  level:
+    help:
+      lixin: DEBUG
+    root: INFO

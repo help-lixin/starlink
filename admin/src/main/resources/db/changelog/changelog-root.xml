@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+    <!-- 定时任务加锁 -->
+    <include file="db/changelog/shedlock/release.1.0.0/changelog-shedlock.xml" relativeToChangelogFile="false"/>
+    <!-- ansible -->
+    <include file="db/changelog/ansible/release.1.0.0/changelog-ansible.xml" relativeToChangelogFile="false"/>
+    <!-- gitlab -->
+    <include file="db/changelog/gitlab/release.1.0.0/changelog-gitlab.xml" relativeToChangelogFile="false"/>
+    <!-- harbor -->
+    <include file="db/changelog/harbor/release.1.0.0/changelog-harbor.xml" relativeToChangelogFile="false"/>
+    <!-- jenkins -->
+    <include file="db/changelog/jenkins/release.1.0.0/changelog-jenkins.xml" relativeToChangelogFile="false"/>
+    <!-- ssh -->
+    <include file="db/changelog/ssh/release.1.0.0/changelog-ssh.xml" relativeToChangelogFile="false"/>
+    <!-- credential -->
+    <include file="db/changelog/credential/release.1.0.0/changelog-credential.xml" relativeToChangelogFile="false"/>
+    <!-- pipeline -->
+    <include file="db/changelog/pipeline/release.1.0.0/changelog-pipeline.xml" relativeToChangelogFile="false"/>
+    <!-- K8S -->
+    <include file="db/changelog/k8s/release.1.0.0/changelog-k8s.xml" relativeToChangelogFile="false"/>
+</databaseChangeLog>

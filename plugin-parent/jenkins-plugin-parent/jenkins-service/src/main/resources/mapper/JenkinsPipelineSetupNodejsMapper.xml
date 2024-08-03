@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.jenkins.mapper.JenkinsPipelineSetupNodejsMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.jenkins.domain.JenkinsPipelineSetupNodejs">
+    
+    <!-- ID -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    
+    <!-- nodejs名称 -->
+    <result column="nodejs_id" jdbcType="VARCHAR" property="nodejsId" />
+    
+    <!-- 脚本命令 -->
+    <result column="script" jdbcType="VARCHAR" property="script" />
+    
+    <!-- 缓存路径 -->
+    <result column="cache_location" jdbcType="VARCHAR" property="cacheLocation" />
+    
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+    
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    
+    <!-- 更新时间 -->
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <insert id="insertSelective">
+    insert into jenkins_pipeline_setup_nodejs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="nodejsId != null">
+        nodejs_id,
+      </if>
+      <if test="script != null">
+        script,
+      </if>
+      <if test="cacheLocation != null">
+        cache_location,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="nodejsId != null">
+        #{nodejsId,jdbcType=VARCHAR},
+      </if>
+      <if test="script != null">
+        #{script,jdbcType=VARCHAR},
+      </if>
+      <if test="cacheLocation != null">
+        #{cacheLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- Generate time: 2023-12-12 10:59:06 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  
+</mapper>

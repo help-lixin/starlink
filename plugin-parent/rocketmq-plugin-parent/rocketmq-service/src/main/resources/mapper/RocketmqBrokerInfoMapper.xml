@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.rocketmq.mapper.RocketmqBrokerInfoMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.rocketmq.domain.RocketmqBrokerInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    
+    <!-- 分片名称 -->
+    <result column="broker_name" jdbcType="VARCHAR" property="brokerName" />
+    
+    <!-- 集群id（编号） -->
+    <result column="cluster_id" jdbcType="BIGINT" property="clusterId" />
+    
+    <!-- 客户端地址 -->
+    <result column="client_addr" jdbcType="VARCHAR" property="clientAddr" />
+    <result column="msg_put_total_today_now" jdbcType="VARCHAR" property="msgPutTotalTodayNow" />
+    <result column="send_thread_pool_queue_head_wait_time_mills" jdbcType="VARCHAR" property="sendThreadPoolQueueHeadWaitTimeMills" />
+    <result column="put_message_distribute_time" jdbcType="VARCHAR" property="putMessageDistributeTime" />
+    <result column="query_thread_pool_queue_head_wait_time_mills" jdbcType="VARCHAR" property="queryThreadPoolQueueHeadWaitTimeMills" />
+    <result column="remain_how_many_data_to_flush" jdbcType="VARCHAR" property="remainHowManyDataToFlush" />
+    <result column="msg_get_total_today_now" jdbcType="VARCHAR" property="msgGetTotalTodayNow" />
+    <result column="query_thread_pool_queue_size" jdbcType="VARCHAR" property="queryThreadPoolQueueSize" />
+    <result column="boot_timestamp" jdbcType="VARCHAR" property="bootTimestamp" />
+    <result column="msg_put_total_yesterday_morning" jdbcType="VARCHAR" property="msgPutTotalYesterdayMorning" />
+    <result column="msg_get_total_yesterday_morning" jdbcType="VARCHAR" property="msgGetTotalYesterdayMorning" />
+    <result column="pull_thread_pool_queue_size" jdbcType="VARCHAR" property="pullThreadPoolQueueSize" />
+    <result column="commit_log_min_offset" jdbcType="VARCHAR" property="commitLogMinOffset" />
+    <result column="pull_thread_pool_queue_head_wait_time_mills" jdbcType="VARCHAR" property="pullThreadPoolQueueHeadWaitTimeMills" />
+    <result column="runtime" jdbcType="VARCHAR" property="runtime" />
+    <result column="dispatch_max_buffer" jdbcType="VARCHAR" property="dispatchMaxBuffer" />
+    <result column="broker_version" jdbcType="VARCHAR" property="brokerVersion" />
+    <result column="put_tps" jdbcType="VARCHAR" property="putTps" />
+    <result column="get_miss_tps" jdbcType="VARCHAR" property="getMissTps" />
+    <result column="get_transfered_tps" jdbcType="VARCHAR" property="getTransferedTps" />
+    <result column="end_transaction_queue_size" jdbcType="VARCHAR" property="endTransactionQueueSize" />
+    <result column="get_total_tps" jdbcType="VARCHAR" property="getTotalTps" />
+    <result column="consume_queue_disk_ratio" jdbcType="VARCHAR" property="consumeQueueDiskRatio" />
+    <result column="page_cache_lock_time_mills" jdbcType="VARCHAR" property="pageCacheLockTimeMills" />
+    <result column="commit_log_disk_ratio" jdbcType="VARCHAR" property="commitLogDiskRatio" />
+    <result column="get_found_tps" jdbcType="VARCHAR" property="getFoundTps" />
+    <result column="end_transaction_thread_pool_queue_capacity" jdbcType="VARCHAR" property="endTransactionThreadPoolQueueCapacity" />
+    <result column="commit_log_max_offset" jdbcType="VARCHAR" property="commitLogMaxOffset" />
+    <result column="get_message_entire_time_max" jdbcType="VARCHAR" property="getMessageEntireTimeMax" />
+    <result column="msg_put_total_today_morning" jdbcType="VARCHAR" property="msgPutTotalTodayMorning" />
+    <result column="put_message_times_total" jdbcType="VARCHAR" property="putMessageTimesTotal" />
+    <result column="msg_get_total_today_morning" jdbcType="VARCHAR" property="msgGetTotalTodayMorning" />
+    <result column="broker_version_desc" jdbcType="VARCHAR" property="brokerVersionDesc" />
+    <result column="send_thread_pool_queue_size" jdbcType="VARCHAR" property="sendThreadPoolQueueSize" />
+    <result column="start_accept_send_request_time_stamp" jdbcType="VARCHAR" property="startAcceptSendRequestTimeStamp" />
+    <result column="put_message_entire_time_max" jdbcType="VARCHAR" property="putMessageEntireTimeMax" />
+    <result column="earliest_message_time_stamp" jdbcType="VARCHAR" property="earliestMessageTimeStamp" />
+    <result column="commit_log_dir_capacity" jdbcType="VARCHAR" property="commitLogDirCapacity" />
+    <result column="remain_transient_store_buffer_numbs" jdbcType="VARCHAR" property="remainTransientStoreBufferNumbs" />
+    <result column="query_thread_pool_queue_capacity" jdbcType="VARCHAR" property="queryThreadPoolQueueCapacity" />
+    <result column="put_message_average_size" jdbcType="VARCHAR" property="putMessageAverageSize" />
+    <result column="dispatch_behind_bytes" jdbcType="VARCHAR" property="dispatchBehindBytes" />
+    <result column="put_message_size_total" jdbcType="VARCHAR" property="putMessageSizeTotal" />
+    <result column="send_thread_pool_queue_capacity" jdbcType="VARCHAR" property="sendThreadPoolQueueCapacity" />
+    <result column="pull_thread_pool_queue_capacity" jdbcType="VARCHAR" property="pullThreadPoolQueueCapacity" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, broker_name, cluster_id, client_addr, msg_put_total_today_now, send_thread_pool_queue_head_wait_time_mills, 
+    put_message_distribute_time, query_thread_pool_queue_head_wait_time_mills, remain_how_many_data_to_flush, 
+    msg_get_total_today_now, query_thread_pool_queue_size, boot_timestamp, msg_put_total_yesterday_morning, 
+    msg_get_total_yesterday_morning, pull_thread_pool_queue_size, commit_log_min_offset, 
+    pull_thread_pool_queue_head_wait_time_mills, runtime, dispatch_max_buffer, broker_version, 
+    put_tps, get_miss_tps, get_transfered_tps, end_transaction_queue_size, get_total_tps, 
+    consume_queue_disk_ratio, page_cache_lock_time_mills, commit_log_disk_ratio, get_found_tps, 
+    end_transaction_thread_pool_queue_capacity, commit_log_max_offset, get_message_entire_time_max, 
+    msg_put_total_today_morning, put_message_times_total, msg_get_total_today_morning, 
+    broker_version_desc, send_thread_pool_queue_size, start_accept_send_request_time_stamp, 
+    put_message_entire_time_max, earliest_message_time_stamp, commit_log_dir_capacity, 
+    remain_transient_store_buffer_numbs, query_thread_pool_queue_capacity, put_message_average_size, 
+    dispatch_behind_bytes, put_message_size_total, send_thread_pool_queue_capacity, pull_thread_pool_queue_capacity, 
+    status, create_by, update_by, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rocketmq_broker_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from rocketmq_broker_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert">
+    insert into rocketmq_broker_info (id, broker_name, cluster_id, 
+      client_addr, msg_put_total_today_now, send_thread_pool_queue_head_wait_time_mills, 
+      put_message_distribute_time, query_thread_pool_queue_head_wait_time_mills, 
+      remain_how_many_data_to_flush, msg_get_total_today_now, 
+      query_thread_pool_queue_size, boot_timestamp, 
+      msg_put_total_yesterday_morning, msg_get_total_yesterday_morning, 
+      pull_thread_pool_queue_size, commit_log_min_offset, 
+      pull_thread_pool_queue_head_wait_time_mills, runtime, 
+      dispatch_max_buffer, broker_version, put_tps, 
+      get_miss_tps, get_transfered_tps, end_transaction_queue_size, 
+      get_total_tps, consume_queue_disk_ratio, page_cache_lock_time_mills, 
+      commit_log_disk_ratio, get_found_tps, end_transaction_thread_pool_queue_capacity, 
+      commit_log_max_offset, get_message_entire_time_max, 
+      msg_put_total_today_morning, put_message_times_total, 
+      msg_get_total_today_morning, broker_version_desc, 
+      send_thread_pool_queue_size, start_accept_send_request_time_stamp, 
+      put_message_entire_time_max, earliest_message_time_stamp, 
+      commit_log_dir_capacity, remain_transient_store_buffer_numbs, 
+      query_thread_pool_queue_capacity, put_message_average_size, 
+      dispatch_behind_bytes, put_message_size_total, 
+      send_thread_pool_queue_capacity, pull_thread_pool_queue_capacity, 
+      status, create_by, update_by, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{brokerName,jdbcType=VARCHAR}, #{clusterId,jdbcType=BIGINT}, 
+      #{clientAddr,jdbcType=VARCHAR}, #{msgPutTotalTodayNow,jdbcType=VARCHAR}, #{sendThreadPoolQueueHeadWaitTimeMills,jdbcType=VARCHAR}, 
+      #{putMessageDistributeTime,jdbcType=VARCHAR}, #{queryThreadPoolQueueHeadWaitTimeMills,jdbcType=VARCHAR}, 
+      #{remainHowManyDataToFlush,jdbcType=VARCHAR}, #{msgGetTotalTodayNow,jdbcType=VARCHAR}, 
+      #{queryThreadPoolQueueSize,jdbcType=VARCHAR}, #{bootTimestamp,jdbcType=VARCHAR}, 
+      #{msgPutTotalYesterdayMorning,jdbcType=VARCHAR}, #{msgGetTotalYesterdayMorning,jdbcType=VARCHAR}, 
+      #{pullThreadPoolQueueSize,jdbcType=VARCHAR}, #{commitLogMinOffset,jdbcType=VARCHAR}, 
+      #{pullThreadPoolQueueHeadWaitTimeMills,jdbcType=VARCHAR}, #{runtime,jdbcType=VARCHAR}, 
+      #{dispatchMaxBuffer,jdbcType=VARCHAR}, #{brokerVersion,jdbcType=VARCHAR}, #{putTps,jdbcType=VARCHAR}, 
+      #{getMissTps,jdbcType=VARCHAR}, #{getTransferedTps,jdbcType=VARCHAR}, #{endTransactionQueueSize,jdbcType=VARCHAR}, 
+      #{getTotalTps,jdbcType=VARCHAR}, #{consumeQueueDiskRatio,jdbcType=VARCHAR}, #{pageCacheLockTimeMills,jdbcType=VARCHAR}, 
+      #{commitLogDiskRatio,jdbcType=VARCHAR}, #{getFoundTps,jdbcType=VARCHAR}, #{endTransactionThreadPoolQueueCapacity,jdbcType=VARCHAR}, 
+      #{commitLogMaxOffset,jdbcType=VARCHAR}, #{getMessageEntireTimeMax,jdbcType=VARCHAR}, 
+      #{msgPutTotalTodayMorning,jdbcType=VARCHAR}, #{putMessageTimesTotal,jdbcType=VARCHAR}, 
+      #{msgGetTotalTodayMorning,jdbcType=VARCHAR}, #{brokerVersionDesc,jdbcType=VARCHAR}, 
+      #{sendThreadPoolQueueSize,jdbcType=VARCHAR}, #{startAcceptSendRequestTimeStamp,jdbcType=VARCHAR}, 
+      #{putMessageEntireTimeMax,jdbcType=VARCHAR}, #{earliestMessageTimeStamp,jdbcType=VARCHAR}, 
+      #{commitLogDirCapacity,jdbcType=VARCHAR}, #{remainTransientStoreBufferNumbs,jdbcType=VARCHAR}, 
+      #{queryThreadPoolQueueCapacity,jdbcType=VARCHAR}, #{putMessageAverageSize,jdbcType=VARCHAR}, 
+      #{dispatchBehindBytes,jdbcType=VARCHAR}, #{putMessageSizeTotal,jdbcType=VARCHAR}, 
+      #{sendThreadPoolQueueCapacity,jdbcType=VARCHAR}, #{pullThreadPoolQueueCapacity,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective">
+    insert into rocketmq_broker_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="brokerName != null">
+        broker_name,
+      </if>
+      <if test="clusterId != null">
+        cluster_id,
+      </if>
+      <if test="clientAddr != null">
+        client_addr,
+      </if>
+      <if test="msgPutTotalTodayNow != null">
+        msg_put_total_today_now,
+      </if>
+      <if test="sendThreadPoolQueueHeadWaitTimeMills != null">
+        send_thread_pool_queue_head_wait_time_mills,
+      </if>
+      <if test="putMessageDistributeTime != null">
+        put_message_distribute_time,
+      </if>
+      <if test="queryThreadPoolQueueHeadWaitTimeMills != null">
+        query_thread_pool_queue_head_wait_time_mills,
+      </if>
+      <if test="remainHowManyDataToFlush != null">
+        remain_how_many_data_to_flush,
+      </if>
+      <if test="msgGetTotalTodayNow != null">
+        msg_get_total_today_now,
+      </if>
+      <if test="queryThreadPoolQueueSize != null">
+        query_thread_pool_queue_size,
+      </if>
+      <if test="bootTimestamp != null">
+        boot_timestamp,
+      </if>
+      <if test="msgPutTotalYesterdayMorning != null">
+        msg_put_total_yesterday_morning,
+      </if>
+      <if test="msgGetTotalYesterdayMorning != null">
+        msg_get_total_yesterday_morning,
+      </if>
+      <if test="pullThreadPoolQueueSize != null">
+        pull_thread_pool_queue_size,
+      </if>
+      <if test="commitLogMinOffset != null">
+        commit_log_min_offset,
+      </if>
+      <if test="pullThreadPoolQueueHeadWaitTimeMills != null">
+        pull_thread_pool_queue_head_wait_time_mills,
+      </if>
+      <if test="runtime != null">
+        runtime,
+      </if>
+      <if test="dispatchMaxBuffer != null">
+        dispatch_max_buffer,
+      </if>
+      <if test="brokerVersion != null">
+        broker_version,
+      </if>
+      <if test="putTps != null">
+        put_tps,
+      </if>
+      <if test="getMissTps != null">
+        get_miss_tps,
+      </if>
+      <if test="getTransferedTps != null">
+        get_transfered_tps,
+      </if>
+      <if test="endTransactionQueueSize != null">
+        end_transaction_queue_size,
+      </if>
+      <if test="getTotalTps != null">
+        get_total_tps,
+      </if>
+      <if test="consumeQueueDiskRatio != null">
+        consume_queue_disk_ratio,
+      </if>
+      <if test="pageCacheLockTimeMills != null">
+        page_cache_lock_time_mills,
+      </if>
+      <if test="commitLogDiskRatio != null">
+        commit_log_disk_ratio,
+      </if>
+      <if test="getFoundTps != null">
+        get_found_tps,
+      </if>
+      <if test="endTransactionThreadPoolQueueCapacity != null">
+        end_transaction_thread_pool_queue_capacity,
+      </if>
+      <if test="commitLogMaxOffset != null">
+        commit_log_max_offset,
+      </if>
+      <if test="getMessageEntireTimeMax != null">
+        get_message_entire_time_max,
+      </if>
+      <if test="msgPutTotalTodayMorning != null">
+        msg_put_total_today_morning,
+      </if>
+      <if test="putMessageTimesTotal != null">
+        put_message_times_total,
+      </if>
+      <if test="msgGetTotalTodayMorning != null">
+        msg_get_total_today_morning,
+      </if>
+      <if test="brokerVersionDesc != null">
+        broker_version_desc,
+      </if>
+      <if test="sendThreadPoolQueueSize != null">
+        send_thread_pool_queue_size,
+      </if>
+      <if test="startAcceptSendRequestTimeStamp != null">
+        start_accept_send_request_time_stamp,
+      </if>
+      <if test="putMessageEntireTimeMax != null">
+        put_message_entire_time_max,
+      </if>
+      <if test="earliestMessageTimeStamp != null">
+        earliest_message_time_stamp,
+      </if>
+      <if test="commitLogDirCapacity != null">
+        commit_log_dir_capacity,
+      </if>
+      <if test="remainTransientStoreBufferNumbs != null">
+        remain_transient_store_buffer_numbs,
+      </if>
+      <if test="queryThreadPoolQueueCapacity != null">
+        query_thread_pool_queue_capacity,
+      </if>
+      <if test="putMessageAverageSize != null">
+        put_message_average_size,
+      </if>
+      <if test="dispatchBehindBytes != null">
+        dispatch_behind_bytes,
+      </if>
+      <if test="putMessageSizeTotal != null">
+        put_message_size_total,
+      </if>
+      <if test="sendThreadPoolQueueCapacity != null">
+        send_thread_pool_queue_capacity,
+      </if>
+      <if test="pullThreadPoolQueueCapacity != null">
+        pull_thread_pool_queue_capacity,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="brokerName != null">
+        #{brokerName,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterId != null">
+        #{clusterId,jdbcType=BIGINT},
+      </if>
+      <if test="clientAddr != null">
+        #{clientAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="msgPutTotalTodayNow != null">
+        #{msgPutTotalTodayNow,jdbcType=VARCHAR},
+      </if>
+      <if test="sendThreadPoolQueueHeadWaitTimeMills != null">
+        #{sendThreadPoolQueueHeadWaitTimeMills,jdbcType=VARCHAR},
+      </if>
+      <if test="putMessageDistributeTime != null">
+        #{putMessageDistributeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="queryThreadPoolQueueHeadWaitTimeMills != null">
+        #{queryThreadPoolQueueHeadWaitTimeMills,jdbcType=VARCHAR},
+      </if>
+      <if test="remainHowManyDataToFlush != null">
+        #{remainHowManyDataToFlush,jdbcType=VARCHAR},
+      </if>
+      <if test="msgGetTotalTodayNow != null">
+        #{msgGetTotalTodayNow,jdbcType=VARCHAR},
+      </if>
+      <if test="queryThreadPoolQueueSize != null">
+        #{queryThreadPoolQueueSize,jdbcType=VARCHAR},
+      </if>
+      <if test="bootTimestamp != null">
+        #{bootTimestamp,jdbcType=VARCHAR},
+      </if>
+      <if test="msgPutTotalYesterdayMorning != null">
+        #{msgPutTotalYesterdayMorning,jdbcType=VARCHAR},
+      </if>
+      <if test="msgGetTotalYesterdayMorning != null">
+        #{msgGetTotalYesterdayMorning,jdbcType=VARCHAR},
+      </if>
+      <if test="pullThreadPoolQueueSize != null">
+        #{pullThreadPoolQueueSize,jdbcType=VARCHAR},
+      </if>
+      <if test="commitLogMinOffset != null">
+        #{commitLogMinOffset,jdbcType=VARCHAR},
+      </if>
+      <if test="pullThreadPoolQueueHeadWaitTimeMills != null">
+        #{pullThreadPoolQueueHeadWaitTimeMills,jdbcType=VARCHAR},
+      </if>
+      <if test="runtime != null">
+        #{runtime,jdbcType=VARCHAR},
+      </if>
+      <if test="dispatchMaxBuffer != null">
+        #{dispatchMaxBuffer,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerVersion != null">
+        #{brokerVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="putTps != null">
+        #{putTps,jdbcType=VARCHAR},
+      </if>
+      <if test="getMissTps != null">
+        #{getMissTps,jdbcType=VARCHAR},
+      </if>
+      <if test="getTransferedTps != null">
+        #{getTransferedTps,jdbcType=VARCHAR},
+      </if>
+      <if test="endTransactionQueueSize != null">
+        #{endTransactionQueueSize,jdbcType=VARCHAR},
+      </if>
+      <if test="getTotalTps != null">
+        #{getTotalTps,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeQueueDiskRatio != null">
+        #{consumeQueueDiskRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="pageCacheLockTimeMills != null">
+        #{pageCacheLockTimeMills,jdbcType=VARCHAR},
+      </if>
+      <if test="commitLogDiskRatio != null">
+        #{commitLogDiskRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="getFoundTps != null">
+        #{getFoundTps,jdbcType=VARCHAR},
+      </if>
+      <if test="endTransactionThreadPoolQueueCapacity != null">
+        #{endTransactionThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="commitLogMaxOffset != null">
+        #{commitLogMaxOffset,jdbcType=VARCHAR},
+      </if>
+      <if test="getMessageEntireTimeMax != null">
+        #{getMessageEntireTimeMax,jdbcType=VARCHAR},
+      </if>
+      <if test="msgPutTotalTodayMorning != null">
+        #{msgPutTotalTodayMorning,jdbcType=VARCHAR},
+      </if>
+      <if test="putMessageTimesTotal != null">
+        #{putMessageTimesTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="msgGetTotalTodayMorning != null">
+        #{msgGetTotalTodayMorning,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerVersionDesc != null">
+        #{brokerVersionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="sendThreadPoolQueueSize != null">
+        #{sendThreadPoolQueueSize,jdbcType=VARCHAR},
+      </if>
+      <if test="startAcceptSendRequestTimeStamp != null">
+        #{startAcceptSendRequestTimeStamp,jdbcType=VARCHAR},
+      </if>
+      <if test="putMessageEntireTimeMax != null">
+        #{putMessageEntireTimeMax,jdbcType=VARCHAR},
+      </if>
+      <if test="earliestMessageTimeStamp != null">
+        #{earliestMessageTimeStamp,jdbcType=VARCHAR},
+      </if>
+      <if test="commitLogDirCapacity != null">
+        #{commitLogDirCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="remainTransientStoreBufferNumbs != null">
+        #{remainTransientStoreBufferNumbs,jdbcType=VARCHAR},
+      </if>
+      <if test="queryThreadPoolQueueCapacity != null">
+        #{queryThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="putMessageAverageSize != null">
+        #{putMessageAverageSize,jdbcType=VARCHAR},
+      </if>
+      <if test="dispatchBehindBytes != null">
+        #{dispatchBehindBytes,jdbcType=VARCHAR},
+      </if>
+      <if test="putMessageSizeTotal != null">
+        #{putMessageSizeTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="sendThreadPoolQueueCapacity != null">
+        #{sendThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="pullThreadPoolQueueCapacity != null">
+        #{pullThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective">
+    update rocketmq_broker_info
+    <set>
+      <if test="brokerName != null">
+        broker_name = #{brokerName,jdbcType=VARCHAR},
+      </if>
+      <if test="clusterId != null">
+        cluster_id = #{clusterId,jdbcType=BIGINT},
+      </if>
+      <if test="clientAddr != null">
+        client_addr = #{clientAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="msgPutTotalTodayNow != null">
+        msg_put_total_today_now = #{msgPutTotalTodayNow,jdbcType=VARCHAR},
+      </if>
+      <if test="sendThreadPoolQueueHeadWaitTimeMills != null">
+        send_thread_pool_queue_head_wait_time_mills = #{sendThreadPoolQueueHeadWaitTimeMills,jdbcType=VARCHAR},
+      </if>
+      <if test="putMessageDistributeTime != null">
+        put_message_distribute_time = #{putMessageDistributeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="queryThreadPoolQueueHeadWaitTimeMills != null">
+        query_thread_pool_queue_head_wait_time_mills = #{queryThreadPoolQueueHeadWaitTimeMills,jdbcType=VARCHAR},
+      </if>
+      <if test="remainHowManyDataToFlush != null">
+        remain_how_many_data_to_flush = #{remainHowManyDataToFlush,jdbcType=VARCHAR},
+      </if>
+      <if test="msgGetTotalTodayNow != null">
+        msg_get_total_today_now = #{msgGetTotalTodayNow,jdbcType=VARCHAR},
+      </if>
+      <if test="queryThreadPoolQueueSize != null">
+        query_thread_pool_queue_size = #{queryThreadPoolQueueSize,jdbcType=VARCHAR},
+      </if>
+      <if test="bootTimestamp != null">
+        boot_timestamp = #{bootTimestamp,jdbcType=VARCHAR},
+      </if>
+      <if test="msgPutTotalYesterdayMorning != null">
+        msg_put_total_yesterday_morning = #{msgPutTotalYesterdayMorning,jdbcType=VARCHAR},
+      </if>
+      <if test="msgGetTotalYesterdayMorning != null">
+        msg_get_total_yesterday_morning = #{msgGetTotalYesterdayMorning,jdbcType=VARCHAR},
+      </if>
+      <if test="pullThreadPoolQueueSize != null">
+        pull_thread_pool_queue_size = #{pullThreadPoolQueueSize,jdbcType=VARCHAR},
+      </if>
+      <if test="commitLogMinOffset != null">
+        commit_log_min_offset = #{commitLogMinOffset,jdbcType=VARCHAR},
+      </if>
+      <if test="pullThreadPoolQueueHeadWaitTimeMills != null">
+        pull_thread_pool_queue_head_wait_time_mills = #{pullThreadPoolQueueHeadWaitTimeMills,jdbcType=VARCHAR},
+      </if>
+      <if test="runtime != null">
+        runtime = #{runtime,jdbcType=VARCHAR},
+      </if>
+      <if test="dispatchMaxBuffer != null">
+        dispatch_max_buffer = #{dispatchMaxBuffer,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerVersion != null">
+        broker_version = #{brokerVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="putTps != null">
+        put_tps = #{putTps,jdbcType=VARCHAR},
+      </if>
+      <if test="getMissTps != null">
+        get_miss_tps = #{getMissTps,jdbcType=VARCHAR},
+      </if>
+      <if test="getTransferedTps != null">
+        get_transfered_tps = #{getTransferedTps,jdbcType=VARCHAR},
+      </if>
+      <if test="endTransactionQueueSize != null">
+        end_transaction_queue_size = #{endTransactionQueueSize,jdbcType=VARCHAR},
+      </if>
+      <if test="getTotalTps != null">
+        get_total_tps = #{getTotalTps,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeQueueDiskRatio != null">
+        consume_queue_disk_ratio = #{consumeQueueDiskRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="pageCacheLockTimeMills != null">
+        page_cache_lock_time_mills = #{pageCacheLockTimeMills,jdbcType=VARCHAR},
+      </if>
+      <if test="commitLogDiskRatio != null">
+        commit_log_disk_ratio = #{commitLogDiskRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="getFoundTps != null">
+        get_found_tps = #{getFoundTps,jdbcType=VARCHAR},
+      </if>
+      <if test="endTransactionThreadPoolQueueCapacity != null">
+        end_transaction_thread_pool_queue_capacity = #{endTransactionThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="commitLogMaxOffset != null">
+        commit_log_max_offset = #{commitLogMaxOffset,jdbcType=VARCHAR},
+      </if>
+      <if test="getMessageEntireTimeMax != null">
+        get_message_entire_time_max = #{getMessageEntireTimeMax,jdbcType=VARCHAR},
+      </if>
+      <if test="msgPutTotalTodayMorning != null">
+        msg_put_total_today_morning = #{msgPutTotalTodayMorning,jdbcType=VARCHAR},
+      </if>
+      <if test="putMessageTimesTotal != null">
+        put_message_times_total = #{putMessageTimesTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="msgGetTotalTodayMorning != null">
+        msg_get_total_today_morning = #{msgGetTotalTodayMorning,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerVersionDesc != null">
+        broker_version_desc = #{brokerVersionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="sendThreadPoolQueueSize != null">
+        send_thread_pool_queue_size = #{sendThreadPoolQueueSize,jdbcType=VARCHAR},
+      </if>
+      <if test="startAcceptSendRequestTimeStamp != null">
+        start_accept_send_request_time_stamp = #{startAcceptSendRequestTimeStamp,jdbcType=VARCHAR},
+      </if>
+      <if test="putMessageEntireTimeMax != null">
+        put_message_entire_time_max = #{putMessageEntireTimeMax,jdbcType=VARCHAR},
+      </if>
+      <if test="earliestMessageTimeStamp != null">
+        earliest_message_time_stamp = #{earliestMessageTimeStamp,jdbcType=VARCHAR},
+      </if>
+      <if test="commitLogDirCapacity != null">
+        commit_log_dir_capacity = #{commitLogDirCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="remainTransientStoreBufferNumbs != null">
+        remain_transient_store_buffer_numbs = #{remainTransientStoreBufferNumbs,jdbcType=VARCHAR},
+      </if>
+      <if test="queryThreadPoolQueueCapacity != null">
+        query_thread_pool_queue_capacity = #{queryThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="putMessageAverageSize != null">
+        put_message_average_size = #{putMessageAverageSize,jdbcType=VARCHAR},
+      </if>
+      <if test="dispatchBehindBytes != null">
+        dispatch_behind_bytes = #{dispatchBehindBytes,jdbcType=VARCHAR},
+      </if>
+      <if test="putMessageSizeTotal != null">
+        put_message_size_total = #{putMessageSizeTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="sendThreadPoolQueueCapacity != null">
+        send_thread_pool_queue_capacity = #{sendThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="pullThreadPoolQueueCapacity != null">
+        pull_thread_pool_queue_capacity = #{pullThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey">
+    update rocketmq_broker_info
+    set broker_name = #{brokerName,jdbcType=VARCHAR},
+      cluster_id = #{clusterId,jdbcType=BIGINT},
+      client_addr = #{clientAddr,jdbcType=VARCHAR},
+      msg_put_total_today_now = #{msgPutTotalTodayNow,jdbcType=VARCHAR},
+      send_thread_pool_queue_head_wait_time_mills = #{sendThreadPoolQueueHeadWaitTimeMills,jdbcType=VARCHAR},
+      put_message_distribute_time = #{putMessageDistributeTime,jdbcType=VARCHAR},
+      query_thread_pool_queue_head_wait_time_mills = #{queryThreadPoolQueueHeadWaitTimeMills,jdbcType=VARCHAR},
+      remain_how_many_data_to_flush = #{remainHowManyDataToFlush,jdbcType=VARCHAR},
+      msg_get_total_today_now = #{msgGetTotalTodayNow,jdbcType=VARCHAR},
+      query_thread_pool_queue_size = #{queryThreadPoolQueueSize,jdbcType=VARCHAR},
+      boot_timestamp = #{bootTimestamp,jdbcType=VARCHAR},
+      msg_put_total_yesterday_morning = #{msgPutTotalYesterdayMorning,jdbcType=VARCHAR},
+      msg_get_total_yesterday_morning = #{msgGetTotalYesterdayMorning,jdbcType=VARCHAR},
+      pull_thread_pool_queue_size = #{pullThreadPoolQueueSize,jdbcType=VARCHAR},
+      commit_log_min_offset = #{commitLogMinOffset,jdbcType=VARCHAR},
+      pull_thread_pool_queue_head_wait_time_mills = #{pullThreadPoolQueueHeadWaitTimeMills,jdbcType=VARCHAR},
+      runtime = #{runtime,jdbcType=VARCHAR},
+      dispatch_max_buffer = #{dispatchMaxBuffer,jdbcType=VARCHAR},
+      broker_version = #{brokerVersion,jdbcType=VARCHAR},
+      put_tps = #{putTps,jdbcType=VARCHAR},
+      get_miss_tps = #{getMissTps,jdbcType=VARCHAR},
+      get_transfered_tps = #{getTransferedTps,jdbcType=VARCHAR},
+      end_transaction_queue_size = #{endTransactionQueueSize,jdbcType=VARCHAR},
+      get_total_tps = #{getTotalTps,jdbcType=VARCHAR},
+      consume_queue_disk_ratio = #{consumeQueueDiskRatio,jdbcType=VARCHAR},
+      page_cache_lock_time_mills = #{pageCacheLockTimeMills,jdbcType=VARCHAR},
+      commit_log_disk_ratio = #{commitLogDiskRatio,jdbcType=VARCHAR},
+      get_found_tps = #{getFoundTps,jdbcType=VARCHAR},
+      end_transaction_thread_pool_queue_capacity = #{endTransactionThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      commit_log_max_offset = #{commitLogMaxOffset,jdbcType=VARCHAR},
+      get_message_entire_time_max = #{getMessageEntireTimeMax,jdbcType=VARCHAR},
+      msg_put_total_today_morning = #{msgPutTotalTodayMorning,jdbcType=VARCHAR},
+      put_message_times_total = #{putMessageTimesTotal,jdbcType=VARCHAR},
+      msg_get_total_today_morning = #{msgGetTotalTodayMorning,jdbcType=VARCHAR},
+      broker_version_desc = #{brokerVersionDesc,jdbcType=VARCHAR},
+      send_thread_pool_queue_size = #{sendThreadPoolQueueSize,jdbcType=VARCHAR},
+      start_accept_send_request_time_stamp = #{startAcceptSendRequestTimeStamp,jdbcType=VARCHAR},
+      put_message_entire_time_max = #{putMessageEntireTimeMax,jdbcType=VARCHAR},
+      earliest_message_time_stamp = #{earliestMessageTimeStamp,jdbcType=VARCHAR},
+      commit_log_dir_capacity = #{commitLogDirCapacity,jdbcType=VARCHAR},
+      remain_transient_store_buffer_numbs = #{remainTransientStoreBufferNumbs,jdbcType=VARCHAR},
+      query_thread_pool_queue_capacity = #{queryThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      put_message_average_size = #{putMessageAverageSize,jdbcType=VARCHAR},
+      dispatch_behind_bytes = #{dispatchBehindBytes,jdbcType=VARCHAR},
+      put_message_size_total = #{putMessageSizeTotal,jdbcType=VARCHAR},
+      send_thread_pool_queue_capacity = #{sendThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      pull_thread_pool_queue_capacity = #{pullThreadPoolQueueCapacity,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!-- Generate time: 2023-09-13 13:12:27 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  <select id="selectByClusterId" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            rocketmq_broker_info
+        WHERE
+            cluster_id = #{clusterId}
+  </select>
+  <select id="selectByBrokerName" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            rocketmq_broker_info
+        WHERE
+            broker_name = #{brokerName}
+  </select>
+  <select id="selectByBrokerNames" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            rocketmq_broker_info
+        WHERE
+            broker_name
+        IN
+            <foreach collection="list" item="name" open="(" close=")" separator=",">
+              #{name}
+            </foreach>
+  </select>
+
+
+    <delete id="truncateTable">
+    truncate table rocketmq_broker_info
+  </delete>
+</mapper>

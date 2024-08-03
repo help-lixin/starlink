@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.ansible.mapper.AnsibleInventoryMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.ansible.domain.AnsibleInventory">
+    
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <!-- ansible标签Id -->
+    <result column="ansible_lable_id" jdbcType="BIGINT" property="ansibleLableId" />
+
+    <!-- ssh实例编码 -->
+    <result column="ssh_instance_code" jdbcType="VARCHAR" property="sshInstanceCode" />
+  </resultMap>
+  <insert id="insertList">
+    insert into ansible_inventory (id,ansible_lable_id, ssh_instance_code)
+    values
+    <foreach collection="list" separator="," item="item">
+      (#{item.id},#{item.ansibleLableId}, #{item.sshInstanceCode})
+    </foreach>
+
+  </insert>
+  <insert id="insertSelective">
+    insert into ansible_inventory
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="ansibleLableId != null">
+        ansible_lable_id,
+      </if>
+      <if test="sshInstanceCode != null">
+        ssh_instance_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ansibleLableId != null">
+        #{ansibleLableId,jdbcType=BIGINT},
+      </if>
+      <if test="sshInstanceCode != null">
+        #{sshInstanceCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+    <!-- Generate time: 2024-01-24 15:12:02 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  <select id="selectByAnsibleLabelId" resultType="java.lang.String">
+    SELECT
+        ssh_instance_code
+    FROM
+        ansible_inventory
+    WHERE
+        ansible_lable_id = #{id}
+  </select>
+</mapper>

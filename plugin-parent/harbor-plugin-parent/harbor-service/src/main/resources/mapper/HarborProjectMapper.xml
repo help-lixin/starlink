@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.harbor.mapper.HarborProjectMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.harbor.domain.HarborProject">
+    
+    <!-- harbor_config_id -->
+      <id column="id" jdbcType="BIGINT" property="id"/>
+
+    <result column="harbor_project_id" jdbcType="BIGINT" property="harborProjectId"/>
+
+      <!-- 实例code -->
+      <result column="instance_code" jdbcType="VARCHAR" property="instanceCode"/>
+
+      <!-- 项目名 -->
+      <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+
+      <!-- 是否公开 -->
+      <result column="is_public" jdbcType="INTEGER" property="isPublic"/>
+
+      <!-- 容量 -->
+      <result column="capacity" jdbcType="VARCHAR" property="capacity"/>
+
+      <!-- 状态值 -->
+      <result column="is_del" jdbcType="INTEGER" property="isDel"/>
+
+      <!-- 状态值 -->
+      <result column="status" jdbcType="INTEGER" property="status"/>
+
+      <!-- 创建人 -->
+      <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+
+      <!-- 更新人 -->
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+
+      <!-- 创建时间 -->
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,harbor_project_id,  instance_code, project_name, is_public, capacity, status, create_by,
+    update_by, create_time, update_time
+  </sql>
+
+  <insert id="insertSelective">
+    insert into harbor_project
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="harborProjectId != null">
+        harbor_project_id,
+      </if>
+      <if test="instanceCode != null">
+        instance_code,
+      </if>
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="isPublic != null">
+        is_public,
+      </if>
+      <if test="capacity != null">
+        capacity,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="harborProjectId != null">
+        #{harborProjectId,jdbcType=BIGINT},
+      </if>
+      <if test="instanceCode != null">
+        #{instanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null">
+        #{isPublic,jdbcType=INTEGER},
+      </if>
+      <if test="capacity != null">
+        #{capacity,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List"/>
+    from harbor_project
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="queryProjectByHarborProjectIds" resultMap="BaseResultMap">
+      SELECT
+            *
+      FROM
+            harbor_project
+      WHERE
+            harbor_project_id
+      IN
+          <foreach collection="list" item="id" open="(" close=")" separator=",">
+            ${id}
+          </foreach>
+    </select>
+  <select id="selectByNullHarborProjectId" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        harbor_project
+    WHERE
+        harbor_project_id IS NULL
+    AND
+        instance_code = #{instanceCode}
+    AND
+        project_name = #{projectName}
+    AND
+        status = 10
+  </select>
+  <select id="pageList" resultMap="BaseResultMap">
+    SELECT
+      *
+    FROM
+        harbor_project
+    WHERE
+        is_del = 0
+    AND
+        instance_code = #{instanceCode}
+    <if test="projectName != null and projectName != '' ">
+      AND
+          project_name LIKE CONCAT("%",#{projectName},"%")
+    </if>
+    <if test="isPublic != null">
+      AND
+          is_public = #{isPublic}
+    </if>
+    <if test="status != null">
+      AND
+          status = #{status}
+    </if>
+    <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+        AND
+          date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+    </if>
+    <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+        AND
+          date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+    </if>
+    ORDER BY
+        create_time DESC
+  </select>
+  <select id="queryByProjectName" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        harbor_project
+    WHERE
+        instance_code = #{instanceCode}
+    AND
+        project_name LIKE CONCAT("%",#{projectName},"%")
+    AND
+        is_del = 0
+  </select>
+  <select id="checkProjectName" resultType="help.lixin.starlink.plugin.harbor.domain.HarborProject">
+    SELECT
+        *
+    FROM
+        harbor_project
+    WHERE
+        instance_code = #{instanceCode}
+    AND
+        project_name = #{projectName}
+    AND
+        is_del = 0
+  </select>
+
+  <update id="removeById">
+    UPDATE
+        harbor_project
+    SET
+        is_del = 1
+    WHERE
+        id =#{id}
+  </update>
+
+    <!-- Your codes goes here!!! -->
+  
+</mapper>

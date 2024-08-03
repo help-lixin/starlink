@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.jenkins.mapper.JenkinsPipelineSetupGradleMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.jenkins.domain.JenkinsPipelineSetupGradle">
+    
+    <!-- ID -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    
+    <!-- gradle名称 -->
+    <result column="gradle_id" jdbcType="VARCHAR" property="gradleId" />
+    
+    <!-- 任务命令 -->
+    <result column="task" jdbcType="VARCHAR" property="task" />
+    
+    <!-- 是否直接调用gradle -->
+    <result column="invoke_gradle" jdbcType="TINYINT" property="invokeGradle" />
+    
+    <!-- 如果你的gradlew脚本没有执行权限，你应该启用这个选项。这将使Jenkins尝试修改gradlew脚本的权限，使其可以执行 -->
+    <result column="make_gradlew_executable" jdbcType="TINYINT" property="makeGradlewExecutable" />
+    
+    <!-- 额外命令 -->
+    <result column="switches" jdbcType="VARCHAR" property="switches" />
+    
+    <!-- 指定工作执行路径 -->
+    <result column="wrapper_location" jdbcType="VARCHAR" property="wrapperLocation" />
+    
+    <!-- 传递给Gradle构建的系统属性 -->
+    <result column="system_properties" jdbcType="VARCHAR" property="systemProperties" />
+    
+    <!-- 传递给Gradle构建的项目属性 -->
+    <result column="project_properties" jdbcType="VARCHAR" property="projectProperties" />
+    
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+    
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    
+    <!-- 更新时间 -->
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <insert id="insertSelective">
+    insert into jenkins_pipeline_setup_gradle
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gradleId != null">
+        gradle_id,
+      </if>
+      <if test="task != null">
+        task,
+      </if>
+      <if test="invokeGradle != null">
+        invoke_gradle,
+      </if>
+      <if test="makeGradlewExecutable != null">
+        make_gradlew_executable,
+      </if>
+      <if test="switches != null">
+        switches,
+      </if>
+      <if test="wrapperLocation != null">
+        wrapper_location,
+      </if>
+      <if test="systemProperties != null">
+        system_properties,
+      </if>
+      <if test="projectProperties != null">
+        project_properties,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gradleId != null">
+        #{gradleId,jdbcType=VARCHAR},
+      </if>
+      <if test="task != null">
+        #{task,jdbcType=VARCHAR},
+      </if>
+      <if test="invokeGradle != null">
+        #{invokeGradle,jdbcType=TINYINT},
+      </if>
+      <if test="makeGradlewExecutable != null">
+        #{makeGradlewExecutable,jdbcType=TINYINT},
+      </if>
+      <if test="switches != null">
+        #{switches,jdbcType=VARCHAR},
+      </if>
+      <if test="wrapperLocation != null">
+        #{wrapperLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="systemProperties != null">
+        #{systemProperties,jdbcType=VARCHAR},
+      </if>
+      <if test="projectProperties != null">
+        #{projectProperties,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- Generate time: 2023-12-12 10:59:06 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  
+</mapper>

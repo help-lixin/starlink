@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.nacos.mapper.NacosConfigCenterMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.nacos.domain.NacosConfigCenter">
+    
+    <!-- ID -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="env_code" jdbcType="VARCHAR" property="envCode" />
+    <result column="group_code" jdbcType="VARCHAR" property="groupCode" />
+    <result column="instance_code" jdbcType="VARCHAR" property="instanceCode" />
+    
+    <!-- 配置名称 -->
+    <result column="data_id" jdbcType="VARCHAR" property="dataId" />
+    
+    <!-- 组名称 -->
+    <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+    
+    <!-- 租户id -->
+    <result column="tenant" jdbcType="VARCHAR" property="tenant" />
+    <result column="md5" jdbcType="VARCHAR" property="md5" />
+    
+    <!-- 归属应用 -->
+    <result column="app_name" jdbcType="VARCHAR" property="appName" />
+    
+    <!-- 标签 -->
+    <result column="config_tags" jdbcType="VARCHAR" property="configTags" />
+    
+    <!-- 描述 -->
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    
+    <!-- 配置格式 -->
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+    
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    
+    <!-- 更新时间 -->
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="help.lixin.starlink.plugin.nacos.domain.NacosConfigCenter">
+    
+    <!-- 配置信息 -->
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, env_code, group_code, instance_code, data_id, group_name, tenant, md5, app_name, 
+    config_tags, remark, type, status, create_by, update_by, created_time, updated_time
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from nacos_config_center
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from nacos_config_center
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert">
+    insert into nacos_config_center (id, env_code, group_code, 
+      instance_code, data_id, group_name, 
+      tenant, md5, app_name, 
+      config_tags, remark, type, 
+      status, create_by, update_by, 
+      created_time, updated_time, content
+      )
+    values (#{id,jdbcType=BIGINT}, #{envCode,jdbcType=VARCHAR}, #{groupCode,jdbcType=VARCHAR}, 
+      #{instanceCode,jdbcType=VARCHAR}, #{dataId,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, 
+      #{tenant,jdbcType=VARCHAR}, #{md5,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR}, 
+      #{configTags,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective">
+    insert into nacos_config_center
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="envCode != null">
+        env_code,
+      </if>
+      <if test="groupCode != null">
+        group_code,
+      </if>
+      <if test="instanceCode != null">
+        instance_code,
+      </if>
+      <if test="dataId != null">
+        data_id,
+      </if>
+      <if test="groupName != null">
+        group_name,
+      </if>
+      <if test="tenant != null">
+        tenant,
+      </if>
+      <if test="md5 != null">
+        md5,
+      </if>
+      <if test="appName != null">
+        app_name,
+      </if>
+      <if test="configTags != null">
+        config_tags,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="envCode != null">
+        #{envCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groupCode != null">
+        #{groupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="instanceCode != null">
+        #{instanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dataId != null">
+        #{dataId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null">
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="tenant != null">
+        #{tenant,jdbcType=VARCHAR},
+      </if>
+      <if test="md5 != null">
+        #{md5,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null">
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="configTags != null">
+        #{configTags,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective">
+    update nacos_config_center
+    <set>
+      <if test="envCode != null">
+        env_code = #{envCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groupCode != null">
+        group_code = #{groupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="instanceCode != null">
+        instance_code = #{instanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dataId != null">
+        data_id = #{dataId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null">
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="tenant != null">
+        tenant = #{tenant,jdbcType=VARCHAR},
+      </if>
+      <if test="md5 != null">
+        md5 = #{md5,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null">
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="configTags != null">
+        config_tags = #{configTags,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs">
+    update nacos_config_center
+    set env_code = #{envCode,jdbcType=VARCHAR},
+      group_code = #{groupCode,jdbcType=VARCHAR},
+      instance_code = #{instanceCode,jdbcType=VARCHAR},
+      data_id = #{dataId,jdbcType=VARCHAR},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      tenant = #{tenant,jdbcType=VARCHAR},
+      md5 = #{md5,jdbcType=VARCHAR},
+      app_name = #{appName,jdbcType=VARCHAR},
+      config_tags = #{configTags,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey">
+    update nacos_config_center
+    set env_code = #{envCode,jdbcType=VARCHAR},
+      group_code = #{groupCode,jdbcType=VARCHAR},
+      instance_code = #{instanceCode,jdbcType=VARCHAR},
+      data_id = #{dataId,jdbcType=VARCHAR},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      tenant = #{tenant,jdbcType=VARCHAR},
+      md5 = #{md5,jdbcType=VARCHAR},
+      app_name = #{appName,jdbcType=VARCHAR},
+      config_tags = #{configTags,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+
+
+
+  <!-- Your codes goes here!!! -->
+  <update id="updateByGroupAndDataId">
+    update nacos_config_center
+    set env_code = #{envCode,jdbcType=VARCHAR},
+      group_code = #{groupCode,jdbcType=VARCHAR},
+      instance_code = #{instanceCode,jdbcType=VARCHAR},
+      data_id = #{dataId,jdbcType=VARCHAR},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      tenant = #{tenant,jdbcType=VARCHAR},
+      md5 = #{md5,jdbcType=VARCHAR},
+      app_name = #{appName,jdbcType=VARCHAR},
+      config_tags = #{configTags,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where
+        group_name = #{groupName}
+    AND
+        data_id = #{dataId}
+  </update>
+
+  <update id="removeConfig">
+    UPDATE
+        nacos_config_center
+    SET
+        status = 0
+    WHERE
+        id
+    IN
+      <foreach close=")" collection="list" item="id" open="(" separator=",">
+        ${id}
+      </foreach>
+  </update>
+
+  <select id="queryByGroupAndDataId" resultMap="BaseResultMap">
+    SELECT
+        *
+    FROM
+        nacos_config_center
+    WHERE
+        group_name = #{groupName}
+    AND
+        data_id = #{dataId}
+  </select>
+  <select id="queryPageList" resultType="help.lixin.starlink.plugin.nacos.api.dto.config.NacosPageListDetailConfigResponse">
+    SELECT
+        id,
+        data_id,
+        group_name `group`,
+        content,
+        tenant,
+        app_name,
+        created_time,
+        updated_time
+    FROM
+        nacos_config_center
+    WHERE
+        env_code = #{envDTO.envCode}
+    AND
+        group_code = #{envDTO.groupCode}
+    AND
+        instance_code = #{envDTO.instanceCode}
+    <if test="status != null">
+      AND status = #{status}
+    </if>
+    <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+      AND date_format(created_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+    </if>
+    <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+      AND date_format(created_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+    </if>
+
+    <choose>
+      <when test="search.getDesc() == 'blur'">
+        <if test="dataId != '' and dataId != null ">
+        AND
+            data_id LIKE CONCAT("%", #{dataId} , "%")
+        </if>
+
+        <if test="tenant != '' and tenant != null ">
+        AND
+            tenant LIKE CONCAT("%", #{tenant} ,"%")
+        </if>
+
+        <if test="group != '' and group != null ">
+        AND
+            group_name LIKE CONCAT("%", #{group} ,"%")
+        </if>
+
+        <if test="configDetail != '' and configDetail != null ">
+        AND
+            content LIKE CONCAT("%", #{configDetail} ,"%")
+        </if>
+
+        <if test="tag != '' and tag != null ">
+        AND
+            config_tags LIKE CONCAT("%", #{tag} ,"%")
+        </if>
+
+        <if test="appName != '' and appName != null ">
+        AND
+            app_name LIKE CONCAT("%", #{appName} ,"%")
+        </if>
+      </when>
+      
+      <otherwise>
+        <if test="dataId != '' and dataId != null ">
+        AND
+            data_id = #{dataId}
+        </if>
+
+        <if test="tenant != '' and tenant != null ">
+        AND
+            tenant = #{tenant}
+        </if>
+
+        <if test="group != '' and group != null ">
+        AND
+            group_name = #{group}
+        </if>
+
+        <if test="configDetail != '' and configDetail != null ">
+        AND
+            content = #{configDetail}
+        </if>
+
+        <if test="tag != '' and tag != null ">
+        AND
+            config_tags = #{tag}
+        </if>
+
+        <if test="appName != '' and appName != null ">
+        AND
+            app_name = #{appName}
+        </if>
+      </otherwise>
+    </choose>
+
+  </select>
+  <select id="queryByEnv" resultType="help.lixin.starlink.plugin.nacos.api.dto.config.NacosPageListDetailConfigResponse">
+        SELECT
+            *
+        FROM
+            nacos_config_center
+        WHERE
+            env_code = #{envDTO.envCode}
+        AND
+            group_code = #{envDTO.groupCode}
+        AND
+            instance_code = #{envDTO.instanceCode}
+        AND
+            status = 1
+  </select>
+</mapper>

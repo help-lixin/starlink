@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.gitlab.mapper.GitlabUserGroupMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.gitlab.domain.GitlabUserGroup">
+    
+    <!-- ID -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="group_id" jdbcType="BIGINT" property="groupId" />
+    <result column="access_level" jdbcType="INTEGER" property="accessLevel" />
+    <result column="instance_code" jdbcType="VARCHAR" property="instanceCode" />
+    <result column="expires_at" jdbcType="TIMESTAMP" property="instanceCode" />
+
+    <!-- 是否删除（删除为1） -->
+    <result column="is_del" jdbcType="TINYINT" property="isDel" />
+
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+
+    <insert id="insertGroup" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO gitlab_user_group (user_id, group_id, access_level, instance_code, expires_at, status, create_by, update_by, create_time)
+      VALUES (#{userId}, #{groupId}, #{accessLevel}, #{instanceCode}, #{expiresAt}, #{status}, #{createBy}, #{updateBy}, #{createTime})
+    </insert>
+  <!-- Generate time: 2023-11-24 15:10:59 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+
+  <select id="queryByUserIdAndGroupId" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            gitlab_user_group
+        WHERE
+            user_id = #{userId}
+        AND
+            group_id = #{groupId}
+        AND
+            is_del = 0
+  </select>
+
+  <select id="queryByGroupId" resultType="LONG">
+        SELECT
+            user_id
+        FROM
+            gitlab_user_group
+        WHERE
+            group_id = #{groupId}
+        AND
+            is_del = 0
+  </select>
+  <select id="queryUserGroupList" resultType="help.lixin.starlink.plugin.gitlab.dto.group.GroupMemberUserGroupDTO">
+        SELECT
+            u.user_name,
+            u.nick_name,
+            u.email,
+            ug.status,
+            ug.id,
+            ug.user_id,
+            ug.instance_code,
+            ug.group_id,
+            g.gitlab_group_name,
+            ug.access_level,
+            ug.expires_at,
+            ug.create_time
+        FROM
+            gitlab_user_group ug
+            LEFT JOIN (SELECT * FROM gitlab_user WHERE is_del = 0) u ON u.id = ug.user_id
+            LEFT JOIN (SELECT * FROM gitlab_group WHERE is_del = 0) g ON g.id = ug.group_id
+        WHERE
+            ug.is_del = 0
+        AND
+            ug.instance_code = #{instanceCode}
+        <if test="userName != null and userName != '' ">
+            AND user_name LIKE CONCAT( "%", #{userName}, "%" )
+        </if>
+        <if test="email != null and email != '' ">
+            AND email LIKE CONCAT( "%", #{email}, "%" )
+        </if>
+        <if test="groupId != null ">
+            AND group_id = #{groupId}
+        </if>
+        <if test="accessLevel != null ">
+            AND access_level = #{accessLevel}
+        </if>
+        <if test="status != null">
+          AND ug.status = #{status}
+        </if>
+        <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+          AND date_format(ug.create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+        </if>
+        <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+          AND date_format(ug.create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+        </if>
+        ORDER BY
+          create_time DESC
+  </select>
+
+    <update id="removeById" >
+        UPDATE
+            gitlab_user_group
+        SET
+            is_del = 1,
+            update_by = #{updateBy}
+        WHERE
+            id = #{id}
+    </update>
+
+</mapper>

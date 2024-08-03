@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.jenkins.mapper.JenkinsPipelineSetupMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.jenkins.domain.JenkinsPipelineSetupCommon">
+    
+    <!-- ID -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="job_id" jdbcType="BIGINT" property="jobId" />
+    
+    <!-- 执行步骤类型 -->
+    <result column="setup_type" jdbcType="VARCHAR" property="setupType" />
+    
+    <!-- 执行顺序 -->
+    <result column="sequence" jdbcType="INTEGER" property="sequence" />
+    <result column="instance_code" jdbcType="VARCHAR" property="instanceCode" />
+    
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+    
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    
+    <!-- 更新时间 -->
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <insert id="insertSetup" useGeneratedKeys="true" keyProperty="id">
+    insert into jenkins_pipeline_setup_common (id, job_id, setup_type, 
+      sequence, instance_code, status,
+      create_by, update_by, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{jobId,jdbcType=BIGINT}, #{setupType,jdbcType=VARCHAR}, 
+      #{sequence,jdbcType=INTEGER}, #{instanceCode,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT},
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <!-- Generate time: 2023-12-12 10:59:06 ### -->
+
+  <!-- Your codes goes here!!! -->
+
+  <!--insert setup -->
+  <insert id="insertAnt">
+    insert into jenkins_pipeline_setup_ant (id, ant_id, targets, status,
+      create_by, update_by
+      <trim suffix="" suffixOverrides=",">
+        <if test="createTime">
+          create_time,
+        </if>
+
+        <if test="updateTime">
+          update_time,
+        </if>
+      </trim>
+    )
+    values (#{id,jdbcType=BIGINT}, #{antId,jdbcType=BIGINT}, #{targets,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT},
+    #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}
+    <trim suffix="" suffixOverrides=",">
+      <if test="createTime">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="updateTime">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    )
+  </insert>
+
+  <insert id="insertGo">
+    insert into jenkins_pipeline_setup_go (id, go_id, script,
+      status, create_by, update_by
+    <trim prefix="," suffixOverrides=",">
+      <if test="createTime">
+        create_time,
+      </if>
+
+      <if test="updateTime">
+        update_time,
+      </if>
+    </trim>
+    )
+    values (#{id,jdbcType=BIGINT}, #{goId,jdbcType=BIGINT}, #{script,jdbcType=VARCHAR},
+    #{status,jdbcType=TINYINT}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}
+    <trim prefix="," suffixOverrides=",">
+      <if test="createTime">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="updateTime">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    )
+  </insert>
+
+  <insert id="insertGradle">
+    insert into jenkins_pipeline_setup_gradle (id, gradle_id, task,
+      invoke_gradle, make_gradlew_executable, switches,
+      wrapper_location, system_properties, project_properties,
+      status, create_by, update_by
+    <trim prefix="," suffixOverrides=",">
+      <if test="createTime">
+        create_time,
+      </if>
+
+      <if test="updateTime">
+        update_time,
+      </if>
+    </trim>
+    )
+    values (#{id,jdbcType=BIGINT}, #{gradleId,jdbcType=BIGINT}, #{task,jdbcType=VARCHAR},
+      #{invokeGradle,jdbcType=TINYINT}, #{makeGradlewExecutable,jdbcType=TINYINT}, #{switches,jdbcType=VARCHAR},
+      #{wrapperLocation,jdbcType=VARCHAR}, #{systemProperties,jdbcType=VARCHAR}, #{projectProperties,jdbcType=VARCHAR},
+      #{status,jdbcType=TINYINT}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}
+    <trim prefix="," suffixOverrides=",">
+      <if test="createTime">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="updateTime">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    )
+  </insert>
+
+  <insert id="insertMaven">
+    insert into jenkins_pipeline_setup_maven (id, maven_id, goals,
+      status, create_by, update_by
+    <trim prefix="," suffixOverrides=",">
+      <if test="createTime">
+        create_time,
+      </if>
+
+      <if test="updateTime">
+        update_time,
+      </if>
+    </trim>
+    )
+    values (#{id,jdbcType=BIGINT}, #{mavenId,jdbcType=BIGINT}, #{goals,jdbcType=VARCHAR},
+      #{status,jdbcType=TINYINT}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}
+    <trim prefix="," suffixOverrides=",">
+      <if test="createTime">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="updateTime">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    )
+  </insert>
+
+  <insert id="insertNodejs">
+    insert into jenkins_pipeline_setup_nodejs (id, nodejs_id, script,
+    cache_location, status,
+    create_by, update_by
+    <trim prefix="," suffixOverrides=",">
+      <if test="createTime">
+        create_time,
+      </if>
+
+      <if test="updateTime">
+        update_time,
+      </if>
+    </trim>
+    )
+    values (#{id,jdbcType=BIGINT}, #{nodejsId,jdbcType=BIGINT}, #{script,jdbcType=VARCHAR},
+      #{cacheLocation,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT},
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}
+    <trim prefix="," suffixOverrides=",">
+      <if test="createTime">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="updateTime">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    )
+  </insert>
+
+  <insert id="insertPython">
+    insert into jenkins_pipeline_setup_python (id, python_id, script,
+      status, create_by, update_by
+    <trim prefix="," suffixOverrides=",">
+      <if test="createTime">
+        create_time,
+      </if>
+
+      <if test="updateTime">
+        update_time,
+      </if>
+    </trim>
+    )
+    values (#{id,jdbcType=BIGINT}, #{pythonId,jdbcType=BIGINT}, #{script,jdbcType=VARCHAR},
+      #{status,jdbcType=TINYINT}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}
+    <trim prefix="," suffixOverrides=",">
+      <if test="createTime">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="updateTime">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    )
+  </insert>
+
+  <insert id="insertShell">
+    insert into jenkins_pipeline_setup_shell (id, shell_script, status,
+      create_by, update_by
+    <trim prefix="," suffixOverrides=",">
+      <if test="createTime">
+        create_time,
+      </if>
+
+      <if test="updateTime">
+        update_time,
+      </if>
+    </trim>
+    )
+    values (#{id,jdbcType=BIGINT}, #{shellScript,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT},
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}
+    <trim prefix="," suffixOverrides=",">
+      <if test="createTime">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+      <if test="updateTime">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    )
+  </insert>
+
+
+  <!--update setup-->
+
+  <update id="updateAnt">
+    update jenkins_pipeline_setup_ant set ant_id=#{antId,jdbcType=BIGINT}, targets=#{targets,jdbcType=VARCHAR}, status=#{status,jdbcType=TINYINT},
+      create_by=#{createBy,jdbcType=VARCHAR}, update_by=#{updateBy,jdbcType=VARCHAR}, create_time=#{createTime,jdbcType=TIMESTAMP},
+      update_time=#{updateTime,jdbcType=TIMESTAMP}
+      where id=#{id,jdbcType=BIGINT}
+</update>
+
+  <update id="updateGo">
+    update jenkins_pipeline_setup_go set go_id=#{goId,jdbcType=BIGINT}, script=#{script,jdbcType=VARCHAR},
+      status=#{status,jdbcType=TINYINT}, create_by=#{createBy,jdbcType=VARCHAR}, update_by=#{updateBy,jdbcType=VARCHAR},
+      create_time=#{createTime,jdbcType=TIMESTAMP}, update_time=#{updateTime,jdbcType=TIMESTAMP} where id=#{id,jdbcType=BIGINT}
+</update>
+
+  <update id="updateGradle">
+    update jenkins_pipeline_setup_gradle set gradle_id=#{gradleId,jdbcType=BIGINT}, task=#{task,jdbcType=VARCHAR},
+      invoke_gradle=#{invokeGradle,jdbcType=TINYINT}, make_gradlew_executable=#{makeGradlewExecutable,jdbcType=TINYINT}, switches=#{switches,jdbcType=VARCHAR},
+      wrapper_location=#{wrapperLocation,jdbcType=VARCHAR}, system_properties=#{systemProperties,jdbcType=VARCHAR}, project_properties=#{projectProperties,jdbcType=VARCHAR},
+      status=#{status,jdbcType=TINYINT}, create_by=#{createBy,jdbcType=VARCHAR}, update_by=#{updateBy,jdbcType=VARCHAR},
+      create_time=#{createTime,jdbcType=TIMESTAMP}, update_time=#{updateTime,jdbcType=TIMESTAMP} where id=#{id,jdbcType=BIGINT}
+</update>
+
+  <update id="updateMaven">
+    update jenkins_pipeline_setup_maven set maven_id=#{mavenId,jdbcType=BIGINT}, goals=#{goals,jdbcType=VARCHAR},
+      status=#{status,jdbcType=TINYINT}, create_by=#{createBy,jdbcType=VARCHAR}, update_by=#{updateBy,jdbcType=VARCHAR},
+      create_time=#{createTime,jdbcType=TIMESTAMP}, update_time=#{updateTime,jdbcType=TIMESTAMP} where id=#{id,jdbcType=BIGINT}
+</update>
+
+  <update id="updateNodejs">
+    update jenkins_pipeline_setup_nodejs set nodejs_id=#{nodejsId,jdbcType=BIGINT}, script=#{script,jdbcType=VARCHAR},
+      cache_location=#{cacheLocation,jdbcType=VARCHAR}, status=#{status,jdbcType=TINYINT},
+      create_by=#{createBy,jdbcType=VARCHAR}, update_by=#{updateBy,jdbcType=VARCHAR}, create_time=#{createTime,jdbcType=TIMESTAMP},
+      update_time=#{updateTime,jdbcType=TIMESTAMP} where id=#{id,jdbcType=BIGINT}
+</update>
+
+  <update id="updatePython">
+    update jenkins_pipeline_setup_python set python_id=#{pythonId,jdbcType=BIGINT}, script=#{script,jdbcType=VARCHAR},
+      status=#{status,jdbcType=TINYINT}, create_by=#{createBy,jdbcType=VARCHAR}, update_by=#{updateBy,jdbcType=VARCHAR},
+      create_time=#{createTime,jdbcType=TIMESTAMP}, update_time=#{updateTime,jdbcType=TIMESTAMP} where id=#{id,jdbcType=BIGINT}
+</update>
+
+  <update id="updateShell">
+    update jenkins_pipeline_setup_shell set shell_script=#{shellScript,jdbcType=VARCHAR}, status=#{status,jdbcType=TINYINT},
+      create_by=#{createBy,jdbcType=VARCHAR}, update_by=#{updateBy,jdbcType=VARCHAR}, create_time=#{createTime,jdbcType=TIMESTAMP},
+      update_time=#{updateTime,jdbcType=TIMESTAMP} where id=#{id,jdbcType=BIGINT}
+</update>
+
+  <select id="querySetup" resultType="java.util.Map">
+    SELECT  DISTINCT  c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,m.maven_id value_1,m.goals script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_maven m
+    WHERE  c.id = #{id}  AND  c.id = m.id  AND  c.setup_type = "maven"
+    UNION
+    SELECT DISTINCT c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,null value_1,s.shell_script script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_shell s
+    WHERE c.id = #{id}  AND  c.id = s.id  AND  c.setup_type = "shell"
+    UNION
+    SELECT DISTINCT c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,p.python_id value_1,p.script script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_python p
+    WHERE  c.id = #{id}  AND  c.id = p.id  AND  c.setup_type = "python"
+    UNION
+    SELECT DISTINCT c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,g.go_id value_1,g.script script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_go g
+    WHERE  c.id = #{id}  AND c.id = g.id AND  c.setup_type = "go"
+    UNION
+    SELECT DISTINCT c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,a.ant_id value_1,a.targets script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_ant a
+    WHERE c.id = #{id} AND  c.id = a.id  AND c.setup_type = "ant"
+    UNION
+    SELECT DISTINCT c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,gr.gradle_id value_1,gr.task script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_gradle gr
+    WHERE  c.id = #{id}  AND  c.id = gr.id  AND  c.setup_type = "gradle"
+    UNION
+    SELECT DISTINCT c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,
+    n.nodejs_id value_1,n.script script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_nodejs n
+    WHERE
+        c.id = #{id}
+    AND
+        c.id = n.id
+    AND
+        c.setup_type = "node_js"
+  </select>
+
+  <select id="querySetupList" resultType="java.util.Map">
+    SELECT DISTINCT c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,
+    m.maven_id value_1,m.goals script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_maven m
+    WHERE
+        c.job_id = #{jobId}
+    AND
+        c.id = m.id
+    AND
+        c.setup_type = "maven"
+    UNION
+    SELECT DISTINCT c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,
+    null value_1,s.shell_script script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_shell s
+    WHERE
+        c.job_id = #{jobId}
+    AND
+        c.id = s.id
+    AND
+      c.setup_type = "shell"
+    UNION
+    SELECT DISTINCT c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,
+    p.python_id value_1,p.script script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_python p
+    WHERE
+        c.job_id = #{jobId}
+    AND
+        c.id = p.id
+    AND
+        c.setup_type = "python"
+    UNION
+    SELECT DISTINCT c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,
+    g.go_id value_1,g.script script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_go g
+    WHERE
+        c.job_id = #{jobId}
+    AND
+        c.id = g.id
+    AND
+        c.setup_type = "go"
+    UNION
+    SELECT DISTINCT c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,
+    a.ant_id value_1,a.targets script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_ant a
+    WHERE
+        c.job_id = #{jobId}
+    AND
+        c.id = a.id
+    AND
+        c.setup_type = "ant"
+    UNION
+    SELECT DISTINCT c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,
+    gr.gradle_id value_1,gr.task script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_gradle gr
+    WHERE
+        c.job_id = #{jobId}
+    AND
+        c.id = gr.id
+    AND
+        c.setup_type = "gradle"
+    UNION
+    SELECT DISTINCT c.id,c.job_id,c.setup_type,c.sequence,c.instance_code,c.`status`,c.create_by,c.update_by,c.create_time,c.update_time,
+    n.nodejs_id value_1,n.script script
+    FROM jenkins_pipeline_setup_common c,jenkins_pipeline_setup_nodejs n
+    WHERE
+        c.job_id = #{jobId}
+    AND
+        c.id = n.id
+    AND
+        c.setup_type = "node_js"
+  </select>
+</mapper>

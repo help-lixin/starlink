@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.jenkins.mapper.JenkinsInstallPluginsMapper">
+    <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.jenkins.domain.JenkinsInstallPlugins">
+
+        <!-- ID -->
+        <result column="id" jdbcType="BIGINT" property="id"/>
+
+        <!-- 插件名称 -->
+        <result column="plugin_name" jdbcType="VARCHAR" property="pluginName"/>
+
+        <!-- 版本号 -->
+        <result column="version" jdbcType="VARCHAR" property="version"/>
+
+        <!-- 描述 -->
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+
+        <result column="instance_code" jdbcType="VARCHAR" property="instanceCode"/>
+
+        <!-- 状态值 -->
+        <result column="retry_amount" jdbcType="TINYINT" property="retryAmount"/>
+
+        <!-- 状态值 -->
+        <result column="status" jdbcType="TINYINT" property="status"/>
+
+        <!-- 安装状态 -->
+        <result column="install_status" jdbcType="TINYINT" property="installStatus"/>
+
+        <!-- 创建人 -->
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+
+        <!-- 更新人 -->
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+
+        <!-- 创建时间 -->
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+
+        <!-- 更新时间 -->
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <!-- Generate time: 2023-12-12 10:59:06 ### -->
+
+
+    <!-- Your codes goes here!!! -->
+    <select id="queryList" resultType="help.lixin.starlink.plugin.jenkins.domain.JenkinsInstallPlugins">
+      SELECT
+          *
+      FROM
+          jenkins_install_plugins
+      WHERE
+          plugin_name = #{pluginName}
+      ORDER BY
+        create_time DESC
+    </select>
+    <select id="queryRetryPlugin" resultType="help.lixin.starlink.plugin.jenkins.domain.JenkinsInstallPlugins">
+        SELECT
+            *
+        FROM
+            jenkins_install_plugins
+        WHERE
+            instance_code = #{instanceCode}
+        AND
+            retry_amount &lt; 3
+        AND
+            install_status &lt; 1
+    </select>
+</mapper>

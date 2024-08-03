@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.rocketmq.mapper.RocketmqTopicRouteMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.rocketmq.domain.RocketmqTopicRoute">
+    
+    <!-- ID -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    
+    <!-- topic_id -->
+    <result column="topic_id" jdbcType="BIGINT" property="topicId" />
+    
+    <!-- broker -->
+    <result column="broker" jdbcType="VARCHAR" property="broker" />
+    
+    <!-- broker地址;broker地址 -->
+    <result column="broker_addrs" jdbcType="VARCHAR" property="brokerAddrs" />
+    
+    <!-- 读队列数量;读队列数量 -->
+    <result column="read_queue_nums" jdbcType="INTEGER" property="readQueueNums" />
+    
+    <!-- 写队列数量;写队列数量 -->
+    <result column="write_queue_nums" jdbcType="INTEGER" property="writeQueueNums" />
+    
+    <!-- perm -->
+    <result column="perm" jdbcType="INTEGER" property="perm" />
+    <result column="topic_syn_flag" jdbcType="TINYINT" property="topicSynFlag" />
+    <result column="cluster" jdbcType="VARCHAR" property="cluster" />
+    
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    
+    <!-- 更新时间 -->
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, topic_id, broker, broker_addrs, read_queue_nums, write_queue_nums, perm, topic_syn_flag, 
+    cluster, create_by, status, update_by, created_time, updated_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rocketmq_topic_route
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from rocketmq_topic_route
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert">
+    insert into rocketmq_topic_route (id, topic_id, broker, 
+      broker_addrs, read_queue_nums, write_queue_nums, 
+      perm, topic_syn_flag, cluster, 
+      create_by, status, update_by, 
+      created_time, updated_time)
+    values (#{id,jdbcType=BIGINT}, #{topicId,jdbcType=BIGINT}, #{broker,jdbcType=VARCHAR}, 
+      #{brokerAddrs,jdbcType=VARCHAR}, #{readQueueNums,jdbcType=INTEGER}, #{writeQueueNums,jdbcType=INTEGER}, 
+      #{perm,jdbcType=INTEGER}, #{topicSynFlag,jdbcType=TINYINT}, #{cluster,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{updateBy,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective">
+    insert into rocketmq_topic_route
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="topicId != null">
+        topic_id,
+      </if>
+      <if test="broker != null">
+        broker,
+      </if>
+      <if test="brokerAddrs != null">
+        broker_addrs,
+      </if>
+      <if test="readQueueNums != null">
+        read_queue_nums,
+      </if>
+      <if test="writeQueueNums != null">
+        write_queue_nums,
+      </if>
+      <if test="perm != null">
+        perm,
+      </if>
+      <if test="topicSynFlag != null">
+        topic_syn_flag,
+      </if>
+      <if test="cluster != null">
+        cluster,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="topicId != null">
+        #{topicId,jdbcType=BIGINT},
+      </if>
+      <if test="broker != null">
+        #{broker,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerAddrs != null">
+        #{brokerAddrs,jdbcType=VARCHAR},
+      </if>
+      <if test="readQueueNums != null">
+        #{readQueueNums,jdbcType=INTEGER},
+      </if>
+      <if test="writeQueueNums != null">
+        #{writeQueueNums,jdbcType=INTEGER},
+      </if>
+      <if test="perm != null">
+        #{perm,jdbcType=INTEGER},
+      </if>
+      <if test="topicSynFlag != null">
+        #{topicSynFlag,jdbcType=TINYINT},
+      </if>
+      <if test="cluster != null">
+        #{cluster,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective">
+    update rocketmq_topic_route
+    <set>
+      <if test="topicId != null">
+        topic_id = #{topicId,jdbcType=BIGINT},
+      </if>
+      <if test="broker != null">
+        broker = #{broker,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerAddrs != null">
+        broker_addrs = #{brokerAddrs,jdbcType=VARCHAR},
+      </if>
+      <if test="readQueueNums != null">
+        read_queue_nums = #{readQueueNums,jdbcType=INTEGER},
+      </if>
+      <if test="writeQueueNums != null">
+        write_queue_nums = #{writeQueueNums,jdbcType=INTEGER},
+      </if>
+      <if test="perm != null">
+        perm = #{perm,jdbcType=INTEGER},
+      </if>
+      <if test="topicSynFlag != null">
+        topic_syn_flag = #{topicSynFlag,jdbcType=TINYINT},
+      </if>
+      <if test="cluster != null">
+        cluster = #{cluster,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey">
+    update rocketmq_topic_route
+    set topic_id = #{topicId,jdbcType=BIGINT},
+      broker = #{broker,jdbcType=VARCHAR},
+      broker_addrs = #{brokerAddrs,jdbcType=VARCHAR},
+      read_queue_nums = #{readQueueNums,jdbcType=INTEGER},
+      write_queue_nums = #{writeQueueNums,jdbcType=INTEGER},
+      perm = #{perm,jdbcType=INTEGER},
+      topic_syn_flag = #{topicSynFlag,jdbcType=TINYINT},
+      cluster = #{cluster,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!-- Generate time: 2023-10-18 15:39:00 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  <delete id="truncateTable">
+    truncate table rocketmq_topic_route
+  </delete>
+</mapper>

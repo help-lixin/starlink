@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="help.lixin.starlink.plugin.ansible.mapper.AnsibleLabelMapper">
+  <resultMap id="BaseResultMap" type="help.lixin.starlink.plugin.ansible.domain.AnsibleLabel">
+    
+    <!-- ID -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    
+    <!-- 标签key -->
+    <result column="label_key" jdbcType="VARCHAR" property="labelKey" />
+    
+    <!-- 标签名 -->
+    <result column="label_name" jdbcType="VARCHAR" property="labelName" />
+    
+    <!-- 是否删除（删除为1） -->
+    <result column="is_del" jdbcType="TINYINT" property="isDel" />
+
+    <!-- 状态值 -->
+    <result column="status" jdbcType="TINYINT" property="status" />
+
+    <!-- 创建人 -->
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    
+    <!-- 更新人 -->
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    
+    <!-- 创建时间 -->
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    
+    <!-- 更新时间 -->
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+    insert into ansible_label
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="labelKey != null">
+        label_key,
+      </if>
+      <if test="labelName != null">
+        label_name,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="labelKey != null">
+        #{labelKey,jdbcType=VARCHAR},
+      </if>
+      <if test="labelName != null">
+        #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- Generate time: 2024-01-24 15:12:02 ### -->
+
+
+  <!-- Your codes goes here!!! -->
+  <select id="selectByLabelKey" resultType="help.lixin.starlink.plugin.ansible.domain.AnsibleLabel">
+    SELECT
+        *
+    FROM
+        ansible_label
+    WHERE
+        label_key = #{key}
+    AND
+        is_del = 0
+  </select>
+
+  <select id="pageList" resultType="help.lixin.starlink.plugin.ansible.domain.AnsibleLabel">
+    SELECT
+        *
+    FROM
+        ansible_label
+    WHERE
+      is_del = 0
+    <if test="labelKey != null and labelKey != ''">
+      AND
+        label_key LIKE CONCAT("%", #{labelKey}, "%")
+    </if>
+    <if test="labelName != null and labelName != ''">
+      AND
+        label_name LIKE CONCAT("%", #{labelName}, "%")
+    </if>
+    <if test="status != null ">
+      AND
+        status = #{status}
+    </if>
+    <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
+      AND
+        date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+    </if>
+    <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+      AND
+        date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+    </if>
+    ORDER BY
+        create_time DESC
+  </select>
+  <select id="selectAll" resultType="help.lixin.starlink.plugin.ansible.domain.AnsibleLabel">
+    SELECT
+          *
+    FROM
+          ansible_label
+    WHERE
+        status = 1
+    AND
+        is_del = 0
+  </select>
+  <update id="removeById">
+    UPDATE
+        ansible_label
+    SET
+        is_del = 1
+    WHERE
+        id = #{id}
+  </update>
+</mapper>

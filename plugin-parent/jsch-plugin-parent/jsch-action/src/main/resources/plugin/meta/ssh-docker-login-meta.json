@@ -1,0 +1,71 @@
+{
+  "name": "Docker仓库配置",
+  "group": "tools",
+  "icon": "/icons/plugin/icon/ssh-docker-login-config.png",
+  "enableInstanceSelect": false,
+  "pluginCode": "jsch",
+  "_meta": {
+
+    "imageRepository": {
+      "type": "string",
+      "title": "镜像仓库域名",
+      "required": true,
+      "x-decorator": "FormItem",
+      "x-visible" : true,
+      "x-decorator-props": {
+        "tooltip": "请填写镜像仓库域名(registry.cn-hangzhou.aliyuncs.com)"
+      },
+      "x-component": "Input",
+      "x-component-props": {
+        "placeholder": "registry.cn-hangzhou.aliyuncs.com"
+      }
+    },
+
+    "namespace": {
+      "type": "string",
+      "title": "命名空间",
+      "required": true,
+      "x-decorator": "FormItem",
+      "x-visible" : true,
+      "x-decorator-props": {
+        "tooltip": "请填写镜像仓库命名空间(lixin-help)"
+      },
+      "x-component": "Input",
+      "x-component-props": {
+        "placeholder": "lixin-help"
+      }
+    },
+
+    "userName": {
+      "type": "string",
+      "title": "用户名",
+      "required": true,
+      "x-decorator": "FormItem",
+      "x-visible" : true,
+      "x-decorator-props": {
+        "tooltip": "请填写镜像仓库用户名"
+      },
+      "x-component": "Input",
+      "x-component-props": {
+        "placeholder": "admin"
+      }
+    },
+
+    "password": {
+      "type": "string",
+      "title": "密码",
+      "required": true,
+      "x-decorator": "FormItem",
+      "x-visible" : true,
+      "x-decorator-props": {
+        "tooltip": "请填写镜像仓库密码"
+      },
+      "x-component": "Password",
+      "x-component-props": {
+        "placeholder": "123456"
+      }
+    }
+
+
+  }
+}
